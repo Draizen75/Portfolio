@@ -5,6 +5,7 @@ import Skills from './components/skills/Skills';
 import Projects from './components/projects/Projects';
 import Contact from './components/contact/Contact';
 import Footer from './components/footer/Footer';
+import BackToTop from './components/backToTop/BackToTop';
 import { useScrollDetection } from './hooks/useScrollDetection';
 import { scrollToSection } from './utils/scrollUtils';
 
@@ -40,6 +41,7 @@ function App(): React.JSX.Element {
       <Projects />
       <Contact />
       <Footer />
+      <BackToTop />
     </div>
   );
 }
