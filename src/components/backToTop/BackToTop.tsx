@@ -45,7 +45,7 @@ const BackToTop = (): React.JSX.Element => {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[999] w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-accent-primary text-white shadow-lg hover:bg-accent-hover transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group"
+          className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-[999] w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-accent-primary dark:bg-accent-primary text-white shadow-lg dark:shadow-gray-900/50 hover:bg-accent-hover transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center group"
           aria-label="Back to top"
         >
           <svg

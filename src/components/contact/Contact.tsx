@@ -41,11 +41,11 @@ export default function Contact(): React.JSX.Element {
     <section 
       ref={sectionRef}
       id="contact" 
-      className="bg-background-primary py-8 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden"
+      className="bg-background-primary dark:bg-gray-900 py-8 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden"
     >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 sm:gap-4 mb-8 sm:mb-12 md:mb-16">
-          <div className="hidden sm:block flex-1 h-px bg-border-default"></div>
+          <div className="hidden sm:block flex-1 h-px bg-border-default dark:bg-gray-700"></div>
         </div>
         
         {/* Footer-style Contact Layout */}
@@ -62,12 +62,12 @@ export default function Contact(): React.JSX.Element {
               <div className="space-y-3 sm:space-y-4">
                 {/* Email */}
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-text-secondary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-text-secondary dark:text-gray-300 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                   <a 
                     href={`mailto:${emailAddress}`}
-                    className="text-text-secondary hover:text-accent-primary transition-colors duration-300 break-all text-sm sm:text-base"
+                    className="text-text-secondary dark:text-gray-200 hover:text-accent-primary transition-colors duration-300 break-all text-sm sm:text-base"
                   >
                     {emailAddress}
                   </a>
@@ -75,12 +75,12 @@ export default function Contact(): React.JSX.Element {
                 
                 {/* Phone */}
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-text-secondary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-text-secondary dark:text-gray-300 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <a 
                     href={`tel:${phone}`}
-                    className="text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base"
+                    className="text-text-secondary dark:text-gray-200 hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base"
                   >
                     {phone}
                   </a>
@@ -92,11 +92,11 @@ export default function Contact(): React.JSX.Element {
             <div className="space-y-4">
               <h3 className="text-accent-primary font-bold text-lg sm:text-xl md:text-2xl">Location</h3>
               <div className="flex items-start gap-3">
-                <svg className="w-5 h-5 text-text-secondary mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-text-secondary dark:text-gray-300 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <p className="text-text-secondary text-sm sm:text-base break-words">{address}</p>
+                <p className="text-text-secondary dark:text-gray-200 text-sm sm:text-base break-words">{address}</p>
               </div>
             </div>
 
@@ -104,10 +104,10 @@ export default function Contact(): React.JSX.Element {
             <div className="space-y-4">
               <h3 className="text-accent-primary font-bold text-lg sm:text-xl md:text-2xl">Quick Links</h3>
               <div className="space-y-2 sm:space-y-3">
-                <a href="#about" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">About</a>
-                <a href="#skills" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Skills</a>
-                <a href="#projects" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Projects</a>
-                <a href="#contact" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Contact</a>
+                <a href="#about" className="block text-text-secondary dark:text-gray-200 hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">About</a>
+                <a href="#skills" className="block text-text-secondary dark:text-gray-200 hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Skills</a>
+                <a href="#projects" className="block text-text-secondary dark:text-gray-200 hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Projects</a>
+                <a href="#contact" className="block text-text-secondary dark:text-gray-200 hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Contact</a>
               </div>
             </div>
 

@@ -6,6 +6,7 @@ import Projects from './components/projects/Projects';
 import Contact from './components/contact/Contact';
 import Footer from './components/footer/Footer';
 import BackToTop from './components/backToTop/BackToTop';
+import { ThemeProvider } from './contexts/ThemeContext';
 import { useScrollDetection } from './hooks/useScrollDetection';
 import { scrollToSection } from './utils/scrollUtils';
 
@@ -29,20 +30,22 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <div className="w-full min-h-screen bg-background-primary text-text-primary overflow-x-hidden">
-      <Navigation
-        activeSection={activeSection}
-        isScrolled={isScrolled}
-        onSectionClick={handleSectionClick}
-      />
-      <Hero onSectionClick={handleSectionClick} />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
-      <Footer />
-      <BackToTop />
-    </div>
+    <ThemeProvider>
+      <div className="w-full min-h-screen bg-background-primary dark:bg-gray-900 text-text-primary dark:text-gray-100 overflow-x-hidden transition-colors duration-300">
+        <Navigation
+          activeSection={activeSection}
+          isScrolled={isScrolled}
+          onSectionClick={handleSectionClick}
+        />
+        <Hero onSectionClick={handleSectionClick} />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
+        <Footer />
+        <BackToTop />
+      </div>
+    </ThemeProvider>
   );
 }
 
