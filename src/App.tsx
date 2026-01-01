@@ -1,7 +1,6 @@
 import Navigation from './components/navigation/Navigation';
 import Hero from './components/hero/Hero';
 import About from './components/about/About';
-import Resume from './components/resume/Resume';
 import Skills from './components/skills/Skills';
 import Projects from './components/projects/Projects';
 import Contact from './components/contact/Contact';
@@ -16,7 +15,7 @@ import { scrollToSection } from './utils/scrollUtils';
  * Uses custom hooks for scroll detection and utility functions for navigation.
  */
 function App(): React.JSX.Element {
-  const sections: string[] = ['home', 'about', 'resume', 'skills', 'projects', 'contact'];
+  const sections: string[] = ['home', 'about', 'skills', 'projects', 'contact'];
   const { activeSection, isScrolled } = useScrollDetection(sections);
 
   /**
@@ -37,7 +36,6 @@ function App(): React.JSX.Element {
       />
       <Hero onSectionClick={handleSectionClick} />
       <About />
-      <Resume />
       <Skills />
       <Projects />
       <Contact />

@@ -22,7 +22,6 @@ const Navigation = ({ activeSection, isScrolled, onSectionClick }: NavigationPro
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
-    { id: 'resume', label: 'Resume' },
     { id: 'skills', label: 'Skills' },
     { id: 'projects', label: 'Projects' },
     { id: 'contact', label: 'Contact' },

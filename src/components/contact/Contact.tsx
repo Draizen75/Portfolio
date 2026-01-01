@@ -105,7 +105,6 @@ export default function Contact(): React.JSX.Element {
               <h3 className="text-accent-primary font-bold text-lg sm:text-xl md:text-2xl">Quick Links</h3>
               <div className="space-y-2 sm:space-y-3">
                 <a href="#about" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">About</a>
-                <a href="#resume" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Resume</a>
                 <a href="#skills" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Skills</a>
                 <a href="#projects" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Projects</a>
                 <a href="#contact" className="block text-text-secondary hover:text-accent-primary transition-colors duration-300 text-sm sm:text-base">Contact</a>

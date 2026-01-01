@@ -1,15 +1,83 @@
 /**
  * About Component
  * 
- * Displays personal information and technologies used.
- * Shows a brief introduction and list of technologies.
+ * Displays personal information, education, work experience, and certifications.
+ * Merged with Resume section for a comprehensive about page.
  */
 
 import { useState, useEffect, useRef } from 'react';
 
+interface EducationItem {
+  degree: string;
+  period: string;
+  institution: string;
+}
+
+interface WorkItem {
+  position: string;
+  period: string;
+  company: string;
+  responsibilities: string[];
+}
+
+interface CertificationItem {
+  title: string;
+  period: string;
+  level?: string;
+  description: string;
+}
+
 const About = (): React.JSX.Element => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const education: EducationItem[] = [
+    {
+      degree: 'Bachelor of Science in Computer Science',
+      period: '2021 - 2025',
+      institution: 'Camarines Sur Polytechnic Colleges',
+    },
+  ];
+
+  const workExperience: WorkItem[] = [
+    {
+      position: 'Web Developer',
+      period: '2024 - Present',
+      company: 'Syd Solution Tech',
+      responsibilities: [
+        'Developed responsive and interactive web applications using modern frontend technologies',
+        'Collaborated with cross-functional teams to deliver innovative IT solutions for businesses',
+        'Built scalable web applications focusing on user experience and performance optimization',
+        'Implemented responsive designs using modern CSS frameworks and best practices',
+        'Contributed to software development projects including e-commerce platforms and digital solutions',
+      ],
+    },
+    {
+      position: 'Programmer Intern',
+      period: 'March 2025 - May 2025',
+      company: 'AI Research Center for Community Development',
+      responsibilities: [
+        'Provided technical support and troubleshooting for network issues',
+        'Assisted in software installation and maintenance',
+        'Managed user accounts and permissions',
+      ],
+    },
+  ];
+
+  const certifications: CertificationItem[] = [
+    {
+      title: 'Computer Systems Servicing National Certificate Level II (TESDA)',
+      period: '2021-2026',
+      level: 'NC II',
+      description: 'Successfully completed the Computer Systems Servicing NC II program, demonstrating proficiency in installing and configuring computer systems, setting up computer networks, and maintaining computer systems and networks. Acquired hands-on experience in troubleshooting hardware and software issues, network configuration, and system maintenance.',
+    },
+    {
+      title: 'Career Service Examination - Professional Level Passer (CSE-PPT)',
+      period: 'March 2025',
+      level: 'Career Service Professional Eligibility',
+      description: 'I achieved Career Service Professional Eligibility by passing the CSE-PPT, demonstrating my competence in various professional skills and knowledge areas. This certification, recognized by the Civil Service Commission (CSC), qualifies me for government positions that require professional eligibility.',
+    },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -48,96 +116,182 @@ const About = (): React.JSX.Element => {
           <div className="flex-1 h-px bg-border-default"></div>
         </div>
         
-        <div className="max-w-4xl mx-auto">
+        <div className="space-y-12 sm:space-y-16">
           {/* Introduction Section */}
           <div 
-            className={`space-y-8 sm:space-y-10 transition-all duration-700 ${
+            className={`transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            {/* Main Introduction Card */}
-            <div className="professional-card p-6 sm:p-8 md:p-10 rounded-2xl hover-lift">
-              <div className="flex items-start gap-4 mb-6">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-accent-primary/10 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 sm:w-7 sm:h-7 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
+          </div>
+
+          {/* Education Section */}
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-accent-primary/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-text-primary">Education</h3>
+            </div>
+            
+            <div className="relative pl-8 sm:pl-12 border-l-2 border-border-default">
+              {education.map((edu, index) => (
+                <div 
+                  key={index}
+                  className={`mb-8 last:mb-0 relative transition-all duration-500 ${
+                    isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                  }`}
+                  style={{ transitionDelay: `${100 + index * 100}ms` }}
+                >
+                  <div className="absolute -left-[29px] sm:-left-[37px] top-1 w-6 h-6 rounded-full bg-accent-primary border-4 border-background-secondary flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-accent-primary"></div>
+                  </div>
+                  
+                  <div className="group professional-card p-5 sm:p-6 md:p-7 rounded-xl hover-lift relative">
+                    <div className="absolute top-4 right-4 z-10 hidden sm:block">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-primary/10 text-accent-primary text-xs sm:text-sm font-semibold whitespace-nowrap">
+                        {edu.period}
+                      </span>
+                    </div>
+                    
+                    <div className="sm:pr-24 md:pr-32 lg:pr-36">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-4 mb-2">
+                        <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-text-primary group-hover:text-accent-primary transition-colors duration-300 break-words flex-1">
+                          {edu.degree}
+                        </h4>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-primary/10 text-accent-primary text-xs font-semibold whitespace-nowrap w-fit sm:hidden mb-2">
+                          {edu.period}
+                        </span>
+                      </div>
+                      <p className="text-accent-primary font-semibold text-base sm:text-lg mb-2 break-words">
+                        {edu.institution}
+                      </p>
+                      <ul className="space-y-2 mt-2">
+                        <li className="flex items-start gap-3">
+                          <span className="text-accent-primary flex-shrink-0">▸</span>
+                          <span className="text-text-secondary leading-relaxed text-sm sm:text-base break-words">
+                            Graduated with a General Weighted Average (GWA) of 1.44
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-text-primary mb-3">
-                    Hello, I'm Lloyd Draizen
-                  </h3>
-                  <p className="text-base sm:text-lg md:text-xl leading-relaxed text-text-secondary">
-                    I'm a passionate web developer with expertise in creating modern and responsive websites. 
-                    I love turning complex problems into simple, beautiful, and intuitive solutions.
+              ))}
+            </div>
+          </div>
+
+          {/* Experience Section */}
+          <div className="space-y-6 mt-12 sm:mt-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-accent-primary/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-text-primary">Experience</h3>
+            </div>
+            
+            <div className="relative pl-8 sm:pl-12 border-l-2 border-border-default">
+              {workExperience.map((work, index) => (
+                <div 
+                  key={index}
+                  className={`mb-8 last:mb-0 relative transition-all duration-500 ${
+                    isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                  }`}
+                  style={{ transitionDelay: `${200 + (education.length + index) * 100}ms` }}
+                >
+                  <div className="absolute -left-[29px] sm:-left-[37px] top-1 w-6 h-6 rounded-full bg-accent-primary border-4 border-background-secondary flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-accent-primary"></div>
+                  </div>
+                  
+                  <div className="group professional-card p-5 sm:p-6 md:p-7 rounded-xl hover-lift relative">
+                    <div className="absolute top-4 right-4 z-10 hidden sm:block">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-primary/10 text-accent-primary text-xs sm:text-sm font-semibold whitespace-nowrap">
+                        {work.period}
+                      </span>
+                    </div>
+                    
+                    <div className="sm:pr-24 md:pr-32 lg:pr-36">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between sm:gap-4 mb-2">
+                        <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-text-primary group-hover:text-accent-primary transition-colors duration-300 break-words flex-1">
+                          {work.position}
+                        </h4>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-primary/10 text-accent-primary text-xs font-semibold whitespace-nowrap w-fit sm:hidden mb-2">
+                          {work.period}
+                        </span>
+                      </div>
+                      <p className="text-accent-primary font-semibold text-base sm:text-lg mb-4 break-words">
+                        {work.company}
+                      </p>
+                      
+                      {work.responsibilities && (
+                        <ul className="space-y-2">
+                          {work.responsibilities.map((resp, respIndex) => (
+                            <li key={respIndex} className="flex items-start gap-3">
+                              <span className="text-accent-primary flex-shrink-0">▸</span>
+                              <span className="text-text-secondary leading-relaxed text-sm sm:text-base break-words">
+                                {resp}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Certifications Section */}
+          <div className="space-y-6 mt-12 sm:mt-16">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-lg bg-accent-primary/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-6 h-6 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-text-primary">Certifications</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {certifications.map((cert, index) => (
+                <div
+                  key={index}
+                  className={`group professional-card p-5 sm:p-6 rounded-xl hover-lift transition-all duration-500 ${
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: `${300 + (education.length + workExperience.length + index) * 100}ms` }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-12 h-12 rounded-lg bg-accent-primary/10 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-6 h-6 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      </svg>
+                    </div>
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-background-secondary text-text-muted text-xs font-mono">
+                      {cert.period}
+                    </span>
+                  </div>
+                  
+                  <h4 className="text-lg sm:text-xl font-bold text-text-primary mb-2 group-hover:text-accent-primary transition-colors duration-300 break-words">
+                    {cert.title}
+                  </h4>
+                  
+                  {cert.level && (
+                    <p className="text-accent-primary font-semibold text-sm sm:text-base mb-3 break-words">
+                      {cert.level}
+                    </p>
+                  )}
+                  
+                  <p className="text-text-secondary leading-relaxed text-sm sm:text-base break-words">
+                    {cert.description}
                   </p>
                 </div>
-              </div>
-            </div>
-
-            {/* Content Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-              {/* Experience Card */}
-              <div 
-                className={`professional-card p-6 sm:p-7 md:p-8 rounded-xl hover-lift transition-all duration-500 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
-                style={{ transitionDelay: '200ms' }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-accent-primary/10 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg sm:text-xl font-bold text-text-primary">Professional Experience</h4>
-                </div>
-                <p className="text-sm sm:text-base leading-relaxed text-text-secondary">
-                  Currently working as a <span className="text-accent-primary font-semibold">Web Developer</span> at{' '}
-                  <span className="text-accent-primary font-semibold">Syd Solution Tech</span>, I'm dedicated to building innovative technology solutions that empower businesses in the digital age.
-                </p>
-              </div>
-
-              {/* Education Card */}
-              <div 
-                className={`professional-card p-6 sm:p-7 md:p-8 rounded-xl hover-lift transition-all duration-500 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
-                style={{ transitionDelay: '300ms' }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-lg bg-accent-primary/10 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  <h4 className="text-lg sm:text-xl font-bold text-text-primary">Education</h4>
-                </div>
-                <p className="text-sm sm:text-base leading-relaxed text-text-secondary">
-                  I graduated from <span className="text-accent-primary font-semibold">Camarines Sur Polytechnic Colleges</span> with a{' '}
-                  <span className="text-accent-primary font-semibold">Bachelor of Science in Computer Science</span>, where I developed a strong foundation in software engineering and programming principles.
-                </p>
-              </div>
-            </div>
-
-            {/* Philosophy/Approach Card */}
-            <div 
-              className={`professional-card p-6 sm:p-8 md:p-10 rounded-xl hover-lift transition-all duration-500 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-              style={{ transitionDelay: '400ms' }}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-accent-primary/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
-                </div>
-                <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-text-primary">My Approach</h4>
-              </div>
-              <p className="text-sm sm:text-base md:text-lg leading-relaxed text-text-secondary">
-                With a strong foundation in software engineering and data analysis, I bring a unique perspective to web development, combining technical expertise with creative problem-solving to deliver exceptional user experiences. I'm always eager to learn new technologies and take on challenging projects that push the boundaries of what's possible.
-              </p>
+              ))}
             </div>
           </div>
         </div>
