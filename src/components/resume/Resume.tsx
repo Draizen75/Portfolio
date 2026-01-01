@@ -26,7 +26,7 @@ interface CertificationItem {
   description: string;
 }
 
-const Resume = (): React.JSX.Element => {
+export default function Resume() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -307,5 +307,3 @@ const Resume = (): React.JSX.Element => {
     </section>
   );
 };
-
-export default Resume;

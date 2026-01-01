@@ -27,7 +27,7 @@ interface CertificationItem {
   description: string;
 }
 
-const About = (): React.JSX.Element => {
+export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -299,8 +299,3 @@ const About = (): React.JSX.Element => {
     </section>
   );
 };
-
-export default About;
-
-
-

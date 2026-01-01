@@ -17,7 +17,7 @@ interface NavigationProps {
   onSectionClick: (sectionId: string) => void;
 }
 
-const Navigation = ({ activeSection, isScrolled, onSectionClick }: NavigationProps): React.JSX.Element => {
+export default function Navigation({ activeSection, isScrolled, onSectionClick }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const { theme, toggleTheme } = useTheme();
 
@@ -213,7 +213,3 @@ const Navigation = ({ activeSection, isScrolled, onSectionClick }: NavigationPro
     </nav>
   );
 };
-
-export default Navigation;
-
-

@@ -16,7 +16,7 @@ import { scrollToSection } from './utils/scrollUtils';
  * Orchestrates all portfolio sections and handles global navigation.
  * Uses custom hooks for scroll detection and utility functions for navigation.
  */
-function App(): React.JSX.Element {
+export default function App() {
   const sections: string[] = ['home', 'about', 'skills', 'projects', 'contact'];
   const { activeSection, isScrolled } = useScrollDetection(sections);
 
@@ -48,5 +48,3 @@ function App(): React.JSX.Element {
     </ThemeProvider>
   );
 }
-
-export default App;

@@ -12,7 +12,7 @@ interface HeroProps {
   onSectionClick: (sectionId: string) => void;
 }
 
-const Hero = ({ onSectionClick }: HeroProps): React.JSX.Element => {
+export default function Hero ({ onSectionClick }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const hasScrolledPastRef = useRef(false);
@@ -123,5 +123,3 @@ const Hero = ({ onSectionClick }: HeroProps): React.JSX.Element => {
     </section>
   );
 };
-
-export default Hero;

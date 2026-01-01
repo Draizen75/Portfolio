@@ -19,7 +19,7 @@ interface Project {
   imageFolder?: string; // Folder name to automatically load images from
 }
 
-const Projects = (): React.JSX.Element => {
+export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -221,7 +221,7 @@ const Projects = (): React.JSX.Element => {
    * @param project - The project data object
    * @param index - The index of the project (used for alternating layout)
    */
-  const renderProjectCard = (project: Project, index: number): React.JSX.Element => {
+  const renderProjectCard = (project: Project, index: number) => {
     const isReverse: boolean = index % 2 === 1;
     const projectImages = getAllProjectImages(project);
     const firstImage = projectImages.length > 0 ? projectImages[0] : null;
@@ -606,5 +606,3 @@ const Projects = (): React.JSX.Element => {
     </section>
   );
 };
-
-export default Projects;

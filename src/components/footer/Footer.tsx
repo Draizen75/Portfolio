@@ -3,7 +3,7 @@
  * 
  * Displays footer information with copyright notice.
  */
-const Footer = (): React.JSX.Element => {
+export default function Footer() {
   /**
    * Gets the current year dynamically
    */
@@ -26,5 +26,3 @@ const Footer = (): React.JSX.Element => {
     </footer>
   );
 };
-
-export default Footer;

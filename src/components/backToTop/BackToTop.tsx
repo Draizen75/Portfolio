@@ -7,7 +7,7 @@
 
 import { useState, useEffect } from 'react';
 
-const BackToTop = (): React.JSX.Element => {
+export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -66,6 +66,3 @@ const BackToTop = (): React.JSX.Element => {
     </>
   );
 };
-
-export default BackToTop;
-

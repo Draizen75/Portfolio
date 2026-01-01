@@ -28,7 +28,7 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-export const ThemeProvider = ({ children }: ThemeProviderProps): React.JSX.Element => {
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(() => {
     // Check localStorage first, then system preference
     const storedTheme = localStorage.getItem('theme') as Theme | null;

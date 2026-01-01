@@ -6,7 +6,7 @@
 
 import { useTheme } from '../../contexts/ThemeContext';
 
-const ThemeToggle = (): React.JSX.Element => {
+export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -49,6 +49,3 @@ const ThemeToggle = (): React.JSX.Element => {
     </button>
   );
 };
-
-export default ThemeToggle;
-

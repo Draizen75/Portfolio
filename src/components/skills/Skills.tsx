@@ -64,7 +64,7 @@ const getSkillIcon = (skillName: string): SimpleIcon | null => {
   return skillMap[skillName] || skillMap[skillName.toLowerCase()] || null;
 };
 
-const Skills = (): React.JSX.Element => {
+export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -199,7 +199,3 @@ const Skills = (): React.JSX.Element => {
     </section>
   );
 };
-
-export default Skills;
-
-

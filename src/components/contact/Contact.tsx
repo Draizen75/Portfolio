@@ -7,7 +7,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-export default function Contact(): React.JSX.Element {
+export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const emailAddress: string = 'draizenllaban@gmail.com';
