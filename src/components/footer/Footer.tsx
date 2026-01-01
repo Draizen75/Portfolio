@@ -12,13 +12,13 @@ const Footer = (): React.JSX.Element => {
   };
 
   return (
-    <footer className="bg-background-secondary py-6 sm:py-8 text-center border-t border-border-default">
+    <footer className="bg-accent-primary py-6 sm:py-8 text-center border-t-2 border-accent-secondary shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-1px_rgba(0,0,0,0.06)]">
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-          <p className="text-text-muted text-xs sm:text-sm md:text-base">
-            Designed & Built by <span className="text-accent-primary font-semibold">Lloyd Draizen L. Martirez</span>
+        <div className="flex flex-col items-center justify-center gap-3 sm:gap-4">
+          <p className="text-white/90 text-xs sm:text-sm md:text-base">
+            Designed & Built by <span className="text-white font-semibold">Lloyd Draizen L. Martirez</span>
           </p>
-          <p className="text-accent-primary text-xs sm:text-sm md:text-base font-mono">
+          <p className="text-white/90 text-xs sm:text-sm md:text-base font-mono">
             © {getCurrentYear()} All Rights Reserved
           </p>
         </div>

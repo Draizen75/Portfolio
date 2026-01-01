@@ -78,6 +78,23 @@
     background-color: rgba(59, 130, 246, 0.2);
     color: #1e293b;
   }
+
+  /* Scroll offset for fixed navigation - ensures section titles are visible */
+  section[id] {
+    scroll-margin-top: 60px;
+  }
+
+  @media (min-width: 640px) {
+    section[id] {
+      scroll-margin-top: 0px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    section[id] {
+      scroll-margin-top: 10px;
+    }
+  }
 }
 
 @layer utilities {
@@ -140,36 +157,31 @@
     animation: scroll 2s infinite;
   }
 
-  /* Professional card effect - White theme */
+  /* Professional card effect - Clean and consistent */
   .professional-card {
     background: #ffffff;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    transition: all 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   }
 
   .professional-card:hover {
-    border-color: rgba(59, 130, 246, 0.5);
-    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+    border-color: #cbd5e1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
 
-  /* Professional gradient text */
+  /* Professional accent text - solid color instead of gradient for consistency */
   .gradient-text {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #2563eb;
   }
 
-  /* Subtle hover effect */
+  /* Subtle hover effect - more refined */
   .hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   }
 }

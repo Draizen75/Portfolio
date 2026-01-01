@@ -5,14 +5,18 @@
  */
 
 /**
- * Scrolls smoothly to a target section element
+ * Scrolls smoothly to a target section element with offset for fixed navigation
  * 
  * @param sectionId - The ID of the section to scroll to
  */
 export const scrollToSection = (sectionId: string): void => {
   const element: HTMLElement | null = document.getElementById(sectionId);
   if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
+    // Use scrollIntoView with block start - CSS scroll-margin-top will handle the offset
+    element.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
   }
 };
 

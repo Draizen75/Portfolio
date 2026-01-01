@@ -4,14 +4,19 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate:images": "node scripts/generateImageMap.js",
+    "predev": "npm run generate:images",
     "dev": "vite",
+    "prebuild": "npm run generate:images",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "devicons-react": "^1.5.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "simple-icons": "^16.3.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
