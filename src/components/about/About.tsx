@@ -42,7 +42,7 @@ export default function About() {
   const workExperience: WorkItem[] = [
     {
       position: 'Web Developer',
-      period: '2024 - Present',
+      period: 'October 2025 - Present',
       company: 'Syd Solution Tech',
       responsibilities: [
         'Developed responsive and interactive web applications using modern frontend technologies',

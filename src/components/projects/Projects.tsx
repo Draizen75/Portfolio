@@ -385,7 +385,7 @@ export default function Projects() {
                         <img 
                           src={image} 
                           alt={`${selectedProject.title} - Image ${index + 1}`}
-                          className="w-full h-full object-contain"
+                          className="w-full h-full object-cover"
                         />
                       </div>
                     ))}

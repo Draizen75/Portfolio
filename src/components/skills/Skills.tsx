@@ -49,6 +49,7 @@ const getSkillIcon = (skillName: string): SimpleIcon | null => {
     'NPM': Icons.siNpm,
     'ESLint': Icons.siEslint,
     'Docker': Icons.siDocker,
+    'Vite': Icons.siVite,
     
     // Deployment & Hosting
     'Vercel': Icons.siVercel,
@@ -92,6 +93,7 @@ export default function Skills() {
     'Docker',
     'ESLint',
     'Figma',
+    'Vite',
   ];
 
   useEffect(() => {
@@ -162,10 +164,10 @@ export default function Skills() {
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                             className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 transition-all duration-300 relative z-10"
-                            fill={`#${iconData.hex}`}
+                            style={{ fill: `#${iconData.hex}` }}
                           >
                             <title>{iconData.title}</title>
-                            <path d={iconData.path} />
+                            <path d={iconData.path} fill={`#${iconData.hex}`} />
                           </svg>
                           {/* Glow effect on hover */}
                           <svg
@@ -173,9 +175,9 @@ export default function Skills() {
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                             className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 absolute inset-0 opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300"
-                            fill="#3b82f6"
+                            style={{ fill: `#${iconData.hex}` }}
                           >
-                            <path d={iconData.path} />
+                            <path d={iconData.path} fill={`#${iconData.hex}`} />
                           </svg>
                         </div>
                       ) : (

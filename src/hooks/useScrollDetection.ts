@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getActiveSection } from '../utils/scrollUtils';
+import { getActiveSection, isProgrammaticScroll } from '../utils/scrollUtils';
 
 /**
  * Custom hook for detecting scroll position and active section
@@ -12,26 +12,39 @@ export const useScrollDetection = (sections: string[]) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    
     /**
      * Handles scroll events to update active section and scroll state
      */
     const handleScroll = (): void => {
       setIsScrolled(window.scrollY > 50);
-      const active: string = getActiveSection(sections);
-      if (active) {
-        setActiveSection(active);
+      
+      // Don't update active section during programmatic scrolling
+      if (isProgrammaticScroll()) {
+        return;
       }
+      
+      // Debounce the active section update
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        const active: string = getActiveSection(sections);
+        if (active) {
+          setActiveSection(active);
+        }
+      }, 100);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     // Set initial state
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      clearTimeout(scrollTimeout);
     };
   }, [sections]);
 
-  return { activeSection, isScrolled };
+  return { activeSection, isScrolled, setActiveSection };
 };
 

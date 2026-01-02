@@ -18,7 +18,7 @@ import { scrollToSection } from './utils/scrollUtils';
  */
 export default function App() {
   const sections: string[] = ['home', 'about', 'skills', 'projects', 'contact'];
-  const { activeSection, isScrolled } = useScrollDetection(sections);
+  const { activeSection, isScrolled, setActiveSection } = useScrollDetection(sections);
 
   /**
    * Handles section navigation clicks
@@ -26,6 +26,8 @@ export default function App() {
    * @param sectionId - The ID of the section to navigate to
    */
   const handleSectionClick = (sectionId: string): void => {
+    // Immediately set the active section when clicking navigation
+    setActiveSection(sectionId);
     scrollToSection(sectionId);
   };
 
