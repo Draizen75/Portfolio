@@ -12,7 +12,7 @@ export const useScrollDetection = (sections: string[]) => {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
+    let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
     
     /**
      * Handles scroll events to update active section and scroll state
@@ -26,7 +26,9 @@ export const useScrollDetection = (sections: string[]) => {
       }
       
       // Debounce the active section update
-      clearTimeout(scrollTimeout);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
       scrollTimeout = setTimeout(() => {
         const active: string = getActiveSection(sections);
         if (active) {
@@ -41,10 +43,11 @@ export const useScrollDetection = (sections: string[]) => {
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      clearTimeout(scrollTimeout);
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
     };
   }, [sections]);
 
   return { activeSection, isScrolled, setActiveSection };
 };
-
