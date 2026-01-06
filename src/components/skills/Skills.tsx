@@ -7,6 +7,7 @@
 import { useState, useEffect, useRef } from 'react';
 import * as Icons from 'simple-icons';
 import type { SimpleIcon } from 'simple-icons';
+import { useTypingEffect } from '../../hooks/useTypingEffect';
 
 /**
  * Maps skill names to Simple Icons
@@ -68,6 +69,10 @@ const getSkillIcon = (skillName: string): SimpleIcon | null => {
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  
+  // Typing effect for skill categories
+  const skillCategories = ['Frontend Developer', 'Backend Developer', 'Full Stack Developer', 'Data Analyst'];
+  const typedCategory = useTypingEffect(skillCategories, 100, 50, 2000);
 
   // All skills in a single flat list
   const skills: string[] = [
@@ -126,11 +131,19 @@ export default function Skills() {
       className="bg-background-primary dark:bg-gray-900 py-8 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden"
     >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-8 sm:mb-12 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary dark:text-white break-words">
-            Skills
-          </h2>
-          <div className="flex-1 h-px bg-border-default dark:bg-gray-700"></div>
+        <div className="mb-10 sm:mb-14 md:mb-20">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary dark:text-white break-words tracking-tight">
+              Skills
+            </h2>
+            <div className="flex-1 h-px bg-border-default dark:bg-gray-700"></div>
+          </div>
+          <div className="text-center sm:text-left">
+            <p className="text-base sm:text-lg md:text-xl text-text-secondary dark:text-gray-300 font-medium">
+              <span>{typedCategory}</span>
+              <span className="inline-block w-[2px] h-[1em] bg-accent-primary ml-1.5 animate-[blink_0.3s_infinite]"></span>
+            </p>
+          </div>
         </div>
         
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 gap-6 sm:gap-8 md:gap-10">
@@ -149,7 +162,7 @@ export default function Skills() {
                 }}
               >
                 {/* Card Container with Hover Effects */}
-                <div className="group relative w-full p-4 sm:p-5 md:p-6 rounded-xl bg-background-secondary/50 dark:bg-gray-800/50 border border-border-default/50 dark:border-gray-700/50 hover:border-accent-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-accent-primary/20 dark:hover:shadow-gray-900/50 hover:-translate-y-1 cursor-pointer">
+                <div className="group relative w-full p-4 sm:p-5 md:p-6 rounded-xl bg-background-secondary/50 dark:bg-gray-800/50 border border-border-default/50 dark:border-gray-700/50 hover:border-accent-primary/50 transition-all duration-400 hover:shadow-premium hover:shadow-accent-primary/20 dark:hover:shadow-gray-900/50 hover:-translate-y-2 cursor-pointer backdrop-blur-sm">
                   {/* Light/Glow effect on hover */}
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-accent-primary/0 via-accent-primary/0 to-accent-primary/0 group-hover:from-accent-primary/5 group-hover:via-accent-primary/10 group-hover:to-accent-primary/5 transition-all duration-300 pointer-events-none"></div>
                   

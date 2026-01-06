@@ -17,7 +17,7 @@
     line-height: 1.6;
     font-weight: 400;
     color-scheme: light dark;
-    color: #1e293b;
+    color: #0f172a;
     background-color: #ffffff;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -26,7 +26,8 @@
     -webkit-tap-highlight-color: transparent;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: -0.01em;
   }
 
   .dark body {
@@ -64,25 +65,14 @@
     @apply w-full min-h-screen;
   }
 
-  ::-webkit-scrollbar {
-    @apply w-2.5;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-background-secondary;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-accent-primary rounded-[5px];
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-accent-hover;
-  }
-
   ::selection {
-    background-color: rgba(59, 130, 246, 0.2);
-    color: #1e293b;
+    background-color: rgba(59, 130, 246, 0.25);
+    color: #0f172a;
+  }
+
+  .dark ::selection {
+    background-color: rgba(59, 130, 246, 0.4);
+    color: #f1f5f9;
   }
 
   /* Scroll offset for fixed navigation - ensures section titles are visible */
@@ -147,6 +137,15 @@
     }
   }
 
+  @keyframes blink {
+    0%, 50% {
+      opacity: 1;
+    }
+    51%, 100% {
+      opacity: 0;
+    }
+  }
+
   .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out;
   }
@@ -163,42 +162,72 @@
     animation: scroll 2s infinite;
   }
 
-  /* Professional card effect - Clean and consistent */
+  /* Premium card effect - Enhanced shadows and transitions */
   .professional-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
   }
 
   .dark .professional-card {
     background: #1e293b;
     border-color: #334155;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
   }
 
   .professional-card:hover {
     border-color: #cbd5e1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
   }
 
   .dark .professional-card:hover {
     border-color: #475569;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 4px 10px rgba(0, 0, 0, 0.3);
   }
 
-  /* Professional accent text - solid color instead of gradient for consistency */
+  /* Premium accent text with subtle gradient */
   .gradient-text {
-    color: #2563eb;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
   }
 
-  /* Subtle hover effect - more refined */
+  .dark .gradient-text {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Premium hover effect with smooth transitions */
   .hover-lift {
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .dark .hover-lift:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Premium text styles */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+
+  p {
+    letter-spacing: -0.01em;
+    line-height: 1.7;
   }
 }

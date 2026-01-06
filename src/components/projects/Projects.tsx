@@ -258,12 +258,13 @@ export default function Projects() {
             <a
               href={project.liveUrl}
               onClick={(e) => e.stopPropagation()}
-              className="p-3 sm:p-4 md:p-5 bg-accent-primary text-white rounded-lg transition-all duration-200 active:bg-accent-hover hover:bg-accent-hover hover-lift touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center shadow-sm"
+              className="group/btn p-3 sm:p-4 md:p-5 bg-accent-primary text-white rounded-xl transition-all duration-300 active:bg-accent-hover hover:bg-accent-hover hover-lift touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center shadow-accent relative overflow-hidden"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View ${project.title} live`}
             >
-              <svg width="20" height="20" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></span>
+              <svg width="20" height="20" className="sm:w-6 sm:h-6 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                 <polyline points="15 3 21 3 21 9"></polyline>
                 <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -272,12 +273,13 @@ export default function Projects() {
             <a
               href={project.githubUrl}
               onClick={(e) => e.stopPropagation()}
-              className="p-3 sm:p-4 md:p-5 bg-accent-primary text-white rounded-lg transition-all duration-200 active:bg-accent-hover hover:bg-accent-hover hover-lift touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center shadow-sm"
+              className="group/btn p-3 sm:p-4 md:p-5 bg-accent-primary text-white rounded-xl transition-all duration-300 active:bg-accent-hover hover:bg-accent-hover hover-lift touch-manipulation min-w-[44px] min-h-[44px] flex items-center justify-center shadow-accent relative overflow-hidden"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View ${project.title} on GitHub`}
             >
-              <svg width="20" height="20" className="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></span>
+              <svg width="20" height="20" className="sm:w-6 sm:h-6 relative z-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
               </svg>
             </a>
@@ -294,7 +296,7 @@ export default function Projects() {
             <div className="flex-1 h-px bg-border-default dark:bg-gray-700"></div>
           </div>
           
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-text-primary dark:text-white group-hover:text-accent-primary transition-colors duration-300 break-words">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-text-primary dark:text-white group-hover:text-accent-primary transition-colors duration-300 break-words tracking-tight">
             {project.title}
           </h3>
           
@@ -326,11 +328,11 @@ export default function Projects() {
       className="bg-background-secondary dark:bg-gray-800 py-8 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden"
     >
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-8 sm:mb-12 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-text-primary dark:text-white break-words">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-10 sm:mb-14 md:mb-20">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary dark:text-white break-words tracking-tight">
             My Projects
           </h2>
-          <div className="flex-1 h-px bg-border-default"></div>
+          <div className="flex-1 h-px bg-border-default dark:bg-gray-700"></div>
         </div>
         
         <div className="flex flex-col gap-8 sm:gap-12 md:gap-16 lg:gap-20">
@@ -452,7 +454,7 @@ export default function Projects() {
               )}
 
               {/* Project Title */}
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-text-primary dark:text-white mb-4 break-words">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-text-primary dark:text-white mb-4 break-words tracking-tight">
                 {selectedProject.title}
               </h3>
 
@@ -485,12 +487,13 @@ export default function Projects() {
                     href={selectedProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-accent-primary text-white rounded-lg font-semibold transition-all duration-200 hover:bg-accent-hover hover-lift shadow-lg"
+                    className="group/btn flex items-center justify-center gap-3 px-8 py-4 bg-accent-primary text-white rounded-xl font-semibold transition-all duration-300 hover:bg-accent-hover hover-lift shadow-accent-lg relative overflow-hidden"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700"></span>
+                    <svg className="w-5 h-5 relative z-10 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
-                    <span>Visit Live Site</span>
+                    <span className="relative z-10">Visit Live Site</span>
                   </a>
                 )}
                 {selectedProject.githubUrl && selectedProject.githubUrl !== '#' && (
@@ -498,10 +501,10 @@ export default function Projects() {
                     href={selectedProject.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 px-6 py-3 bg-background-secondary dark:bg-gray-700 text-text-primary dark:text-white rounded-lg font-semibold border border-border-default dark:border-gray-600 transition-all duration-200 hover:bg-background-tertiary dark:hover:bg-gray-600 hover-lift"
+                    className="group/btn flex items-center justify-center gap-3 px-8 py-4 bg-background-secondary dark:bg-gray-700 text-text-primary dark:text-white rounded-xl font-semibold border border-border-default dark:border-gray-600 transition-all duration-300 hover:bg-background-tertiary dark:hover:bg-gray-600 hover:border-accent-primary/50 hover-lift"
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    <svg className="w-5 h-5 transition-transform group-hover/btn:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                     </svg>
                     <span>View Code</span>
                   </a>

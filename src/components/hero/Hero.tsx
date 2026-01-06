@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTypingEffect } from '../../hooks/useTypingEffect';
 
 /**
  * Hero Component
@@ -16,6 +17,10 @@ export default function Hero ({ onSectionClick }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
   const hasScrolledPastRef = useRef(false);
+  
+  // Typing effect for the subtitle
+  const roles = ['Web Developer', 'Data Analyst', 'Software Engineer'];
+  const typedText = useTypingEffect(roles, 100, 50, 2000);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -69,40 +74,42 @@ export default function Hero ({ onSectionClick }: HeroProps) {
       </div>
 
       <div className="max-w-[1200px] w-full flex flex-col items-center justify-center text-center relative z-10 my-auto">
-        <div className="animate-fade-in-up space-y-4 sm:space-y-5 md:space-y-6 w-full max-w-[800px]">
-          <p className="text-text-secondary dark:text-gray-300 text-base sm:text-base md:text-lg font-mono tracking-wider mb-2 sm:mb-3 md:mb-4">
+        <div className="animate-fade-in-up space-y-5 sm:space-y-6 md:space-y-8 w-full max-w-[800px]">
+          <p className="text-text-secondary dark:text-gray-300 text-lg md:text-base font-medium tracking-wide mb-3 sm:mb-4 md:mb-6 opacity-90">
             Hi, I'm
           </p>
           
-          <h1 className="text-5xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] sm:leading-tight break-words">
-            <span className="block text-text-primary dark:text-gray-100 mb-1 sm:mb-2">Lloyd Draizen</span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-[1.05] sm:leading-tight break-words tracking-tight">
+            <span className="block text-text-primary dark:text-gray-50 mb-2 sm:mb-3">Lloyd Draizen</span>
             <span className="block gradient-text">Martirez</span>
           </h1>
           
-          <h2 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-text-secondary dark:text-gray-300 leading-tight break-words mt-2 sm:mt-3">
-            Web Developer & Data Analyst
+          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-text-secondary dark:text-gray-200 leading-tight break-words mt-3 sm:mt-4 tracking-tight min-h-[1.5em] flex items-center justify-center">
+            <span>{typedText}</span>
+            <span className="inline-block w-[2px] h-[1em] bg-accent-primary ml-1.5 animate-[blink_0.3s_infinite]"></span>
           </h2>
           
-          <p className="text-base sm:text-base md:text-lg lg:text-xl leading-relaxed text-text-muted dark:text-gray-400 max-w-[600px] mx-auto break-words px-2 sm:px-4 md:px-0 mt-4 sm:mt-5 md:mt-6">
+          <p className="text-md sm:text-sm md:text-base lg:text-lg leading-relaxed text-text-muted dark:text-gray-300 max-w-[650px] mx-auto break-words px-2 sm:px-4 md:px-0 mt-6 sm:mt-8 md:mt-10 font-light">
             I'm a passionate web developer with expertise in creating modern and responsive websites. 
             I love turning complex problems into simple, beautiful, and intuitive solutions.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 w-full sm:w-auto justify-center pt-16 sm:pt-6 md:pt-8">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 md:gap-6 w-full sm:w-auto justify-center">
             <button 
-              className="w-full sm:w-auto px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 bg-accent-primary text-white text-base sm:text-base md:text-lg font-semibold rounded-lg transition-all duration-300 active:bg-accent-hover hover:bg-accent-hover hover-lift shadow-lg shadow-accent-primary/20 touch-manipulation min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
+              className="group w-full sm:w-auto px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 bg-accent-primary text-white text-xs sm:text-sm md:text-base font-semibold rounded-xl transition-all duration-300 active:bg-accent-hover hover:bg-accent-hover hover-lift shadow-accent-lg touch-manipulation min-h-[48px] sm:min-h-[52px] flex items-center justify-center relative overflow-hidden"
               onClick={handleContactClick}
             >
-              <span className="flex items-center justify-center gap-2">
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></span>
+              <span className="relative flex items-center justify-center gap-2">
                 Get in Touch
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
             </button>
             
             <button 
-              className="w-full sm:w-auto px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 border-2 border-border-default dark:border-gray-600 bg-transparent text-text-primary dark:text-gray-100 text-base sm:text-base md:text-lg font-semibold rounded-lg transition-all duration-300 active:border-accent-primary active:text-accent-primary hover:border-accent-primary hover:text-accent-primary hover-lift touch-manipulation min-h-[48px] sm:min-h-[52px] flex items-center justify-center"
+              className="group w-full sm:w-auto px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 border-2 border-border-default dark:border-gray-600 bg-transparent text-text-primary dark:text-gray-50 text-xs sm:text-sm md:text-base font-semibold rounded-xl transition-all duration-300 active:border-accent-primary active:text-accent-primary hover:border-accent-primary hover:text-accent-primary hover:bg-accent-primary/5 hover-lift touch-manipulation min-h-[48px] sm:min-h-[52px] flex items-center justify-center backdrop-blur-sm"
               onClick={handleViewWorkClick}
             >
               View My Work
