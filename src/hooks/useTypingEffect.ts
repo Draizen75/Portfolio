@@ -55,3 +55,4 @@ export function useTypingEffect(
   return currentText;
 }
 
+

@@ -1,13 +1,14 @@
 /**
  * Skills Component
- * 
- * Displays technologies in a grid layout with logos and labels.
+ * * Displays technologies in a grid layout with logos and labels.
+ * Updated to use GridPattern background and consistent spacing.
  */
 
 import { useState, useEffect, useRef } from 'react';
 import * as Icons from 'simple-icons';
 import type { SimpleIcon } from 'simple-icons';
 import { useTypingEffect } from '../../hooks/useTypingEffect';
+import GridPattern from '../common/GridPattern';
 
 /**
  * Maps skill names to Simple Icons
@@ -18,7 +19,7 @@ const getSkillIcon = (skillName: string): SimpleIcon | null => {
     'Python': Icons.siPython,
     'JavaScript': Icons.siJavascript,
     'TypeScript': Icons.siTypescript,
-    'Java': null, // Java icon not available
+    'Java': null, // Java icon not available in this specific import set
     'Godot Script': Icons.siGodotengine,
     'Godot': Icons.siGodotengine,
     'HTML': Icons.siHtml5,
@@ -59,8 +60,8 @@ const getSkillIcon = (skillName: string): SimpleIcon | null => {
     'Figma': Icons.siFigma,
     
     // Other
-    'Visual Studio Code': null, // Icon not available
-    'Microsoft Office': null, // Icon not available
+    'Visual Studio Code': null,
+    'Microsoft Office': null,
   };
 
   return skillMap[skillName] || skillMap[skillName.toLowerCase()] || null;
@@ -107,6 +108,7 @@ export default function Skills() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            observer.disconnect(); // Only trigger once
           }
         });
       },
@@ -128,25 +130,23 @@ export default function Skills() {
     <section 
       ref={sectionRef}
       id="skills" 
-      className="bg-background-primary dark:bg-gray-900 py-8 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden"
+      className="relative py-16 md:py-32 overflow-hidden bg-white dark:bg-black"
     >
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 relative z-10">
-        <div className="mb-10 sm:mb-14 md:mb-20">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-text-primary dark:text-white break-words tracking-tight">
-              Skills
-            </h2>
-            <div className="flex-1 h-px bg-border-default dark:bg-gray-700"></div>
-          </div>
-          <div className="text-center sm:text-left">
-            <p className="text-base sm:text-lg md:text-xl text-text-secondary dark:text-gray-300 font-medium">
-              <span>{typedCategory}</span>
-              <span className="inline-block w-[2px] h-[1em] bg-accent-primary ml-1.5 animate-[blink_0.3s_infinite]"></span>
-            </p>
-          </div>
+      {/* --- BACKGROUND START --- */}
+      <GridPattern />
+      {/* --- BACKGROUND END --- */}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">
+            My Technical Skills
+          </h1>
+          <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-400">
+             Building with modern tools as a <span className="font-semibold text-gray-900 dark:text-white">{typedCategory}</span>
+          </p>
         </div>
         
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-6 gap-6 sm:gap-8 md:gap-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8">
           {skills.map((skill, index) => {
             const iconData = getSkillIcon(skill);
             const hasIcon = iconData !== null;
@@ -161,47 +161,50 @@ export default function Skills() {
                   transitionDelay: `${index * 50}ms`
                 }}
               >
-                {/* Card Container with Hover Effects */}
-                <div className="group relative w-full p-4 sm:p-5 md:p-6 rounded-xl bg-background-secondary/50 dark:bg-gray-800/50 border border-border-default/50 dark:border-gray-700/50 hover:border-accent-primary/50 transition-all duration-400 hover:shadow-premium hover:shadow-accent-primary/20 dark:hover:shadow-gray-900/50 hover:-translate-y-2 cursor-pointer backdrop-blur-sm">
-                  {/* Light/Glow effect on hover */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-accent-primary/0 via-accent-primary/0 to-accent-primary/0 group-hover:from-accent-primary/5 group-hover:via-accent-primary/10 group-hover:to-accent-primary/5 transition-all duration-300 pointer-events-none"></div>
+                {/* Card Container with Hover Effects - Updated to match Glass theme */}
+                <div className="group relative w-full p-6 rounded-2xl border border-gray-200/60 dark:border-gray-800/60 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm hover:border-gray-300 dark:hover:border-gray-700 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:-translate-y-1 cursor-pointer shadow-sm hover:shadow-md">
                   
                   {/* Content */}
                   <div className="relative z-10 flex flex-col items-center justify-center">
                     {/* Icon */}
-                    <div className="mb-3 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                    <div className="mb-4 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                       {hasIcon && iconData ? (
                         <div className="relative">
+                          {/* Main Icon */}
                           <svg
                             role="img"
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 transition-all duration-300 relative z-10"
+                            className="w-10 h-10 sm:w-12 sm:h-12 md:w-12 md:h-12 transition-all duration-300 relative z-10"
                             style={{ fill: `#${iconData.hex}` }}
                           >
                             <title>{iconData.title}</title>
-                            <path d={iconData.path} fill={`#${iconData.hex}`} />
+                            <path d={iconData.path} />
                           </svg>
+                          
                           {/* Glow effect on hover */}
                           <svg
                             role="img"
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
-                            className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 absolute inset-0 opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300"
+                            className="w-10 h-10 sm:w-12 sm:h-12 md:w-12 md:h-12 absolute inset-0 opacity-0 group-hover:opacity-40 blur-md transition-opacity duration-300"
                             style={{ fill: `#${iconData.hex}` }}
                           >
-                            <path d={iconData.path} fill={`#${iconData.hex}`} />
+                            <path d={iconData.path} />
                           </svg>
                         </div>
                       ) : (
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-background-tertiary rounded flex items-center justify-center group-hover:bg-accent-primary/10 transition-colors duration-300">
-                          <span className="text-xs sm:text-sm text-text-secondary dark:text-gray-200 font-medium group-hover:text-accent-primary transition-colors duration-300">{skill}</span>
+                        // Fallback for missing icons
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors duration-300">
+                          <span className="text-xs font-bold text-gray-500 dark:text-gray-400">
+                             {skill.substring(0, 2).toUpperCase()}
+                          </span>
                         </div>
                       )}
                     </div>
                     
                     {/* Label */}
-                    <span className="text-text-primary dark:text-white text-xs sm:text-sm text-center font-normal break-words group-hover:text-accent-primary transition-colors duration-300">
+                    <span className="text-gray-900 dark:text-gray-100 text-sm font-semibold text-center break-words group-hover:text-black dark:group-hover:text-white transition-colors duration-300">
                       {skill}
                     </span>
                   </div>

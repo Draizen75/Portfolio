@@ -81,9 +81,9 @@ export default {
         '3xl': '1.5rem',
       },
       animation: {
-        'fade-in': 'fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-        'slide-up': 'slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        'fade-in': 'fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        'slide-up': 'slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        'fade-in-up': 'fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
         'scale-in': 'scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         'blink': 'blink 1s ease-in-out infinite',
       },

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getActiveSection, isProgrammaticScroll } from '../utils/scrollUtils';
 
 /**
@@ -10,6 +10,7 @@ import { getActiveSection, isProgrammaticScroll } from '../utils/scrollUtils';
 export const useScrollDetection = (sections: string[]) => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const isScrolledRef = useRef<boolean>(false);
 
   useEffect(() => {
     let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -18,7 +19,14 @@ export const useScrollDetection = (sections: string[]) => {
      * Handles scroll events to update active section and scroll state
      */
     const handleScroll = (): void => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      const shouldBeScrolled = currentScrollY > 50;
+      
+      // Only update state if the value has changed
+      if (isScrolledRef.current !== shouldBeScrolled) {
+        isScrolledRef.current = shouldBeScrolled;
+        setIsScrolled(shouldBeScrolled);
+      }
       
       // Don't update active section during programmatic scrolling
       if (isProgrammaticScroll()) {

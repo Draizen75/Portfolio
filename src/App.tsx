@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+import GridPattern from './components/common/GridPattern';
 import Navigation from './components/navigation/Navigation';
 import Hero from './components/hero/Hero';
 import About from './components/about/About';
@@ -25,27 +27,32 @@ export default function App() {
    * 
    * @param sectionId - The ID of the section to navigate to
    */
-  const handleSectionClick = (sectionId: string): void => {
+  const handleSectionClick = useCallback((sectionId: string): void => {
     // Immediately set the active section when clicking navigation
     setActiveSection(sectionId);
     scrollToSection(sectionId);
-  };
+  }, [setActiveSection]);
 
   return (
     <ThemeProvider>
-      <div className="w-full min-h-screen bg-background-primary dark:bg-gray-900 text-text-primary dark:text-gray-100 overflow-x-hidden transition-colors duration-300">
-        <Navigation
-          activeSection={activeSection}
-          isScrolled={isScrolled}
-          onSectionClick={handleSectionClick}
-        />
-        <Hero onSectionClick={handleSectionClick} />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
-        <Footer />
-        <BackToTop />
+      <div className="relative">
+        <div className="absolute inset-0 z-0">
+          <GridPattern />
+        </div>
+        <div className="relative z-10 bg-transparent">
+          <Navigation
+            activeSection={activeSection}
+            isScrolled={isScrolled}
+            onSectionClick={handleSectionClick}
+          />
+          <Hero onSectionClick={handleSectionClick} />
+          <About />
+          <Skills />
+          <Projects />
+          <Contact />
+          <Footer />
+          <BackToTop />
+        </div>
       </div>
     </ThemeProvider>
   );
