@@ -45,7 +45,7 @@ const ProjectCard = ({ project, onClick }: { project: (typeof projects)[0], onCl
   
   return (
     <div 
-      className="group relative overflow-hidden rounded-2xl border border-gray-200/60 dark:border-gray-800/60 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+      className="group relative overflow-hidden rounded-2xl border border-gray-200/60 dark:border-gray-800/60 bg-white/80 dark:bg-gray-900/80 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
       onClick={onClick}
     >
       <div className="relative h-60 overflow-hidden">
@@ -97,7 +97,7 @@ export default function Projects() {
   const currentProjectImages = selectedProject ? getProjectImages(selectedProject.imageFolder) : [];
 
   return (
-    <section id="projects" className="relative py-16 md:py-32 overflow-hidden bg-white dark:bg-black">
+    <section id="projects" className="relative py-16 md:py-32 overflow-hidden bg-gray-50 dark:bg-black">
       <GridPattern />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

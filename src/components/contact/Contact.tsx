@@ -81,7 +81,7 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative bg-white dark:bg-black py-16 md:py-28 overflow-hidden"
+      className="relative bg-gray-50 dark:bg-black py-16 md:py-28 overflow-hidden"
     >
       {/* --- BACKGROUND START --- */}
       <GridPattern />
@@ -89,7 +89,7 @@ export default function Contact() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
-          className={`transition-all duration-700 ${
+          className={`transition-all duration-500 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}
         >

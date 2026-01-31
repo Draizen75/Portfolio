@@ -18,7 +18,7 @@ export default function Hero ({ onSectionClick }: HeroProps) {
   };
 
   return (
-    <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-white dark:bg-black">
+    <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-gray-50 dark:bg-black">
       <GridPattern />
       <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tighter">

@@ -130,14 +130,14 @@ export default function Skills() {
     <section 
       ref={sectionRef}
       id="skills" 
-      className="relative py-16 md:py-32 overflow-hidden bg-white dark:bg-black"
+      className="relative py-16 md:py-32 overflow-hidden bg-gray-50 dark:bg-black"
     >
       {/* --- BACKGROUND START --- */}
       <GridPattern />
       {/* --- BACKGROUND END --- */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <div className={`text-center mb-16 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tight">
             My Technical Skills
           </h1>
@@ -161,8 +161,8 @@ export default function Skills() {
                   transitionDelay: `${index * 50}ms`
                 }}
               >
-                {/* Card Container with Hover Effects - Updated to match Glass theme */}
-                <div className="group relative w-full p-6 rounded-2xl border border-gray-200/60 dark:border-gray-800/60 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm hover:border-gray-300 dark:hover:border-gray-700 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:-translate-y-1 cursor-pointer shadow-sm hover:shadow-md">
+                {/* Card Container with Hover Effects - Optimized for performance (removed backdrop-blur) */}
+                <div className="group relative w-full p-6 rounded-2xl border border-gray-200/60 dark:border-gray-800/60 bg-white/80 dark:bg-gray-900/80 hover:border-gray-300 dark:hover:border-gray-700 hover:bg-white dark:hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1 cursor-pointer shadow-sm hover:shadow-md">
                   
                   {/* Content */}
                   <div className="relative z-10 flex flex-col items-center justify-center">

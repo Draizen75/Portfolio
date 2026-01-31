@@ -130,8 +130,8 @@ const GlassCard = ({ children, className = "", delay = 0, isVisible }: { childre
   <div
     className={`
       relative overflow-hidden rounded-2xl border border-gray-200/50 dark:border-gray-700/50 
-      bg-white/60 dark:bg-gray-900/60 backdrop-blur-md shadow-sm 
-      transition-all duration-700 ease-out group hover:shadow-lg hover:border-accent-primary/30 dark:hover:border-accent-primary/30
+      bg-white/80 dark:bg-gray-900/80 shadow-sm 
+      transition-all duration-500 ease-out group hover:shadow-lg hover:border-accent-primary/30 dark:hover:border-accent-primary/30
       ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
       ${className}
     `}
@@ -179,7 +179,7 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-16 md:py-32 overflow-hidden bg-white dark:bg-black"
+      className="relative py-16 md:py-32 overflow-hidden bg-gray-50 dark:bg-black"
     >
       {/* --- BACKGROUND START --- */}
       <GridPattern />
@@ -188,7 +188,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* --- Header & Bio --- */}
-        <div className={`text-center mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <div className={`text-center mb-20 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           <div className="inline-flex items-center justify-center p-2 mb-6 rounded-full bg-gray-100 dark:bg-gray-900/80 border border-gray-200 dark:border-gray-800 backdrop-blur-sm">
             <Icons.User className="w-4 h-4 text-accent-primary mr-2" />
             <span className="text-xs font-bold uppercase tracking-widest text-gray-500">About Me</span>
