@@ -35,8 +35,8 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <div className="relative">
-        <div className="absolute inset-0 z-0">
+      <div className="relative min-h-screen bg-[#FBFBFE] dark:bg-black transition-colors duration-300">
+        <div className="fixed inset-0 z-0">
           <GridPattern />
         </div>
         <div className="relative z-10 bg-transparent">

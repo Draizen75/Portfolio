@@ -7,7 +7,6 @@ import { useState, useEffect, useRef, type ComponentType } from 'react';
 import * as Icons from 'simple-icons';
 import type { SimpleIcon } from 'simple-icons';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import GridPattern from '../common/GridPattern';
 
 /* -------------------------------------------------------------------------- */
 /* Types                                   */
@@ -81,12 +80,8 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="relative bg-gray-50 dark:bg-black py-16 md:py-28 overflow-hidden"
+      className="relative bg-transparent pb-16 overflow-hidden"
     >
-      {/* --- BACKGROUND START --- */}
-      <GridPattern />
-      {/* --- BACKGROUND END --- */}
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
           className={`transition-all duration-500 ${

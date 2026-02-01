@@ -1,5 +1,4 @@
 import { useTypingEffect } from '../../hooks/useTypingEffect';
-import GridPattern from '../common/GridPattern';
 
 interface HeroProps {
   onSectionClick: (sectionId: string) => void;
@@ -18,29 +17,28 @@ export default function Hero ({ onSectionClick }: HeroProps) {
   };
 
   return (
-    <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-gray-50 dark:bg-black">
-      <GridPattern />
-      <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-900 dark:text-gray-100 mb-4 tracking-tighter">
+    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent pt-20">
+      <div className="relative z-10 flex flex-col items-center text-center px-6 sm:px-8 lg:px-12">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1]">
           Lloyd Draizen Martirez
         </h1>
-        <h2 className="text-xl sm:text-2xl md:text-3xl text-gray-700 dark:text-gray-300 mb-8 font-light">
-          I'm a <span className="font-medium text-gray-900 dark:text-gray-100">{typedText}</span>
+        <h2 className="text-lg sm:text-2xl md:text-3xl text-slate-600 dark:text-slate-400 mb-8 font-light min-h-[1.5em]">
+          I'm a <span className="font-semibold text-blue-600 dark:text-blue-400">{typedText}</span>
         </h2>
-        <p className="max-w-2xl text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 leading-relaxed">
+        <p className="max-w-xl text-base sm:text-lg md:text-xl text-slate-500 dark:text-slate-400 mb-12 leading-relaxed font-normal">
           I create beautiful, functional, and user-centric web experiences. 
           Let's build something amazing together.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4">
+        <div className="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
           <button
             onClick={handleContactClick}
-            className="px-6 py-3 sm:px-8 sm:py-4 bg-gray-900 text-white dark:bg-white dark:text-black rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-700 dark:hover:bg-gray-200 transition-colors duration-200"
+            className="w-full sm:w-auto px-10 py-4 bg-slate-900 text-white dark:bg-white dark:text-black rounded-full text-base font-bold hover:bg-blue-600 dark:hover:bg-blue-500 transition-all duration-300 active:scale-95 shadow-[0_10px_20px_-5px_rgba(15,23,42,0.3)] dark:shadow-none"
           >
             Get in Touch
           </button>
           <button
             onClick={handleViewWorkClick}
-            className="px-6 py-3 sm:px-8 sm:py-4 bg-transparent border-2 border-gray-900 dark:border-white text-gray-900 dark:text-white rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors duration-200"
+            className="w-full sm:w-auto px-10 py-4 bg-white dark:bg-transparent border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white rounded-full text-base font-bold hover:border-slate-900 dark:hover:border-white transition-all duration-300 active:scale-95 shadow-sm"
           >
             View My Work
           </button>

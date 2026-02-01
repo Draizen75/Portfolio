@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { getProjectImages } from '../../utils/imageUtils';
-import GridPattern from '../common/GridPattern';
 import AnimatedModal from '../ui/AnimatedModal';
 import ProjectGalleryModal from '../ProjectGalleryModal';
 
@@ -45,30 +44,30 @@ const ProjectCard = ({ project, onClick }: { project: (typeof projects)[0], onCl
   
   return (
     <div 
-      className="group relative overflow-hidden rounded-2xl border border-gray-200/60 dark:border-gray-800/60 bg-white/80 dark:bg-gray-900/80 hover:border-blue-500/50 dark:hover:border-blue-500/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+      className="group relative overflow-hidden rounded-[2.5rem] border border-blue-100/50 dark:border-slate-800/60 bg-blue-50/40 dark:bg-slate-900/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 hover:-translate-y-2 cursor-pointer"
       onClick={onClick}
     >
-      <div className="relative h-60 overflow-hidden">
+      <div className="relative h-64 sm:h-72 overflow-hidden">
         <img 
           src={imageUrl} 
           alt={project.title} 
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
 
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">{project.title}</h3>
-        <p className="mt-2 text-gray-600 dark:text-gray-400 line-clamp-2 text-sm">{project.description}</p>
-        <div className="mt-4 flex flex-wrap gap-2">
+      <div className="p-8 sm:p-10">
+        <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">{project.title}</h3>
+        <p className="mt-3 text-slate-500 dark:text-slate-400 line-clamp-2 text-sm sm:text-base leading-relaxed">{project.description}</p>
+        <div className="mt-6 flex flex-wrap gap-2">
           {project.technologies.slice(0, 3).map((tech) => (
-            <span key={tech} className="px-2 py-1 bg-blue-50 dark:bg-blue-900/20 text-xs font-semibold text-blue-600 dark:text-blue-300 rounded-md border border-blue-100 dark:border-blue-800/30">
+            <span key={tech} className="px-3 py-1 bg-white dark:bg-slate-800 text-[10px] font-bold text-slate-500 dark:text-slate-400 rounded-full border border-blue-100 dark:border-slate-700 uppercase tracking-wider shadow-sm">
               {tech}
             </span>
           ))}
           {project.technologies.length > 3 && (
-            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-xs font-semibold text-gray-500 dark:text-gray-400 rounded-md">
-              +{project.technologies.length - 3}
+            <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-[10px] font-bold text-blue-600 dark:text-blue-400 rounded-full border border-blue-100 dark:border-blue-800/30 uppercase tracking-wider shadow-sm">
+              +{project.technologies.length - 3} More
             </span>
           )}
         </div>
@@ -97,16 +96,14 @@ export default function Projects() {
   const currentProjectImages = selectedProject ? getProjectImages(selectedProject.imageFolder) : [];
 
   return (
-    <section id="projects" className="relative py-16 md:py-32 overflow-hidden bg-gray-50 dark:bg-black">
-      <GridPattern />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-gray-100 tracking-tighter">
+    <section id="projects" className="relative pb-24 overflow-hidden bg-transparent">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+        <div className="text-center mb-16 md:mb-24">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">
             My Projects
           </h1>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400">
-            Selected works and experiments.
+          <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-slate-500 dark:text-slate-400 px-4">
+            Selected works and experiments that showcase my skills in development and problem-solving.
           </p>
         </div>
 

@@ -7,7 +7,6 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
-import GridPattern from '../common/GridPattern';
 
 // --- Interfaces ---
 interface EducationItem {
@@ -129,25 +128,25 @@ const SectionHeader = ({ title, icon: Icon }: { title: string; icon: React.FC<Re
 const GlassCard = ({ children, className = "", delay = 0, isVisible }: { children: React.ReactNode; className?: string; delay?: number; isVisible: boolean }) => (
   <div
     className={`
-      relative overflow-hidden rounded-2xl border border-gray-200/50 dark:border-gray-700/50 
-      bg-white/80 dark:bg-gray-900/80 shadow-sm 
-      transition-all duration-500 ease-out group hover:shadow-lg hover:border-accent-primary/30 dark:hover:border-accent-primary/30
+      relative overflow-hidden rounded-3xl border border-blue-100/50 dark:border-slate-800/60 
+      bg-blue-50/40 dark:bg-slate-900/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] 
+      transition-all duration-500 ease-out group hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)] hover:border-blue-500/30
       ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
       ${className}
     `}
     style={{ transitionDelay: `${delay}ms` }}
   >
     {/* Hover Gradient Effect */}
-    <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/0 via-accent-primary/[0.03] to-accent-primary/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/[0.01] to-blue-500/[0.05] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
     
-    <div className="relative z-10 p-6">
+    <div className="relative z-10 p-6 sm:p-8">
       {children}
     </div>
   </div>
 );
 
 const DateBadge = ({ date }: { date: string }) => (
-  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-semibold text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
+  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-slate-800 text-[11px] font-bold text-slate-500 dark:text-slate-400 border border-blue-100 dark:border-slate-700/50 uppercase tracking-wider shadow-sm">
     <Icons.Calendar className="w-3 h-3" />
     {date}
   </div>
@@ -179,37 +178,33 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-16 md:py-32 overflow-hidden bg-gray-50 dark:bg-black"
+      className="relative pb-24 overflow-hidden bg-transparent"
     >
-      {/* --- BACKGROUND START --- */}
-      <GridPattern />
-      {/* --- BACKGROUND END --- */}
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         
         {/* --- Header & Bio --- */}
-        <div className={`text-center mb-20 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="inline-flex items-center justify-center p-2 mb-6 rounded-full bg-gray-100 dark:bg-gray-900/80 border border-gray-200 dark:border-gray-800 backdrop-blur-sm">
-            <Icons.User className="w-4 h-4 text-accent-primary mr-2" />
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-500">About Me</span>
+        <div className={`text-center mb-16 md:mb-24 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 backdrop-blur-sm">
+            <Icons.User className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mr-2" />
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">About Me</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-6">
-            Designing logic, <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-primary to-blue-600">crafting code.</span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-8 leading-[1.1]">
+            Designing logic, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">crafting code.</span>
           </h1>
           
           <div className="max-w-2xl mx-auto">
             {/* Direct text rendering instead of TruncatedText */}
-            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed font-normal">
               {aboutIntro}
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
           
           {/* --- Left Column: Education & Certs (Sticky) --- */}
-          <div className="lg:col-span-5 space-y-12 h-fit lg:sticky lg:top-24">
+          <div className="lg:col-span-5 space-y-10 lg:space-y-12 h-fit lg:sticky lg:top-24">
             
             {/* Education */}
             <div>
@@ -218,11 +213,11 @@ export default function About() {
                 {education.map((edu, index) => (
                   <GlassCard key={index} isVisible={isVisible} delay={100 + (index * 100)}>
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-lg text-gray-900 dark:text-white">
+                      <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-white leading-snug">
                         {edu.degree}
                       </h3>
                     </div>
-                    <p className="text-accent-primary font-medium mb-3">{edu.institution}</p>
+                    <p className="text-blue-600 dark:text-blue-400 text-sm sm:text-base font-medium mb-3">{edu.institution}</p>
                     <DateBadge date={edu.period} />
                   </GlassCard>
                 ))}
@@ -236,18 +231,18 @@ export default function About() {
                 {certifications.map((cert, index) => (
                   <GlassCard key={index} isVisible={isVisible} delay={300 + (index * 100)}>
                     <div className="flex flex-col gap-2">
-                      <h3 className="font-bold text-lg text-gray-900 dark:text-white leading-tight">
+                      <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-white leading-snug">
                         {cert.title}
                       </h3>
                       {cert.level && (
-                        <span className="self-start px-2 py-0.5 rounded text-xs font-bold bg-accent-primary/10 text-accent-primary">
+                        <span className="self-start px-2 py-0.5 rounded text-[10px] font-bold bg-blue-600/10 text-blue-600 dark:text-blue-400">
                           {cert.level}
                         </span>
                       )}
                     </div>
                     
                     {/* Direct text rendering instead of TruncatedText */}
-                    <div className="mt-4 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <div className="mt-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
                       <p>{cert.description}</p>
                     </div>
                     
@@ -264,34 +259,36 @@ export default function About() {
           <div className="lg:col-span-7">
             <SectionHeader title="Experience" icon={Icons.Briefcase} />
             
-            <div className="relative pl-8 border-l-2 border-gray-200 dark:border-gray-800 space-y-12">
+            <div className="relative pl-6 sm:pl-8 border-l-2 border-slate-200 dark:border-slate-800 space-y-10 lg:space-y-12">
               {workExperience.map((work, index) => (
                 <div key={index} className="relative">
                   {/* Timeline Dot */}
                   <span 
                     className={`
-                      absolute -left-[41px] top-6 h-5 w-5 rounded-full border-4 border-white dark:border-black bg-accent-primary 
+                      absolute -left-[31px] sm:-left-[41px] top-6 h-4 w-4 sm:h-5 sm:w-5 rounded-full border-2 sm:border-4 border-white dark:border-black bg-blue-600 
                       transition-all duration-500 delay-300
                       ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
                     `} 
                   />
                   
                   <GlassCard isVisible={isVisible} delay={500 + (index * 150)}>
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-tight">
                           {work.position}
                         </h3>
-                        <p className="text-lg text-accent-primary font-medium">
+                        <p className="text-base sm:text-lg text-blue-600 dark:text-blue-400 font-medium">
                           {work.company}
                         </p>
                       </div>
-                      <DateBadge date={work.period} />
+                      <div className="self-start">
+                        <DateBadge date={work.period} />
+                      </div>
                     </div>
                     
                     {/* Direct list rendering instead of TruncatedText */}
-                    <div className="text-gray-600 dark:text-gray-300">
-                      <ul className="mt-4 list-disc list-inside space-y-2">
+                    <div className="text-slate-500 dark:text-slate-400">
+                      <ul className="mt-4 list-disc list-inside space-y-2 text-sm sm:text-base">
                         {work.responsibilities.map((item, i) => (
                           <li key={i}>{item}</li>
                         ))}

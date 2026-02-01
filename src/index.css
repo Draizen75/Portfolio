@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+  }
+
   html {
     @apply scroll-smooth;
   }

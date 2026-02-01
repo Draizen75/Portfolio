@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://draizenmartirez.vercel.app
+
+Sitemap: https://draizenmartirez.vercel.app/sitemap.xml
