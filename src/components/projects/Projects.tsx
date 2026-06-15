@@ -21,6 +21,15 @@ const projects = [
     imageFolder: 'sydpos',
   },
   {
+    title: 'Duola',
+    description:
+      'A multi-tenant birth support SaaS for doula agencies — automated prenatal-to-postpartum care journeys, white-label branding, secure messaging, birth plan PDFs, and HIPAA-ready tenant isolation.',
+    technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
+    liveUrl: 'https://www.birthflowapp.com/',
+    githubUrl: '#',
+    imageFolder: 'birthflow',
+  },
+  {
     title: 'QR Code Generator',
     description: 'A simple web app to convert URLs into QR codes instantly.',
     technologies: ['Python', 'Flask'],
@@ -38,8 +47,22 @@ const projects = [
   },
 ];
 
+type Project = (typeof projects)[number];
+
+/**
+ * Renders a gradient placeholder when a project has no cover image.
+ *
+ * @param title - Project title shown on the placeholder
+ */
+const ProjectCoverPlaceholder = ({ title }: { title: string }) => (
+  <div className="w-full h-full bg-gradient-to-br from-slate-800 via-blue-900 to-indigo-900 flex flex-col items-center justify-center px-6 text-center">
+    <span className="font-serif text-2xl sm:text-3xl font-medium text-white">{title}</span>
+    <span className="mt-2 type-caption text-slate-300 uppercase tracking-widest">Live Project</span>
+  </div>
+);
+
 // --- Sub-Component: Project Card ---
-const ProjectCard = ({ project, onClick }: { project: (typeof projects)[0], onClick: () => void }) => {
+const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => void }) => {
   const imageUrl = getProjectImages(project.imageFolder)[0] || '';
   
   return (
@@ -48,18 +71,22 @@ const ProjectCard = ({ project, onClick }: { project: (typeof projects)[0], onCl
       onClick={onClick}
     >
       <div className="relative h-52 xs:h-56 sm:h-64 md:h-72 overflow-hidden">
-        <img 
-          src={imageUrl} 
-          alt={project.title}
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-        />
+        {imageUrl ? (
+          <img 
+            src={imageUrl} 
+            alt={project.title}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+          />
+        ) : (
+          <ProjectCoverPlaceholder title={project.title} />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
 
       <div className="p-5 sm:p-8 md:p-10">
-        <h3 className="type-card-title">{project.title}</h3>
+        <h2 className="type-card-title">{project.title}</h2>
         <p className="mt-3 type-muted line-clamp-2">{project.description}</p>
         <div className="mt-6 flex flex-wrap gap-2">
           {project.technologies.slice(0, 3).map((tech) => (
@@ -96,6 +123,7 @@ export default function Projects() {
 
   // Get current project's images for the preview in the modal
   const currentProjectImages = selectedProject ? getProjectImages(selectedProject.imageFolder) : [];
+  const hasGallery = currentProjectImages.length > 0;
 
   return (
     <section id="projects" className="relative pb-24 overflow-hidden bg-transparent">
@@ -126,28 +154,33 @@ export default function Projects() {
           <div className="flex flex-col md:flex-row md:min-h-[400px] md:h-[500px]">
             {/* Left: Image Preview (Clickable) */}
             <div 
-              className="relative w-full md:w-1/2 h-48 sm:h-56 md:h-auto bg-gray-100 dark:bg-gray-800 cursor-zoom-in group overflow-hidden flex items-center justify-center shrink-0"
-              onClick={() => openGallery(selectedProject.imageFolder)}
+              className={`relative w-full md:w-1/2 h-48 sm:h-56 md:h-auto bg-gray-100 dark:bg-gray-800 group overflow-hidden flex items-center justify-center shrink-0 ${hasGallery ? 'cursor-zoom-in' : ''}`}
+              onClick={() => hasGallery && openGallery(selectedProject.imageFolder)}
             >
-              <img 
-                src={currentProjectImages[0]} 
-                alt={selectedProject.title}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
-              />
-              {/* Overlay Hint */}
+              {hasGallery ? (
+                <img 
+                  src={currentProjectImages[0]} 
+                  alt={selectedProject.title}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+              ) : (
+                <ProjectCoverPlaceholder title={selectedProject.title} />
+              )}
+              {hasGallery && (
               <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="bg-black/70 text-white px-4 py-2 rounded-full type-caption backdrop-blur-sm flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
                   View Gallery
                 </span>
               </div>
+              )}
             </div>
 
             {/* Right: Details */}
             <div className="w-full md:w-1/2 p-5 sm:p-8 flex flex-col bg-white dark:bg-gray-900 min-h-0">
-              <h2 className="type-subsection-title mb-2">{selectedProject.title}</h2>
+              <h3 className="type-subsection-title mb-2">{selectedProject.title}</h3>
               <div className="flex flex-wrap gap-2 mb-6">
                 {selectedProject.technologies.map((tech) => (
                   <span key={tech} className="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 type-caption text-slate-700 dark:text-slate-300 rounded border border-gray-200 dark:border-gray-700">

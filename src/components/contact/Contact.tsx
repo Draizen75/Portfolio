@@ -79,10 +79,17 @@ export default function Contact() {
           }`}
         >
 
+          <div className="text-center mb-12 sm:mb-16">
+            <h1 className="type-section-title">Get in Touch</h1>
+            <p className="type-section-lead px-4">
+              Have a project in mind or want to connect? Reach out anytime.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-12 sm:mb-16">
             {/* Contact Section */}
             <div className="space-y-4 text-center sm:text-left min-w-0">
-              <h3 className="type-subsection-title mb-4">Contact</h3>
+              <h2 className="type-subsection-title mb-4">Contact</h2>
               <div className="space-y-3">
                 {/* Email */}
                 <div className="flex items-start justify-center sm:justify-start gap-3 min-w-0">
@@ -114,7 +121,7 @@ export default function Contact() {
 
             {/* Address Section */}
             <div className="space-y-4 text-center sm:text-left min-w-0">
-              <h3 className="type-subsection-title mb-4">Location</h3>
+              <h2 className="type-subsection-title mb-4">Location</h2>
               <div className="flex items-start justify-center sm:justify-start gap-3 min-w-0">
                 <svg className="w-6 h-6 text-gray-700 dark:text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -126,7 +133,7 @@ export default function Contact() {
 
             {/* Quick Links Section */}
             <div className="space-y-4 text-center sm:text-left">
-              <h3 className="type-subsection-title mb-4">Quick Links</h3>
+              <h2 className="type-subsection-title mb-4">Quick Links</h2>
               <div className="space-y-2">
                 <a href="#about" className="block type-body hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">About</a>
                 <a href="#skills" className="block type-body hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300">Skills</a>
@@ -137,7 +144,7 @@ export default function Contact() {
 
             {/* Say Hello Button & Social Icons Section */}
             <div className="space-y-4 text-center">
-              <h3 className="type-subsection-title mb-4">Let's Connect</h3>
+              <h2 className="type-subsection-title mb-4">Let's Connect</h2>
               <div>
                 <a 
                   href={`mailto:${emailAddress}`} 
