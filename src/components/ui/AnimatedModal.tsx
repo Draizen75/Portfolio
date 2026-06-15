@@ -1,5 +1,12 @@
 'use client';
-
+/**
+ * AnimatedModal component for creating modal dialogs with smooth animations.
+ * 
+ * @param isOpen - Whether the modal is open
+ * @param onClose - Function to close the modal
+ * @param children - Content to display inside the modal
+ * @param maxWidth - Maximum width of the modal
+ */
 import { useEffect } from 'react';
 
 interface ModalProps {

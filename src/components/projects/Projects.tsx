@@ -9,7 +9,7 @@ const projects = portfolioProjects;
 type Project = PortfolioProject;
 
 /**
- * Renders a gradient placeholder when a project has no cover image.
+ * Renders a gradients placeholder when a project has no cover image.
  *
  * @param title - Project title shown on the placeholder
  */
