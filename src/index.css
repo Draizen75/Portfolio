@@ -67,8 +67,13 @@
     .pattern-layer,
     html.theme-changing *,
     html.theme-changing *::before,
-    html.theme-changing *::after {
+    html.theme-changing *::after,
+    .entrance-motion {
       transition: none !important;
+    }
+
+    .entrance-hidden {
+      opacity: 1;
     }
   }
 }
@@ -90,7 +95,15 @@
   }
 
   .entrance-motion {
-    @apply transition-[opacity,transform] duration-500 ease-out;
+    @apply transition-opacity duration-500 ease-out;
+  }
+
+  .entrance-visible {
+    @apply opacity-100;
+  }
+
+  .entrance-hidden {
+    @apply opacity-0;
   }
 
   .type-display {

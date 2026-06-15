@@ -132,7 +132,7 @@ const GlassCard = ({ children, className = "", delay = 0, isVisible }: { childre
       relative overflow-hidden rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]
       entrance-motion group hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)]
       glass-surface glass-surface-hover
-      ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+      ${isVisible ? 'entrance-visible' : 'entrance-hidden'}
       ${className}
     `}
     style={{ transitionDelay: `${delay}ms` }}
@@ -179,12 +179,12 @@ export default function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative pb-24 overflow-hidden bg-transparent"
+      className="relative pb-24 bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* --- Header & Bio --- */}
-        <div className={`text-center mb-16 md:mb-24 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <div className={`text-center mb-16 md:mb-24 entrance-motion ${isVisible ? 'entrance-visible' : 'entrance-hidden'}`}>
           <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 backdrop-blur-sm">
             <Icons.User className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mr-2" />
             <span className="type-eyebrow">About Me</span>
@@ -203,15 +203,15 @@ export default function About() {
 
           <PortraitImage
             size="about"
-            className={`mt-10 sm:mt-12 lg:hidden transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            className={`mt-10 sm:mt-12 lg:hidden entrance-motion ${isVisible ? 'entrance-visible' : 'entrance-hidden'}`}
             loading="lazy"
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-16 items-start">
           
           {/* --- Left Column: Education & Certs (Sticky) --- */}
-          <div className="lg:col-span-5 space-y-10 lg:space-y-12 h-fit lg:sticky lg:top-24">
+          <div className="space-y-10 lg:space-y-12 h-fit lg:sticky lg:top-24">
             
             {/* Education */}
             <div>
@@ -263,47 +263,57 @@ export default function About() {
           </div>
 
           {/* --- Right Column: Experience (Timeline) --- */}
-          <div className="lg:col-span-7">
+          <div>
             <SectionHeader title="Experience" icon={Icons.Briefcase} />
-            
-            <div className="relative pl-5 sm:pl-8 border-l-2 border-slate-200 dark:border-slate-800 space-y-8 sm:space-y-10 lg:space-y-12 min-w-0">
-              {workExperience.map((work, index) => (
-                <div key={index} className="relative">
-                  {/* Timeline Dot */}
-                  <span 
-                    className={`
-                      absolute -left-[23px] sm:-left-[41px] top-6 h-4 w-4 sm:h-5 sm:w-5 rounded-full border-2 sm:border-4 border-white dark:border-black bg-blue-600
-                      transition-all duration-500 delay-300
-                      ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}
-                    `} 
-                  />
-                  
-                  <GlassCard isVisible={isVisible} delay={500 + (index * 150)}>
-                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
-                      <div>
-                        <h3 className="type-card-title">
-                          {work.position}
-                        </h3>
-                        <p className="type-card-subtitle">
-                          {work.company}
-                        </p>
-                      </div>
-                      <div className="self-start">
-                        <DateBadge date={work.period} />
-                      </div>
+
+            <div className="relative">
+              {/* Timeline rail */}
+              <div
+                className="absolute left-[11px] top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-slate-800"
+                aria-hidden="true"
+              />
+
+              <div className="space-y-8 sm:space-y-10 lg:space-y-12">
+                {workExperience.map((work, index) => (
+                  <div key={index} className="relative">
+                    <span
+                      className={`
+                        absolute left-[11px] top-6 z-10 h-5 w-5 -translate-x-1/2 rounded-full
+                        border-4 border-white dark:border-slate-950 bg-blue-600
+                        entrance-motion delay-300
+                        ${isVisible ? 'entrance-visible' : 'entrance-hidden'}
+                      `}
+                      aria-hidden="true"
+                    />
+
+                    <div className="pl-10">
+                      <GlassCard isVisible={isVisible} delay={500 + (index * 150)}>
+                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
+                          <div>
+                            <h3 className="type-card-title">
+                              {work.position}
+                            </h3>
+                            <p className="type-card-subtitle">
+                              {work.company}
+                            </p>
+                          </div>
+                          <div className="self-start">
+                            <DateBadge date={work.period} />
+                          </div>
+                        </div>
+
+                        <div className="type-muted">
+                          <ul className="mt-4 list-disc list-inside space-y-2 type-body-sm">
+                            {work.responsibilities.map((item, i) => (
+                              <li key={i}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </GlassCard>
                     </div>
-                    
-                    {/* Direct list rendering instead of TruncatedText */}
-                    <div className="type-muted">
-                      <ul className="mt-4 list-disc list-inside space-y-2 type-body-sm">
-                        {work.responsibilities.map((item, i) => (
-                          <li key={i}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </GlassCard>
-                </div>
-              ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 

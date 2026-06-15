@@ -74,7 +74,7 @@ export default function Skills() {
       className="relative pb-24 overflow-hidden bg-transparent"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className={`text-center mb-12 sm:mb-20 entrance-motion ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+        <div className={`text-center mb-12 sm:mb-20 entrance-motion ${isVisible ? 'entrance-visible' : 'entrance-hidden'}`}>
           <h1 className="type-section-title">
             My Technical Skills
           </h1>
@@ -92,7 +92,7 @@ export default function Skills() {
               <div
                 key={index}
                 className={`flex flex-col items-center justify-center entrance-motion ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  isVisible ? 'entrance-visible' : 'entrance-hidden'
                 }`}
                 style={{ 
                   transitionDelay: `${index * 50}ms`

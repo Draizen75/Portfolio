@@ -28,7 +28,7 @@ export default function Hero ({ onSectionClick }: HeroProps) {
             <h1 className="type-display mb-5 sm:mb-6 break-words max-w-full">
               Lloyd Draizen Martirez
             </h1>
-            <h2 className="type-hero-role mb-6 sm:mb-8 min-h-[1.5em]">
+            <h2 className="type-hero-role mb-6 sm:mb-8 min-h-[2.5em] sm:min-h-[1.5em]">
               I'm a <span className="font-medium text-blue-600 dark:text-blue-400">{typedText}</span>
             </h2>
             <p className="type-hero-lead mb-10 sm:mb-12 lg:max-w-lg lg:mx-0">
