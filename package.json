@@ -5,23 +5,18 @@
   "type": "module",
   "scripts": {
     "generate:images": "node scripts/generateImageMap.js",
-    "predev": "npm run generate:images",
+    "convert:images": "node scripts/convertImagesToWebp.js",
+    "generate:icons": "node scripts/generateInlineIcons.js",
+    "predev": "npm run convert:images && npm run generate:images && npm run generate:icons",
     "dev": "vite",
-    "prebuild": "npm run generate:images",
+    "prebuild": "npm run convert:images && npm run generate:images && npm run generate:icons",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.3.6",
-    "@mui/material": "^7.3.6",
-    "devicons-react": "^1.5.0",
-    "framer-motion": "^12.24.5",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "simple-icons": "^16.3.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
@@ -35,6 +30,8 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "postcss": "^8.5.6",
+    "sharp": "^0.34.5",
+    "simple-icons": "^16.3.0",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",

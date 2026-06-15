@@ -83,13 +83,13 @@ export default function ProjectGalleryModal({
 
   return (
     <AnimatedModal isOpen={isOpen} onClose={onClose} maxWidth="max-w-6xl">
-      <div className="relative flex items-center justify-center bg-black h-[80vh] w-full group select-none">
+      <div className="relative flex items-center justify-center bg-black h-[70vh] sm:h-[80vh] w-full group select-none">
         
         {/* Previous Button (SVG) */}
         {images.length > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); prevImage(); }}
-            className="absolute left-4 z-30 p-3 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-all opacity-0 group-hover:opacity-100"
+            className="absolute left-2 sm:left-4 z-30 p-3 min-w-[44px] min-h-[44px] rounded-full bg-black/60 text-white hover:bg-white hover:text-black transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
             aria-label="Previous image"
           >
             <svg 
@@ -129,7 +129,7 @@ export default function ProjectGalleryModal({
         {images.length > 1 && (
           <button
             onClick={(e) => { e.stopPropagation(); nextImage(); }}
-            className="absolute right-4 z-30 p-3 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-all opacity-0 group-hover:opacity-100"
+            className="absolute right-2 sm:right-4 z-30 p-3 min-w-[44px] min-h-[44px] rounded-full bg-black/60 text-white hover:bg-white hover:text-black transition-all opacity-100 md:opacity-0 md:group-hover:opacity-100"
             aria-label="Next image"
           >
             <svg 

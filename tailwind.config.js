@@ -33,8 +33,16 @@ export default {
         },
       },
       fontFamily: {
+        'sans': ['"DM Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        'serif': ['"Source Serif 4"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
         'mono': ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-        'sans': ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+      },
+      letterSpacing: {
+        'tighter': '-0.04em',
+        'tight': '-0.025em',
+        'wide': '0.02em',
+        'wider': '0.06em',
+        'widest': '0.12em',
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1.5', letterSpacing: '0.01em' }],

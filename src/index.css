@@ -6,19 +6,168 @@
   :root {
     --mouse-x: 50%;
     --mouse-y: 50%;
+    --theme-transition-duration: 500ms;
+    --page-bg-light: #f8fafc;
+    --page-bg-dark: #0a0a0f;
+    --page-bg: var(--page-bg-light);
+    color-scheme: light;
+  }
+
+  html.dark {
+    --page-bg: var(--page-bg-dark);
+    color-scheme: dark;
   }
 
   html {
     @apply scroll-smooth;
+    background-color: var(--page-bg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
-    @apply bg-gray-50 dark:bg-black text-gray-900 dark:text-gray-100;
-    font-family: 'Inter', sans-serif;
+    @apply font-sans text-slate-700 dark:text-slate-200 antialiased overflow-x-hidden;
+    font-feature-settings: 'kern', 'liga', 'calt';
+    text-rendering: optimizeLegibility;
+    background-color: var(--page-bg);
+    min-height: 100dvh;
+  }
+
+  #root {
+    min-height: 100dvh;
+    background-color: var(--page-bg);
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-slate-900 dark:text-white;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   section[id] {
     scroll-margin-top: 80px; /* 5rem */
+  }
+
+  html.theme-changing *,
+  html.theme-changing *::before,
+  html.theme-changing *::after {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, box-shadow;
+    transition-duration: var(--theme-transition-duration) !important;
+    transition-timing-function: ease-in-out !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pattern-layer,
+    html.theme-changing *,
+    html.theme-changing *::before,
+    html.theme-changing *::after {
+      transition: none !important;
+    }
+  }
+}
+
+@layer components {
+  .glass-chrome {
+    @apply bg-white/90 backdrop-blur-md border-slate-200/70;
+    @apply dark:bg-slate-950/95 dark:border-slate-800/60;
+  }
+
+  .glass-surface {
+    @apply bg-white/90 border border-slate-200/60;
+    @apply dark:bg-slate-900/95 dark:border-slate-700/50;
+  }
+
+  .glass-surface-hover {
+    @apply hover:border-blue-400/50 hover:bg-white;
+    @apply dark:hover:border-blue-500/40 dark:hover:bg-slate-900;
+  }
+
+  .entrance-motion {
+    @apply transition-[opacity,transform] duration-500 ease-out;
+  }
+
+  .type-display {
+    @apply font-serif text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] font-medium tracking-tight text-slate-900 dark:text-white;
+    line-height: 1.08;
+    font-optical-sizing: auto;
+  }
+
+  .type-hero-role {
+    @apply font-sans text-lg sm:text-xl md:text-2xl font-light tracking-wide text-slate-500 dark:text-slate-300;
+    line-height: 1.5;
+  }
+
+  .type-hero-lead {
+    @apply max-w-lg text-[0.9375rem] sm:text-base md:text-lg font-normal text-slate-500 dark:text-slate-400 leading-[1.75];
+    letter-spacing: 0.01em;
+  }
+
+  .type-section-title {
+    @apply font-serif text-2xl xs:text-3xl sm:text-4xl md:text-[2.75rem] font-medium tracking-tight text-slate-900 dark:text-white;
+    line-height: 1.12;
+    font-optical-sizing: auto;
+  }
+
+  .type-section-lead {
+    @apply mt-5 max-w-xl mx-auto text-[0.9375rem] sm:text-base font-normal text-slate-500 dark:text-slate-400 leading-[1.75];
+    letter-spacing: 0.01em;
+  }
+
+  .type-eyebrow {
+    @apply font-sans text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400;
+  }
+
+  .type-subsection-title {
+    @apply font-sans text-lg md:text-xl font-semibold tracking-tight text-slate-900 dark:text-white;
+  }
+
+  .type-card-title {
+    @apply font-sans text-base sm:text-lg font-semibold tracking-tight text-slate-900 dark:text-white;
+    line-height: 1.35;
+  }
+
+  .type-card-subtitle {
+    @apply font-sans text-sm font-medium text-blue-600 dark:text-blue-400;
+    letter-spacing: 0.01em;
+  }
+
+  .type-body {
+    @apply text-[0.9375rem] sm:text-base font-normal text-slate-600 dark:text-slate-300 leading-[1.7];
+  }
+
+  .type-body-sm {
+    @apply text-sm font-normal text-slate-600 dark:text-slate-300 leading-[1.65];
+  }
+
+  .type-muted {
+    @apply text-sm sm:text-[0.9375rem] font-normal text-slate-500 dark:text-slate-400 leading-[1.7];
+  }
+
+  .type-caption {
+    @apply text-xs font-medium text-slate-500 dark:text-slate-400 leading-normal tracking-wide;
+  }
+
+  .type-label {
+    @apply font-sans text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400;
+  }
+
+  .type-nav-link {
+    @apply font-sans text-sm font-medium tracking-wide text-slate-600 dark:text-slate-400;
+  }
+
+  .type-logo {
+    @apply font-serif text-xl font-semibold tracking-tight text-slate-900 dark:text-white;
+  }
+
+  .type-button {
+    @apply font-sans text-sm font-semibold tracking-[0.03em];
   }
 }
 
