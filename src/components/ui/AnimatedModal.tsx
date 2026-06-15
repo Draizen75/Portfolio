@@ -1,5 +1,12 @@
 'use client';
-
+/**
+ * AnimatedModal component for creating modal dialogs with smooth animations.
+ * 
+ * @param isOpen - Whether the modal is open
+ * @param onClose - Function to close the modal
+ * @param children - Content to display inside the modal
+ * @param maxWidth - Maximum width of the modal
+ */
 import { useEffect } from 'react';
 
 interface ModalProps {
@@ -32,17 +39,17 @@ export default function AnimatedModal({
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-200"
+        className="fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-0 sm:p-4"
       >
         {/* Modal Card */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`relative w-full ${maxWidth} max-h-[90vh] overflow-hidden bg-white dark:bg-gray-900 rounded-2xl shadow-2xl flex flex-col transition-all duration-200`}
+          className={`relative w-full ${maxWidth} max-h-[95vh] sm:max-h-[90vh] overflow-hidden bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col`}
         >
           {/* Close Button (SVG replaced here) */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 text-gray-800 dark:text-white backdrop-blur-md transition-colors"
+            className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-gray-800 dark:text-white transition-colors"
             aria-label="Close modal"
           >
             <svg 

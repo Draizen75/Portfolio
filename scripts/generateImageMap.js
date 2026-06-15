@@ -41,25 +41,40 @@ function getImageFiles(dir, basePath = '') {
 }
 
 /**
- * Group images by folder
+ * Group images by folder, preferring WebP over duplicate raster sources.
  */
 function groupImagesByFolder(imagePaths) {
   const grouped = {};
 
   for (const imagePath of imagePaths) {
     const parts = imagePath.split(path.sep);
-    if (parts.length > 1) {
-      const folderName = parts[0];
-      const fileName = parts.slice(1).join(path.sep);
+    if (parts.length <= 1) {
+      continue;
+    }
 
-      if (!grouped[folderName]) {
-        grouped[folderName] = [];
-      }
-      grouped[folderName].push(fileName);
+    const folderName = parts[0];
+    const fileName = parts.slice(1).join(path.sep);
+    const extension = path.extname(fileName).toLowerCase();
+    const baseName = fileName.slice(0, -extension.length);
+
+    if (!grouped[folderName]) {
+      grouped[folderName] = new Map();
+    }
+
+    const folderMap = grouped[folderName];
+    const existing = folderMap.get(baseName);
+
+    if (!existing || extension === '.webp') {
+      folderMap.set(baseName, fileName);
     }
   }
 
-  return grouped;
+  const normalized = {};
+  for (const [folder, fileMap] of Object.entries(grouped)) {
+    normalized[folder] = [...fileMap.values()];
+  }
+
+  return normalized;
 }
 
 /**

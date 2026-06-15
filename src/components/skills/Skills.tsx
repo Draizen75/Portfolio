@@ -5,73 +5,15 @@
  */
 
 import { useState, useEffect, useRef } from 'react';
-import * as Icons from 'simple-icons';
-import type { SimpleIcon } from 'simple-icons';
 import { useTypingEffect } from '../../hooks/useTypingEffect';
-
-/**
- * Maps skill names to Simple Icons
- */
-const getSkillIcon = (skillName: string): SimpleIcon | null => {
-  const skillMap: Record<string, SimpleIcon | null> = {
-    // Programming Languages
-    'Python': Icons.siPython,
-    'JavaScript': Icons.siJavascript,
-    'TypeScript': Icons.siTypescript,
-    'Java': null, // Java icon not available in this specific import set
-    'Godot Script': Icons.siGodotengine,
-    'Godot': Icons.siGodotengine,
-    'HTML': Icons.siHtml5,
-    'CSS': Icons.siCss,
-    
-    // Frameworks & Libraries
-    'React': Icons.siReact,
-    'Next.js': Icons.siNextdotjs,
-    'Tailwind': Icons.siTailwindcss,
-    'TailwindCSS': Icons.siTailwindcss,
-    'Flask': Icons.siFlask,
-    'Material UI': Icons.siMui,
-    'MUI': Icons.siMui,
-    
-    // Backend & Runtime
-    'Node.js': Icons.siNodedotjs,
-    'NodeJS': Icons.siNodedotjs,
-    
-    // Databases
-    'PostgreSQL': Icons.siPostgresql,
-    'MySQL': Icons.siMysql,
-    'Prisma': Icons.siPrisma,
-    
-    // Tools & Version Control
-    'Git': Icons.siGit,
-    'GitHub': Icons.siGithub,
-    'Git & GitHub': Icons.siGithub,
-    'npm': Icons.siNpm,
-    'NPM': Icons.siNpm,
-    'ESLint': Icons.siEslint,
-    'Docker': Icons.siDocker,
-    'Vite': Icons.siVite,
-    
-    // Deployment & Hosting
-    'Vercel': Icons.siVercel,
-    
-    // Design
-    'Figma': Icons.siFigma,
-    
-    // Other
-    'Visual Studio Code': null,
-    'Microsoft Office': null,
-  };
-
-  return skillMap[skillName] || skillMap[skillName.toLowerCase()] || null;
-};
+import { getSkillIcon } from '../../utils/skillIconUtils';
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   
   // Typing effect for skill categories
-  const skillCategories = ['Frontend Developer', 'Backend Developer', 'Full Stack Developer', 'Data Analyst'];
+  const skillCategories = ['Frontend Developer', 'Backend Developer', 'Web Developer', 'Data Analyst'];
   const typedCategory = useTypingEffect(skillCategories, 100, 50, 2000);
 
   // All skills in a single flat list
@@ -130,18 +72,19 @@ export default function Skills() {
       ref={sectionRef}
       id="skills" 
       className="relative pb-24 overflow-hidden bg-transparent"
+      aria-labelledby="skills-heading"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
-        <div className={`text-center mb-20 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className={`text-center mb-12 sm:mb-20 entrance-motion ${isVisible ? 'entrance-visible' : 'entrance-hidden'}`}>
+          <h2 id="skills-heading" className="type-section-title">
             My Technical Skills
-          </h1>
-          <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-slate-500 dark:text-slate-400 px-4">
+          </h2>
+          <p className="type-section-lead px-4">
              Building with modern tools as a <span className="font-semibold text-blue-600 dark:text-blue-400">{typedCategory}</span>
           </p>
         </div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-6">
+        <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-5 md:gap-6">
           {skills.map((skill, index) => {
             const iconData = getSkillIcon(skill);
             const hasIcon = iconData !== null;
@@ -149,15 +92,15 @@ export default function Skills() {
             return (
               <div
                 key={index}
-                className={`flex flex-col items-center justify-center transition-all duration-500 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                className={`flex flex-col items-center justify-center entrance-motion ${
+                  isVisible ? 'entrance-visible' : 'entrance-hidden'
                 }`}
                 style={{ 
                   transitionDelay: `${index * 50}ms`
                 }}
               >
                 {/* Card Container with Hover Effects */}
-                <div className="group relative w-full p-6 sm:p-8 rounded-[2rem] border border-blue-100/50 dark:border-slate-800/60 bg-blue-50/40 dark:bg-slate-900/80 hover:border-blue-500/30 dark:hover:border-blue-500/30 hover:bg-white dark:hover:bg-slate-800 transition-all duration-300 hover:-translate-y-1.5 cursor-pointer shadow-[0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)]">
+                <div className="group relative w-full p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-[2rem] glass-surface glass-surface-hover transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-1.5 cursor-pointer shadow-[0_4px_12px_-2px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)]">
                   
                   {/* Content */}
                   <div className="relative z-10 flex flex-col items-center justify-center">
@@ -199,7 +142,7 @@ export default function Skills() {
                     </div>
                     
                     {/* Label */}
-                    <span className="text-slate-900 dark:text-slate-100 text-xs sm:text-sm font-bold tracking-tight text-center break-words group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                    <span className="type-caption font-semibold text-slate-900 dark:text-slate-100 text-center break-words group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                       {skill}
                     </span>
                   </div>
