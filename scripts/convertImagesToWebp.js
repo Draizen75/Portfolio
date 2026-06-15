@@ -34,6 +34,10 @@ function collectSourceImages(dir) {
     }
 
     if (sourceExtensions.has(path.extname(entry.name).toLowerCase())) {
+      // OG image is generated programmatically — do not treat as a conversion source
+      if (entry.name === 'og-image.png') {
+        continue;
+      }
       files.push(fullPath);
     }
   }

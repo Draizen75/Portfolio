@@ -13,7 +13,7 @@ export default function Skills() {
   const [isVisible, setIsVisible] = useState(false);
   
   // Typing effect for skill categories
-  const skillCategories = ['Frontend Developer', 'Backend Developer', 'Full Stack Developer', 'Data Analyst'];
+  const skillCategories = ['Frontend Developer', 'Backend Developer', 'Web Developer', 'Data Analyst'];
   const typedCategory = useTypingEffect(skillCategories, 100, 50, 2000);
 
   // All skills in a single flat list
@@ -72,12 +72,13 @@ export default function Skills() {
       ref={sectionRef}
       id="skills" 
       className="relative pb-24 overflow-hidden bg-transparent"
+      aria-labelledby="skills-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className={`text-center mb-12 sm:mb-20 entrance-motion ${isVisible ? 'entrance-visible' : 'entrance-hidden'}`}>
-          <h1 className="type-section-title">
+          <h2 id="skills-heading" className="type-section-title">
             My Technical Skills
-          </h1>
+          </h2>
           <p className="type-section-lead px-4">
              Building with modern tools as a <span className="font-semibold text-blue-600 dark:text-blue-400">{typedCategory}</span>
           </p>

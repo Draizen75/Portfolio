@@ -3,6 +3,7 @@ import GridPattern from './components/common/GridPattern';
 import Navigation from './components/navigation/Navigation';
 import Hero from './components/hero/Hero';
 import BackToTop from './components/backToTop/BackToTop';
+import StructuredData from './components/seo/StructuredData';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { useScrollDetection } from './hooks/useScrollDetection';
 import { scrollToSection } from './utils/scrollUtils';
@@ -35,8 +36,19 @@ export default function App() {
 
   return (
     <ThemeProvider>
+      <StructuredData />
+      <a
+        href="#home"
+        className="skip-link"
+        onClick={(event) => {
+          event.preventDefault();
+          handleSectionClick('home');
+        }}
+      >
+        Skip to main content
+      </a>
       <div className="relative min-h-screen overflow-x-hidden">
-        <div className="fixed inset-0 z-0 bg-[var(--page-bg)]">
+        <div className="fixed inset-0 z-0 bg-[var(--page-bg)]" aria-hidden="true">
           <GridPattern />
         </div>
         <div className="relative z-10 bg-transparent">
@@ -45,14 +57,16 @@ export default function App() {
             isScrolled={isScrolled}
             onSectionClick={handleSectionClick}
           />
-          <Hero onSectionClick={handleSectionClick} />
-          <Suspense fallback={null}>
-            <About />
-            <Skills />
-            <Projects />
-            <Contact />
-            <Footer />
-          </Suspense>
+          <main id="main-content">
+            <Hero onSectionClick={handleSectionClick} />
+            <Suspense fallback={null}>
+              <About />
+              <Skills />
+              <Projects />
+              <Contact />
+              <Footer />
+            </Suspense>
+          </main>
           <BackToTop isVisible={showBackToTop} />
         </div>
       </div>

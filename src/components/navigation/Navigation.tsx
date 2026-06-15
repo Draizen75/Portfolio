@@ -71,9 +71,17 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <div className="flex-shrink-0 cursor-pointer" onClick={handleLogoClick}>
-            <span className="type-logo">Draizen</span>
-          </div>
+          <a
+            href="#home"
+            onClick={(event) => {
+              event.preventDefault();
+              handleLogoClick();
+            }}
+            className="flex-shrink-0 type-logo"
+            aria-label="Draizen — go to home"
+          >
+            Draizen
+          </a>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">

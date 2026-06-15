@@ -1,53 +1,12 @@
 import { useState } from 'react';
 import { getProjectImages } from '../../utils/imageUtils';
+import { portfolioProjects, type PortfolioProject } from '../../data/projectsData';
 import AnimatedModal from '../ui/AnimatedModal';
 import ProjectGalleryModal from '../ProjectGalleryModal';
 
-const projects = [
-  {
-    title: 'SYD Commerce',
-    description: 'A modern e-commerce platform with a focus on user experience and performance.',
-    technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js'],
-    liveUrl: 'https://sydcommerce.com',
-    githubUrl: '#',
-    imageFolder: 'sydcommerce',
-  },
-  {
-    title: 'SYD POS',
-    description: 'A comprehensive Point of Sale system for managing sales, inventory, and transactions.',
-    technologies: ['React', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL'],
-    liveUrl: 'https://sydpos.biz',
-    githubUrl: '#',
-    imageFolder: 'sydpos',
-  },
-  {
-    title: 'Duola',
-    description:
-      'A multi-tenant birth support SaaS for doula agencies — automated prenatal-to-postpartum care journeys, white-label branding, secure messaging, birth plan PDFs, and HIPAA-ready tenant isolation.',
-    technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
-    liveUrl: 'https://www.birthflowapp.com/',
-    githubUrl: '#',
-    imageFolder: 'birthflow',
-  },
-  {
-    title: 'QR Code Generator',
-    description: 'A simple web app to convert URLs into QR codes instantly.',
-    technologies: ['Python', 'Flask'],
-    liveUrl: '#',
-    githubUrl: '#',
-    imageFolder: 'qr-generator',
-  },
-  {
-    title: 'Movie Recommendation System',
-    description: 'A personalized movie recommendation system using collaborative filtering.',
-    technologies: ['Python', 'Flask', 'TMDB API'],
-    liveUrl: '#',
-    githubUrl: '#',
-    imageFolder: 'Movie Recommendations System',
-  },
-];
+const projects = portfolioProjects;
 
-type Project = (typeof projects)[number];
+type Project = PortfolioProject;
 
 /**
  * Renders a gradient placeholder when a project has no cover image.
@@ -85,7 +44,7 @@ const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => vo
       </div>
 
       <div className="p-5 sm:p-8 md:p-10">
-        <h2 className="type-card-title">{project.title}</h2>
+        <h3 className="type-card-title">{project.title}</h3>
         <p className="mt-3 type-muted line-clamp-2">{project.description}</p>
         <div className="mt-6 flex flex-wrap gap-2">
           {project.technologies.slice(0, 3).map((tech) => (
@@ -125,12 +84,12 @@ export default function Projects() {
   const hasGallery = currentProjectImages.length > 0;
 
   return (
-    <section id="projects" className="relative pb-24 overflow-hidden bg-transparent">
+    <section id="projects" className="relative pb-24 overflow-hidden bg-transparent" aria-labelledby="projects-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-12 sm:mb-16 md:mb-24">
-          <h1 className="type-section-title">
+          <h2 id="projects-heading" className="type-section-title">
             My Projects
-          </h1>
+          </h2>
           <p className="type-section-lead px-4">
             Selected works and experiments that showcase my skills in development and problem-solving.
           </p>

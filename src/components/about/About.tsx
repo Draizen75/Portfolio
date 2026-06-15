@@ -180,6 +180,7 @@ export default function About() {
       ref={sectionRef}
       id="about"
       className="relative pb-24 bg-transparent"
+      aria-labelledby="about-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -190,9 +191,9 @@ export default function About() {
             <span className="type-eyebrow">About Me</span>
           </div>
           
-          <h1 className="type-section-title mb-8">
+          <h2 id="about-heading" className="type-section-title mb-8">
             Designing logic, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">crafting code.</span>
-          </h1>
+          </h2>
           
           <div className="max-w-2xl mx-auto">
             {/* Direct text rendering instead of TruncatedText */}

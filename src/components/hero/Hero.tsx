@@ -21,11 +21,12 @@ export default function Hero ({ onSectionClick }: HeroProps) {
     <section
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden bg-transparent pt-24 pb-16 sm:pt-28 sm:pb-20"
+      aria-labelledby="hero-heading"
     >
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-center gap-10 sm:gap-12 lg:gap-16 xl:gap-20">
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left flex-1 min-w-0 order-1">
-            <h1 className="type-display mb-5 sm:mb-6 break-words max-w-full">
+            <h1 id="hero-heading" className="type-display mb-5 sm:mb-6 break-words max-w-full">
               Lloyd Draizen Martirez
             </h1>
             <h2 className="type-hero-role mb-6 sm:mb-8 min-h-[2.5em] sm:min-h-[1.5em]">

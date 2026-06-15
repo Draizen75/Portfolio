@@ -71,6 +71,7 @@ export default function Contact() {
       ref={sectionRef}
       id="contact"
       className="relative bg-transparent pb-16 overflow-hidden"
+      aria-labelledby="contact-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
@@ -78,7 +79,7 @@ export default function Contact() {
         >
 
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="type-section-title">Get in Touch</h1>
+            <h2 id="contact-heading" className="type-section-title">Get in Touch</h2>
             <p className="type-section-lead px-4">
               Have a project in mind or want to connect? Reach out anytime.
             </p>

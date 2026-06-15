@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Block non-public build artifacts if ever exposed
+Disallow: /src/
+
 Sitemap: https://draizenmartirez.vercel.app/sitemap.xml

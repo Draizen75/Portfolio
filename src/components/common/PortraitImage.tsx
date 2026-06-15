@@ -37,7 +37,7 @@ export default function PortraitImage({
           <source srcSet="/images/portrait.webp" type="image/webp" />
           <img
             src="/images/portrait.png"
-            alt="Lloyd Draizen Martirez — Full Stack Developer"
+            alt="Lloyd Draizen Martirez — Web Developer"
             className="w-full h-full object-cover object-top"
             width={288}
             height={384}
