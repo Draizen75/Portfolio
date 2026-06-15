@@ -42,6 +42,7 @@ export function buildStructuredDataJson(): string {
       description: SITE_DESCRIPTION,
       inLanguage: 'en-PH',
       isPartOf: { '@id': `${SITE_URL}/#website` },
+      mainEntity: { '@id': `${SITE_URL}/#person` },
       about: { '@id': `${SITE_URL}/#person` },
       primaryImageOfPage: {
         '@type': 'ImageObject',
