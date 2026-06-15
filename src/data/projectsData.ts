@@ -51,6 +51,6 @@ export const portfolioProjects: PortfolioProject[] = [
     technologies: ['Python', 'Flask', 'TMDB API'],
     liveUrl: '#',
     githubUrl: '#',
-    imageFolder: 'Movie Recommendations System',
+    imageFolder: 'movie-recommendations-system',
   },
 ];

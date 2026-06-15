@@ -3,22 +3,11 @@ import { getProjectImages } from '../../utils/imageUtils';
 import { portfolioProjects, type PortfolioProject } from '../../data/projectsData';
 import AnimatedModal from '../ui/AnimatedModal';
 import ProjectGalleryModal from '../ProjectGalleryModal';
+import ProjectCoverArt from './ProjectCoverArt';
 
 const projects = portfolioProjects;
 
 type Project = PortfolioProject;
-
-/**
- * Renders a gradients placeholder when a project has no cover image.
- *
- * @param title - Project title shown on the placeholder
- */
-const ProjectCoverPlaceholder = ({ title }: { title: string }) => (
-  <div className="w-full h-full bg-slate-900 flex flex-col items-center justify-center px-6 text-center [contain:strict]">
-    <span className="font-serif text-2xl sm:text-3xl font-medium text-white">{title}</span>
-    <span className="mt-2 type-caption text-slate-400 uppercase tracking-widest">Live Project</span>
-  </div>
-);
 
 interface ProjectCardProps {
   project: Project;
@@ -62,7 +51,7 @@ const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCard
             className="w-full h-full object-cover transform-gpu md:group-hover:scale-[1.03] transition-transform duration-200 motion-reduce:transform-none motion-reduce:transition-none" 
           />
         ) : (
-          <ProjectCoverPlaceholder title={project.title} />
+          <ProjectCoverArt title={project.title} />
         )}
       </div>
 
@@ -160,7 +149,7 @@ export default function Projects() {
                   className="w-full h-full object-contain transform-gpu md:group-hover:scale-[1.02] transition-transform duration-200 motion-reduce:transform-none"
                 />
               ) : (
-                <ProjectCoverPlaceholder title={selectedProject.title} />
+                <ProjectCoverArt title={selectedProject.title} />
               )}
               {hasGallery && (
               <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 md:group-hover:opacity-100 pointer-events-none">
