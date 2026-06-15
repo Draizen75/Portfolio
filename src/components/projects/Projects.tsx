@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useTransition, memo } from 'react';
 import { getProjectImages } from '../../utils/imageUtils';
 import { portfolioProjects, type PortfolioProject } from '../../data/projectsData';
 import AnimatedModal from '../ui/AnimatedModal';
@@ -14,20 +14,43 @@ type Project = PortfolioProject;
  * @param title - Project title shown on the placeholder
  */
 const ProjectCoverPlaceholder = ({ title }: { title: string }) => (
-  <div className="w-full h-full bg-gradient-to-br from-slate-800 via-blue-900 to-indigo-900 flex flex-col items-center justify-center px-6 text-center">
+  <div className="w-full h-full bg-slate-900 flex flex-col items-center justify-center px-6 text-center [contain:strict]">
     <span className="font-serif text-2xl sm:text-3xl font-medium text-white">{title}</span>
-    <span className="mt-2 type-caption text-slate-300 uppercase tracking-widest">Live Project</span>
+    <span className="mt-2 type-caption text-slate-400 uppercase tracking-widest">Live Project</span>
   </div>
 );
 
-// --- Sub-Component: Project Card ---
-const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => void }) => {
+interface ProjectCardProps {
+  project: Project;
+  onSelect: (project: Project) => void;
+}
+
+/**
+ * Renders a single project card with cover image or placeholder.
+ *
+ * @param project - Portfolio project data
+ * @param onSelect - Callback when the card is activated
+ */
+const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const imageUrl = getProjectImages(project.imageFolder)[0] || '';
-  
+
+  const handleClick = (): void => {
+    onSelect(project);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>): void => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      onSelect(project);
+    }
+  };
+
   return (
-    <div 
-      className="group relative overflow-hidden rounded-[2.5rem] glass-surface glass-surface-hover shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] cursor-pointer transform-gpu transition-[transform,box-shadow] duration-200 motion-reduce:transition-none md:hover:-translate-y-1 md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)]"
-      onClick={onClick}
+    <button
+      type="button"
+      className="group relative overflow-hidden rounded-[2.5rem] glass-surface glass-surface-hover shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] cursor-pointer transform-gpu transition-[transform,box-shadow] duration-200 motion-reduce:transition-none md:hover:-translate-y-1 md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)] text-left w-full"
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
       <div className="relative h-52 xs:h-56 sm:h-64 md:h-72 overflow-hidden [contain:paint]">
         {imageUrl ? (
@@ -59,25 +82,38 @@ const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => vo
           )}
         </div>
       </div>
-    </div>
+    </button>
   );
-};
+});
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [, startTransition] = useTransition();
   
   // Gallery State
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [galleryImages, setGalleryImages] = useState<string[]>([]);
 
   // Helper to open the gallery from the details modal
-  const openGallery = (folderName: string) => {
+  const openGallery = useCallback((folderName: string) => {
     const images = getProjectImages(folderName);
     if (images.length > 0) {
       setGalleryImages(images);
       setIsGalleryOpen(true);
     }
-  };
+  }, []);
+
+  const handleProjectSelect = useCallback((project: Project) => {
+    startTransition(() => {
+      setSelectedProject(project);
+    });
+  }, [startTransition]);
+
+  const handleModalClose = useCallback(() => {
+    startTransition(() => {
+      setSelectedProject(null);
+    });
+  }, [startTransition]);
 
   // Get current project's images for the preview in the modal
   const currentProjectImages = selectedProject ? getProjectImages(selectedProject.imageFolder) : [];
@@ -97,7 +133,7 @@ export default function Projects() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
           {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} onClick={() => setSelectedProject(project)} />
+            <ProjectCard key={project.title} project={project} onSelect={handleProjectSelect} />
           ))}
         </div>
       </div>
@@ -105,7 +141,7 @@ export default function Projects() {
       {/* --- MODAL 1: Project Details (Not Fullscreen) --- */}
       <AnimatedModal 
         isOpen={!!selectedProject} 
-        onClose={() => setSelectedProject(null)}
+        onClose={handleModalClose}
         maxWidth="max-w-5xl"
       >
         {selectedProject && (
@@ -127,8 +163,8 @@ export default function Projects() {
                 <ProjectCoverPlaceholder title={selectedProject.title} />
               )}
               {hasGallery && (
-              <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                <span className="bg-black/70 text-white px-4 py-2 rounded-full type-caption backdrop-blur-sm flex items-center gap-2">
+              <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 md:group-hover:opacity-100 pointer-events-none">
+                <span className="bg-black/70 text-white px-4 py-2 rounded-full type-caption flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
                   View Gallery
                 </span>
