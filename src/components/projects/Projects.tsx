@@ -67,22 +67,21 @@ const ProjectCard = ({ project, onClick }: { project: Project; onClick: () => vo
   
   return (
     <div 
-      className="group relative overflow-hidden rounded-[2.5rem] glass-surface glass-surface-hover shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] transition-[transform,box-shadow,border-color,background-color] duration-500 hover:-translate-y-2 cursor-pointer"
+      className="group relative overflow-hidden rounded-[2.5rem] glass-surface glass-surface-hover shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] cursor-pointer transform-gpu transition-[transform,box-shadow] duration-200 motion-reduce:transition-none md:hover:-translate-y-1 md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)]"
       onClick={onClick}
     >
-      <div className="relative h-52 xs:h-56 sm:h-64 md:h-72 overflow-hidden">
+      <div className="relative h-52 xs:h-56 sm:h-64 md:h-72 overflow-hidden [contain:paint]">
         {imageUrl ? (
           <img 
             src={imageUrl} 
             alt={project.title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+            className="w-full h-full object-cover transform-gpu md:group-hover:scale-[1.03] transition-transform duration-200 motion-reduce:transform-none motion-reduce:transition-none" 
           />
         ) : (
           <ProjectCoverPlaceholder title={project.title} />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
 
       <div className="p-5 sm:p-8 md:p-10">
@@ -163,13 +162,13 @@ export default function Projects() {
                   alt={selectedProject.title}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-contain transform-gpu md:group-hover:scale-[1.02] transition-transform duration-200 motion-reduce:transform-none"
                 />
               ) : (
                 <ProjectCoverPlaceholder title={selectedProject.title} />
               )}
               {hasGallery && (
-              <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                 <span className="bg-black/70 text-white px-4 py-2 rounded-full type-caption backdrop-blur-sm flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
                   View Gallery
