@@ -1,9 +1,9 @@
-import { useState, useCallback, useTransition, memo } from 'react';
+import { useState, useCallback, useTransition, memo, useRef, useEffect } from 'react';
 import { getProjectImages } from '../../utils/imageUtils';
 import { portfolioProjects, type PortfolioProject } from '../../data/projectsData';
-import AnimatedModal from '../ui/AnimatedModal';
-import ProjectGalleryModal from '../ProjectGalleryModal';
 import ProjectCoverArt from './ProjectCoverArt';
+import ProjectDetail from './ProjectDetail';
+import AnimatedModal from '../ui/AnimatedModal';
 
 const projects = portfolioProjects;
 
@@ -14,12 +14,6 @@ interface ProjectCardProps {
   onSelect: (project: Project) => void;
 }
 
-/**
- * Renders a single project card with cover image or placeholder.
- *
- * @param project - Portfolio project data
- * @param onSelect - Callback when the card is activated
- */
 const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const imageUrl = getProjectImages(project.imageFolder)[0] || '';
 
@@ -37,38 +31,46 @@ const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCard
   return (
     <button
       type="button"
-      className="group relative overflow-hidden rounded-[2.5rem] glass-surface glass-surface-hover shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] cursor-pointer transform-gpu transition-[transform,box-shadow] duration-200 motion-reduce:transition-none md:hover:-translate-y-1 md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)] text-left w-full"
+      className="group relative overflow-hidden rounded-[2.5rem] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] cursor-pointer transform-gpu transition-[transform,box-shadow] duration-300 motion-reduce:transition-none md:hover:-translate-y-1 md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)] text-left w-full aspect-[4/5]"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="relative h-52 xs:h-56 sm:h-64 md:h-72 overflow-hidden [contain:paint]">
-        {imageUrl ? (
-          <img 
-            src={imageUrl} 
-            alt={project.title}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover transform-gpu md:group-hover:scale-[1.03] transition-transform duration-200 motion-reduce:transform-none motion-reduce:transition-none" 
-          />
-        ) : (
+      {/* Background Image */}
+      {imageUrl ? (
+        <img 
+          src={imageUrl} 
+          alt={project.title}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover transform-gpu group-hover:scale-[1.03] transition-transform duration-300 motion-reduce:transform-none"
+        />
+      ) : (
+        <div className="absolute inset-0 w-full h-full">
           <ProjectCoverArt title={project.title} />
-        )}
-      </div>
+        </div>
+      )}
 
-      <div className="p-5 sm:p-8 md:p-10">
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-300 group-hover:from-black/90 group-hover:via-black/50" />
+
+      {/* Content */}
+      <div className="relative h-full flex flex-col justify-end p-5 sm:p-6 md:p-8 text-white">
         <h3 className="type-card-title">{project.title}</h3>
-        <p className="mt-3 type-muted line-clamp-2">{project.description}</p>
-        <div className="mt-6 flex flex-wrap gap-2">
-          {project.technologies.slice(0, 3).map((tech) => (
-            <span key={tech} className="px-3 py-1 bg-white dark:bg-slate-800 type-label rounded-full border border-blue-100 dark:border-slate-700 shadow-sm">
-              {tech}
-            </span>
-          ))}
-          {project.technologies.length > 3 && (
-            <span className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 type-label text-blue-600 dark:text-blue-400 rounded-full border border-blue-100 dark:border-blue-800/30 shadow-sm">
-              +{project.technologies.length - 3} More
-            </span>
-          )}
+
+        <div className="mt-2 transition-all duration-300 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transform group-hover:translate-y-0">
+          <p className="mt-1 type-muted text-slate-300 line-clamp-2">{project.description}</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {project.technologies.slice(0, 3).map((tech) => (
+              <span key={tech} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-slate-200 type-label rounded-full border border-white/20">
+                {tech}
+              </span>
+            ))}
+            {project.technologies.length > 3 && (
+              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm text-blue-300 type-label rounded-full border border-white/20">
+                +{project.technologies.length - 3} More
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </button>
@@ -78,130 +80,111 @@ const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCard
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [, startTransition] = useTransition();
-  
-  // Gallery State
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [galleryImages, setGalleryImages] = useState<string[]>([]);
-
-  // Helper to open the gallery from the details modal
-  const openGallery = useCallback((folderName: string) => {
-    const images = getProjectImages(folderName);
-    if (images.length > 0) {
-      setGalleryImages(images);
-      setIsGalleryOpen(true);
-    }
-  }, []);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const handleProjectSelect = useCallback((project: Project) => {
     startTransition(() => {
       setSelectedProject(project);
     });
-  }, [startTransition]);
+  }, []);
 
   const handleModalClose = useCallback(() => {
     startTransition(() => {
       setSelectedProject(null);
     });
-  }, [startTransition]);
+  }, []);
 
-  // Get current project's images for the preview in the modal
-  const currentProjectImages = selectedProject ? getProjectImages(selectedProject.imageFolder) : [];
-  const hasGallery = currentProjectImages.length > 0;
+  const checkScrollability = useCallback(() => {
+    const el = scrollContainerRef.current;
+    if (el) {
+      const isScrollable = el.scrollWidth > el.clientWidth;
+      setCanScrollLeft(el.scrollLeft > 0);
+      setCanScrollRight(isScrollable && el.scrollLeft < el.scrollWidth - el.clientWidth - 1); // -1 for precision
+    }
+  }, []);
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (el) {
+      checkScrollability();
+      const debouncedCheck = () => setTimeout(checkScrollability, 200);
+      window.addEventListener('resize', debouncedCheck);
+      return () => window.removeEventListener('resize', debouncedCheck);
+    }
+  }, [checkScrollability]);
+
+  const scroll = (direction: 'left' | 'right') => {
+    const el = scrollContainerRef.current;
+    if (el) {
+      // Scroll by 80% of the container width for a nice page-like feel
+      const scrollAmount = el.clientWidth * 0.8;
+      el.scrollBy({ 
+        left: direction === 'left' ? -scrollAmount : scrollAmount, 
+        behavior: 'smooth' 
+      });
+    }
+  };
 
   return (
     <section id="projects" className="relative pb-24 overflow-hidden bg-transparent" aria-labelledby="projects-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-12 sm:mb-16 md:mb-24">
+        <div className="text-center mb-12 sm:mb-16">
           <h2 id="projects-heading" className="type-section-title">
             My Projects
           </h2>
-          <p className="type-section-lead px-4">
+          <p className="type-section-lead px-4 lg:px-0">
             Selected works and experiments that showcase my skills in development and problem-solving.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} onSelect={handleProjectSelect} />
-          ))}
+        <div className="relative">
+          <div 
+            ref={scrollContainerRef}
+            onScroll={checkScrollability}
+            className="overflow-x-auto pb-4 -mx-4 px-4 hide-scrollbar"
+          >
+            <div className="flex gap-4 sm:gap-8">
+              {projects.map((project) => (
+                <div key={project.title} className="w-[75vw] sm:w-[320px] shrink-0">
+                  <ProjectCard project={project} onSelect={handleProjectSelect} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Carousel Controls */}
+          <div className="flex justify-between items-center absolute top-1/2 -translate-y-1/2 w-full left-0 pointer-events-none">
+             <button
+              onClick={() => scroll('left')}
+              disabled={!canScrollLeft}
+              className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 disabled:opacity-0 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all -ml-2 sm:-ml-4"
+              aria-label="Scroll left"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button
+              onClick={() => scroll('right')}
+              disabled={!canScrollRight}
+              className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 disabled:opacity-0 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all -mr-2 sm:-mr-4"
+              aria-label="Scroll right"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* --- MODAL 1: Project Details (Not Fullscreen) --- */}
       <AnimatedModal 
         isOpen={!!selectedProject} 
         onClose={handleModalClose}
-        maxWidth="max-w-5xl"
+        maxWidth="max-w-6xl"
       >
         {selectedProject && (
-          <div className="flex flex-col md:flex-row md:min-h-[400px] md:h-[500px]">
-            {/* Left: Image Preview (Clickable) */}
-            <div 
-              className={`relative w-full md:w-1/2 h-48 sm:h-56 md:h-auto bg-gray-100 dark:bg-gray-800 group overflow-hidden flex items-center justify-center shrink-0 ${hasGallery ? 'cursor-zoom-in' : ''}`}
-              onClick={() => hasGallery && openGallery(selectedProject.imageFolder)}
-            >
-              {hasGallery ? (
-                <img 
-                  src={currentProjectImages[0]} 
-                  alt={selectedProject.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-contain transform-gpu md:group-hover:scale-[1.02] transition-transform duration-200 motion-reduce:transform-none"
-                />
-              ) : (
-                <ProjectCoverArt title={selectedProject.title} />
-              )}
-              {hasGallery && (
-              <div className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 md:group-hover:opacity-100 pointer-events-none">
-                <span className="bg-black/70 text-white px-4 py-2 rounded-full type-caption flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                  View Gallery
-                </span>
-              </div>
-              )}
-            </div>
-
-            {/* Right: Details */}
-            <div className="w-full md:w-1/2 p-5 sm:p-8 flex flex-col bg-white dark:bg-gray-900 min-h-0">
-              <h3 className="type-subsection-title mb-2">{selectedProject.title}</h3>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {selectedProject.technologies.map((tech) => (
-                  <span key={tech} className="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 type-caption text-slate-700 dark:text-slate-300 rounded border border-gray-200 dark:border-gray-700">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              
-              <div className="type-body mb-8 flex-grow overflow-y-auto">
-                <p>{selectedProject.description}</p>
-              </div>
-
-              <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 mt-auto pt-6 border-t border-gray-100 dark:border-gray-800">
-                {selectedProject.liveUrl !== '#' && (
-                  <a href={selectedProject.liveUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-xl type-button hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20">
-                    Visit Site
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                  </a>
-                )}
-                {selectedProject.githubUrl !== '#' && (
-                  <a href={selectedProject.githubUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-2 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white py-3 rounded-xl type-button hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    GitHub
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
+          <ProjectDetail key={selectedProject.title} project={selectedProject} />
         )}
       </AnimatedModal>
-
-      {/* --- ADDED THIS SECTION BELOW --- */}
-      <ProjectGalleryModal 
-        isOpen={isGalleryOpen}
-        onClose={() => setIsGalleryOpen(false)}
-        images={galleryImages}
-      />
-
     </section>
   );
 }

@@ -3,27 +3,30 @@
  * Initializes Google Analytics 4 (GA4) if the measurement ID is provided in environment variables.
  */
 
+type GtagCommand = 'config' | 'event' | 'js' | 'set';
+
 declare global {
   interface Window {
-    dataLayer: any[];
-    gtag: (...args: any[]) => void;
+    dataLayer: unknown[];
+    gtag: (command: GtagCommand | string, ...args: unknown[]) => void;
   }
 }
 
-export const initGoogleAnalytics = () => {
+/**
+ * Initializes Google Analytics when a measurement ID is configured.
+ */
+export const initGoogleAnalytics = (): void => {
   const gaId = import.meta.env.VITE_GOOGLE_ANALYTICS_ID;
 
   if (gaId) {
-    // Create the script tag for the GA library
     const script = document.createElement('script');
     script.async = true;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
     document.head.appendChild(script);
 
-    // Initialize the dataLayer and gtag function
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function() {
-      window.dataLayer.push(arguments);
+    window.gtag = (...args: unknown[]) => {
+      window.dataLayer.push(args);
     };
 
     window.gtag('js', new Date());

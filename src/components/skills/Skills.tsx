@@ -44,26 +44,27 @@ export default function Skills() {
   ];
 
   useEffect(() => {
+    const sectionElement = sectionRef.current;
+    if (!sectionElement) {
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
-            observer.disconnect(); // Only trigger once
+            observer.disconnect();
           }
         });
       },
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    observer.observe(sectionElement);
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+      observer.disconnect();
     };
   }, []);
 

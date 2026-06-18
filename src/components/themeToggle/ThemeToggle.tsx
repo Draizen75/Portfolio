@@ -4,7 +4,7 @@
  * Button to toggle between light and dark themes.
  */
 
-import { useTheme } from '../../contexts/ThemeContext';
+import { useTheme } from '../../hooks/useTheme';
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();

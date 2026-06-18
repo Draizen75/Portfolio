@@ -4,7 +4,7 @@ import Navigation from './components/navigation/Navigation';
 import Hero from './components/hero/Hero';
 import BackToTop from './components/backToTop/BackToTop';
 import StructuredData from './components/seo/StructuredData';
-import { ThemeProvider } from './contexts/ThemeContext';
+import { ThemeProvider } from './contexts/ThemeProvider';
 import { useScrollDetection } from './hooks/useScrollDetection';
 import { scrollToSection } from './utils/scrollUtils';
 
