@@ -6,8 +6,9 @@
  * * Removed TruncatedText dependency.
  */
 
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import PortraitImage from '../common/PortraitImage';
+import { motion } from 'framer-motion';
 
 // --- Interfaces ---
 interface EducationItem {
@@ -126,16 +127,18 @@ const SectionHeader = ({ title, icon: Icon }: { title: string; icon: React.FC<Re
   </div>
 );
 
-const GlassCard = ({ children, className = "", delay = 0, isVisible }: { children: React.ReactNode; className?: string; delay?: number; isVisible: boolean }) => (
-  <div
+const GlassCard = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number; }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.6, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
     className={`
       relative overflow-hidden rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]
-      entrance-motion group hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)]
+      group hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)]
       glass-surface glass-surface-hover
-      ${isVisible ? 'entrance-visible' : 'entrance-hidden'}
       ${className}
     `}
-    style={{ transitionDelay: `${delay}ms` }}
   >
     {/* Hover Gradient Effect */}
     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/[0.01] to-blue-500/[0.05] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -143,7 +146,7 @@ const GlassCard = ({ children, className = "", delay = 0, isVisible }: { childre
     <div className="relative z-10 p-5 sm:p-8">
       {children}
     </div>
-  </div>
+  </motion.div>
 );
 
 const DateBadge = ({ date }: { date: string }) => (
@@ -155,25 +158,9 @@ const DateBadge = ({ date }: { date: string }) => (
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   const aboutIntro =
     "I’m a detail-oriented developer who enjoys turning complex problems into simple, intuitive digital experiences. I care about clean code, great UX, and building products that feel fast and reliable on every device.";
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <section
@@ -185,7 +172,13 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* --- Header & Bio --- */}
-        <div className={`text-center mb-16 md:mb-24 entrance-motion ${isVisible ? 'entrance-visible' : 'entrance-hidden'}`}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16 md:mb-24"
+        >
           <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 backdrop-blur-sm">
             <Icons.User className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mr-2" />
             <span className="type-eyebrow">About Me</span>
@@ -202,12 +195,13 @@ export default function About() {
             </p>
           </div>
 
-          <PortraitImage
-            size="about"
-            className={`mt-10 sm:mt-12 lg:hidden entrance-motion ${isVisible ? 'entrance-visible' : 'entrance-hidden'}`}
-            loading="lazy"
-          />
-        </div>
+          <div className="mt-10 sm:mt-12 lg:hidden">
+            <PortraitImage
+              size="about"
+              loading="lazy"
+            />
+          </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-16 items-start">
           
@@ -219,7 +213,7 @@ export default function About() {
               <SectionHeader title="Education" icon={Icons.GraduationCap} />
               <div className="space-y-4">
                 {education.map((edu, index) => (
-                  <GlassCard key={index} isVisible={isVisible} delay={100 + (index * 100)}>
+                  <GlassCard key={index} delay={100 + (index * 100)}>
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="type-card-title">
                         {edu.degree}
@@ -237,7 +231,7 @@ export default function About() {
               <SectionHeader title="Certifications" icon={Icons.Award} />
               <div className="space-y-4">
                 {certifications.map((cert, index) => (
-                  <GlassCard key={index} isVisible={isVisible} delay={300 + (index * 100)}>
+                  <GlassCard key={index} delay={300 + (index * 100)}>
                     <div className="flex flex-col gap-2">
                       <h3 className="type-card-title">
                         {cert.title}
@@ -277,18 +271,17 @@ export default function About() {
               <div className="space-y-8 sm:space-y-10 lg:space-y-12">
                 {workExperience.map((work, index) => (
                   <div key={index} className="relative">
-                    <span
-                      className={`
-                        absolute left-[11px] top-6 z-10 h-5 w-5 -translate-x-1/2 rounded-full
-                        border-4 border-white dark:border-slate-950 bg-blue-600
-                        entrance-motion delay-300
-                        ${isVisible ? 'entrance-visible' : 'entrance-hidden'}
-                      `}
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.4, delay: 0.3 + (index * 0.15) }}
+                      className="absolute left-[11px] top-6 z-10 h-5 w-5 -translate-x-1/2 rounded-full border-4 border-white dark:border-slate-950 bg-blue-600"
                       aria-hidden="true"
                     />
 
                     <div className="pl-10">
-                      <GlassCard isVisible={isVisible} delay={500 + (index * 150)}>
+                      <GlassCard delay={500 + (index * 150)}>
                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
                           <div>
                             <h3 className="type-card-title">

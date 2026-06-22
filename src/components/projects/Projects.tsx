@@ -1,4 +1,4 @@
-import { useState, useCallback, useTransition, memo, useRef, useEffect } from 'react';
+import { useState, useCallback, useTransition, memo, useRef } from 'react';
 import { getProjectImages } from '../../utils/imageUtils';
 import { portfolioProjects, type PortfolioProject } from '../../data/projectsData';
 import ProjectCoverArt from './ProjectCoverArt';
@@ -16,6 +16,8 @@ interface ProjectCardProps {
 
 const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const imageUrl = getProjectImages(project.imageFolder)[0] || '';
+  const cardRef = useRef<HTMLButtonElement>(null);
+  const [transformStyle, setTransformStyle] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
 
   const handleClick = (): void => {
     onSelect(project);
@@ -28,61 +30,93 @@ const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCard
     }
   };
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Disable 3D tilt effect on touch devices to avoid scroll glitching
+    if (typeof window !== 'undefined' && window.matchMedia && !window.matchMedia('(pointer: fine)').matches) {
+      return;
+    }
+    
+    if (!cardRef.current) return;
+    const { left, top, width, height } = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - left) / width; // 0 to 1
+    const y = (e.clientY - top) / height; // 0 to 1
+
+    const rotateX = (y - 0.5) * -10; // max 5 deg
+    const rotateY = (x - 0.5) * 10; // max 5 deg
+
+    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+  };
+
+  const handleMouseLeave = () => {
+    setTransformStyle('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+  };
+
   return (
-    <button
-      type="button"
-      className="group relative overflow-hidden rounded-[2.5rem] shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] cursor-pointer transform-gpu transition-[transform,box-shadow] duration-300 motion-reduce:transition-none md:hover:-translate-y-1 md:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)] text-left w-full aspect-[4/5]"
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-    >
-      {/* Background Image */}
-      {imageUrl ? (
-        <img 
-          src={imageUrl} 
-          alt={project.title}
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover transform-gpu group-hover:scale-[1.03] transition-transform duration-300 motion-reduce:transform-none"
-        />
-      ) : (
-        <div className="absolute inset-0 w-full h-full">
-          <ProjectCoverArt title={project.title} />
+    <div className="w-full h-full" style={{ perspective: '1000px' }}>
+      <button
+        ref={cardRef}
+        type="button"
+        className="group relative flex flex-col w-full h-full bg-white dark:bg-slate-900 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.4)] text-left overflow-hidden border border-slate-100 dark:border-slate-800/80 transition-shadow duration-300 will-change-transform ease-out"
+        style={{ transform: transformStyle, transition: transformStyle.includes('scale3d(1, 1, 1)') ? 'transform 0.5s ease-out' : 'none' }}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Top: Image Container */}
+        <div className="relative w-full aspect-[16/10] bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0">
+          {imageUrl ? (
+            <img 
+              src={imageUrl} 
+              alt={project.title}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover transform-gpu group-hover:scale-105 transition-transform duration-700 ease-out motion-reduce:transform-none"
+            />
+          ) : (
+            <div className="absolute inset-0 w-full h-full transition-transform duration-700 ease-out group-hover:scale-105">
+              <ProjectCoverArt title={project.title} />
+            </div>
+          )}
+          
+          {/* Subtle overlay to enhance hover effect without obscuring */}
+          <div className="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/10 transition-colors duration-300" />
         </div>
-      )}
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-all duration-300 group-hover:from-black/90 group-hover:via-black/50" />
-
-      {/* Content */}
-      <div className="relative h-full flex flex-col justify-end p-5 sm:p-6 md:p-8 text-white">
-        <h3 className="type-card-title">{project.title}</h3>
-
-        <div className="mt-2 transition-all duration-300 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transform group-hover:translate-y-0">
-          <p className="mt-1 type-muted text-slate-300 line-clamp-2">{project.description}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
+        {/* Bottom: Content Footer */}
+        <div className="flex flex-col flex-grow p-5 sm:p-6 bg-white dark:bg-slate-900">
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            {project.title}
+          </h3>
+          
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed mb-5 line-clamp-2 flex-grow">
+            {project.description}
+          </p>
+          
+          <div className="flex flex-wrap gap-2 mt-auto">
             {project.technologies.slice(0, 3).map((tech) => (
-              <span key={tech} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-slate-200 type-label rounded-full border border-white/20">
+              <span 
+                key={tech} 
+                className="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-md border border-slate-200/60 dark:border-slate-700/50"
+              >
                 {tech}
               </span>
             ))}
             {project.technologies.length > 3 && (
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm text-blue-300 type-label rounded-full border border-white/20">
-                +{project.technologies.length - 3} More
+              <span className="px-2.5 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-md border border-blue-100 dark:border-blue-800/30">
+                +{project.technologies.length - 3}
               </span>
             )}
           </div>
         </div>
-      </div>
-    </button>
+      </button>
+    </div>
   );
 });
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [, startTransition] = useTransition();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const handleProjectSelect = useCallback((project: Project) => {
     startTransition(() => {
@@ -96,37 +130,6 @@ export default function Projects() {
     });
   }, []);
 
-  const checkScrollability = useCallback(() => {
-    const el = scrollContainerRef.current;
-    if (el) {
-      const isScrollable = el.scrollWidth > el.clientWidth;
-      setCanScrollLeft(el.scrollLeft > 0);
-      setCanScrollRight(isScrollable && el.scrollLeft < el.scrollWidth - el.clientWidth - 1); // -1 for precision
-    }
-  }, []);
-
-  useEffect(() => {
-    const el = scrollContainerRef.current;
-    if (el) {
-      checkScrollability();
-      const debouncedCheck = () => setTimeout(checkScrollability, 200);
-      window.addEventListener('resize', debouncedCheck);
-      return () => window.removeEventListener('resize', debouncedCheck);
-    }
-  }, [checkScrollability]);
-
-  const scroll = (direction: 'left' | 'right') => {
-    const el = scrollContainerRef.current;
-    if (el) {
-      // Scroll by 80% of the container width for a nice page-like feel
-      const scrollAmount = el.clientWidth * 0.8;
-      el.scrollBy({ 
-        left: direction === 'left' ? -scrollAmount : scrollAmount, 
-        behavior: 'smooth' 
-      });
-    }
-  };
-
   return (
     <section id="projects" className="relative pb-24 overflow-hidden bg-transparent" aria-labelledby="projects-heading">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -139,40 +142,11 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="relative">
-          <div 
-            ref={scrollContainerRef}
-            onScroll={checkScrollability}
-            className="overflow-x-auto pb-4 -mx-4 px-4 hide-scrollbar"
-          >
-            <div className="flex gap-4 sm:gap-8">
-              {projects.map((project) => (
-                <div key={project.title} className="w-[75vw] sm:w-[320px] shrink-0">
-                  <ProjectCard project={project} onSelect={handleProjectSelect} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Carousel Controls */}
-          <div className="flex justify-between items-center absolute top-1/2 -translate-y-1/2 w-full left-0 pointer-events-none">
-             <button
-              onClick={() => scroll('left')}
-              disabled={!canScrollLeft}
-              className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 disabled:opacity-0 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all -ml-2 sm:-ml-4"
-              aria-label="Scroll left"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-            <button
-              onClick={() => scroll('right')}
-              disabled={!canScrollRight}
-              className="pointer-events-auto p-2 sm:p-3 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 disabled:opacity-0 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-all -mr-2 sm:-mr-4"
-              aria-label="Scroll right"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 6 6 6-6 6"/></svg>
-            </button>
-          </div>
+        {/* Responsive Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
+          {projects.map((project) => (
+            <ProjectCard key={project.title} project={project} onSelect={handleProjectSelect} />
+          ))}
         </div>
       </div>
 
