@@ -13,6 +13,22 @@ export interface PortfolioProject {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
+    title: 'Portfolio',
+    description: 'A modern, responsive developer portfolio featuring a dynamic UI, horizontal swipe layouts, and optimized performance.',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Framer Motion'],
+    liveUrl: 'https://draizenmartirez.vercel.app/',
+    githubUrl: '#',
+    imageFolder: 'portfolio',
+  },
+  {
+    title: 'Onad Motorshop',
+    description: 'A website for a premium motorcycle repair, maintenance, and parts fitting shop in Bato, Camarines Sur.',
+    technologies: ['Angular', 'TypeScript', 'Tailwind CSS', 'RxJS', 'Vercel'],
+    liveUrl: 'https://onadmotorshop.vercel.app/',
+    githubUrl: '#',
+    imageFolder: 'onadmotorshop',
+  },
+  {
     title: 'SYD Commerce',
     description: 'A modern e-commerce platform with a focus on user experience and performance.',
     technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'PostgreSQL', 'Prisma'],
@@ -38,14 +54,6 @@ export const portfolioProjects: PortfolioProject[] = [
     imageFolder: 'birthflow',
   },
   {
-    title: 'QR Code Generator',
-    description: 'A simple web app to convert URLs into QR codes instantly.',
-    technologies: ['Python', 'Flask', 'HTML/CSS', 'JavaScript', 'PyQRCode', 'Pillow', 'Jinja2'],
-    liveUrl: '#',
-    githubUrl: '#',
-    imageFolder: 'qr-generator',
-  },
-  {
     title: 'CertiGen PH',
     description: 'A free bulk certificate generator that creates accurate certificates from Word templates and Excel/CSV data.',
     technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel', 'Docxtemplater', 'JSZip', 'SheetJS'],
@@ -62,11 +70,12 @@ export const portfolioProjects: PortfolioProject[] = [
     imageFolder: 'pricelistph',
   },
   {
-    title: 'Onad Motorshop',
-    description: 'A website for a premium motorcycle repair, maintenance, and parts fitting shop in Bato, Camarines Sur.',
-    technologies: ['Angular', 'TypeScript', 'Tailwind CSS', 'RxJS', 'Vercel'],
-    liveUrl: 'https://onadmotorshop.vercel.app/',
+    title: 'QR Code Generator',
+    description: 'A simple web app to convert URLs into QR codes instantly.',
+    technologies: ['Python', 'Flask', 'HTML/CSS', 'JavaScript', 'PyQRCode', 'Pillow', 'Jinja2'],
+    liveUrl: '#',
     githubUrl: '#',
-    imageFolder: 'onadmotorshop',
+    imageFolder: 'qr-generator',
   },
+
 ];

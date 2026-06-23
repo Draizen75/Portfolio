@@ -142,10 +142,12 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Responsive Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
-          {projects.map((project) => (
-            <ProjectCard key={project.title} project={project} onSelect={handleProjectSelect} />
+        {/* Responsive Layout: Horizontal Swipe on Mobile, Grid on Desktop */}
+        <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto snap-x snap-mandatory pb-8 md:pb-0 md:overflow-visible [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden -mx-4 px-4 sm:-mx-6 sm:px-6 md:mx-auto md:px-0 scroll-pl-4 sm:scroll-pl-6 md:scroll-pl-0">
+          {projects.map((project, index) => (
+            <div key={project.title} className={`snap-start shrink-0 w-[80vw] max-w-[320px] md:w-auto md:max-w-none ${index === projects.length - 1 ? 'pr-4 sm:pr-6 md:pr-0' : ''}`}>
+              <ProjectCard project={project} onSelect={handleProjectSelect} />
+            </div>
           ))}
         </div>
       </div>

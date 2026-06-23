@@ -32,7 +32,7 @@ export default function BackToTop({ isVisible }: BackToTopProps) {
       initial={{ opacity: 0, scale: 0 }}
       animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0 }}
       transition={{ duration: 0.3 }}
-      className="fixed left-auto right-4 bottom-4 sm:right-8 sm:bottom-8 z-[1050] w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-slate-900 shadow-lg flex items-center justify-center group pointer-events-auto border-2 border-transparent"
+      className="fixed left-auto right-4 bottom-4 sm:right-8 sm:bottom-8 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-slate-900 shadow-lg flex items-center justify-center group pointer-events-auto border-2 border-transparent"
       aria-label="Back to top"
     >
       <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 100 100">
