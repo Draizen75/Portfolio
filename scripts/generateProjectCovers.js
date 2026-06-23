@@ -10,20 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const imagesDir = path.join(__dirname, '../public/images');
 
-const projectCovers = [
-  {
-    folder: 'qr-generator',
-    fileName: 'qr-generator.svg',
-    title: 'QR Code Generator',
-    subtitle: 'FLASK WEB APP',
-  },
-  {
-    folder: 'movie-recommendations-system',
-    fileName: 'movie-recommendations-system.svg',
-    title: 'Movie Recommendation System',
-    subtitle: 'RECOMMENDATION ENGINE',
-  },
-];
+const projectCovers = [];
 
 /**
  * Builds a glowing project cover SVG matching the Duola placeholder style.

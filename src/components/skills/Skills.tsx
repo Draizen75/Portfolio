@@ -99,7 +99,7 @@ export default function Skills() {
         </motion.div>
         
         <div 
-          className="relative w-full max-w-[100vw] overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0 mt-6 sm:mt-8 flex flex-col gap-1.5 sm:gap-2"
+          className="relative w-[calc(100%+2rem)] sm:w-full max-w-[100vw] overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0 mt-6 sm:mt-8 flex flex-col gap-1.5 sm:gap-2"
           style={{ 
             maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
             WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' 
