@@ -141,20 +141,47 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
           will-change: transform, opacity;
         }
         html.dark .preloader-overlay {
           background-color: #0a0a0f;
         }
+        .preloader-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.5rem;
+        }
         .preloader-logo {
-          width: 96px;
-          height: 96px;
+          width: 88px;
+          height: 88px;
           opacity: 0;
           transform: scale(0.85);
-          animation: preloader-logo-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
-                     preloader-logo-pulse 2.2s ease-in-out infinite alternate 0.8s;
-          will-change: transform, opacity, filter;
+          animation: preloader-logo-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          will-change: transform, opacity;
+        }
+        .preloader-bar-container {
+          width: 120px;
+          height: 2px;
+          background-color: rgba(59, 130, 246, 0.08);
+          border-radius: 9999px;
+          overflow: hidden;
+          position: relative;
+        }
+        html.dark .preloader-bar-container {
+          background-color: rgba(96, 165, 250, 0.08);
+        }
+        .preloader-bar {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 100%;
+          background: linear-gradient(90deg, #3b82f6, #60a5fa, #4f46e5);
+          border-radius: 9999px;
+          animation: preloader-bar-load 1.8s cubic-bezier(0.65, 0.05, 0.36, 1) infinite;
+          transform-origin: left;
         }
         .preloader-overlay.exit {
           opacity: 0;
@@ -167,18 +194,27 @@
             transform: scale(1);
           }
         }
-        @keyframes preloader-logo-pulse {
+        @keyframes preloader-bar-load {
           0% {
-            transform: scale(1);
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.15));
+            transform: scaleX(0);
+            left: 0;
+          }
+          50% {
+            transform: scaleX(0.4);
+            left: 30%;
           }
           100% {
-            transform: scale(1.05);
-            filter: drop-shadow(0 0 24px rgba(96, 165, 250, 0.5));
+            transform: scaleX(0);
+            left: 100%;
           }
         }
       </style>
-      <img src="/images/logo_mark.webp" alt="Draizen Logo" class="preloader-logo" />
+      <div class="preloader-content">
+        <img src="/images/logo_mark.webp" alt="Draizen Logo" class="preloader-logo" />
+        <div class="preloader-bar-container">
+          <div class="preloader-bar"></div>
+        </div>
+      </div>
     </div>
     
     <script>
@@ -187,13 +223,13 @@
         var isDismissed = false;
         var minTimeElapsed = false;
 
-        // Ensure preloader displays for at least 350ms
+        // Ensure preloader displays for at least 1500ms
         setTimeout(function() {
           minTimeElapsed = true;
           if (isDismissed) {
             triggerExit();
           }
-        }, 350);
+        }, 1500);
 
         function triggerExit() {
           if (overlay) {
@@ -202,7 +238,7 @@
               if (overlay.parentNode) {
                 overlay.parentNode.removeChild(overlay);
               }
-            }, 400);
+            }, 600);
           }
         }
 
@@ -211,7 +247,7 @@
           if (minTimeElapsed) {
             triggerExit();
           } else {
-            var timeRemaining = 350 - (Date.now() - (window.preloaderStartTime || Date.now()));
+            var timeRemaining = 1500 - (Date.now() - (window.preloaderStartTime || Date.now()));
             setTimeout(triggerExit, Math.max(0, timeRemaining));
           }
         };
