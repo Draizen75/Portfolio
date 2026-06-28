@@ -34,9 +34,9 @@ export default function Hero({ onSectionClick }: HeroProps) {
         <div className="flex flex-col lg:flex-row items-center lg:items-center gap-10 sm:gap-12 lg:gap-16 xl:gap-20">
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left flex-1 min-w-0 order-1">
             <motion.h1 
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: easeCurve }}
+              transition={{ duration: 0.5, ease: easeCurve }}
               id="hero-heading" 
               className="type-display mb-5 sm:mb-6 break-words max-w-full"
             >
@@ -44,18 +44,18 @@ export default function Hero({ onSectionClick }: HeroProps) {
             </motion.h1>
             
             <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: easeCurve }}
+              transition={{ duration: 0.5, delay: 0.05, ease: easeCurve }}
               className="type-hero-role mb-6 sm:mb-8 min-h-[2.5em] sm:min-h-[1.5em]"
             >
               I'm a <span className="font-medium text-blue-600 dark:text-blue-400">{typedText}</span>
             </motion.h2>
             
             <motion.p 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: easeCurve }}
+              transition={{ duration: 0.5, delay: 0.1, ease: easeCurve }}
               className="type-hero-lead mb-10 sm:mb-12 lg:max-w-lg lg:mx-0"
             >
               I create beautiful, functional, and user-centric web experiences.
@@ -63,9 +63,9 @@ export default function Hero({ onSectionClick }: HeroProps) {
             </motion.p>
             
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}
+              transition={{ duration: 0.5, delay: 0.15, ease: easeCurve }}
               className="flex flex-col xs:flex-row gap-4 w-full xs:w-auto lg:justify-start"
             >
               <MagneticButton>

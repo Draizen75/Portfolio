@@ -58,6 +58,7 @@
     <meta name="twitter:image:alt" content="Lloyd Draizen Martirez — Web Developer &amp; Data Analyst portfolio" />
 
     <!-- Identity & canonical -->
+    <link rel="preload" as="image" href="/images/logo_mark.webp" type="image/webp" />
     <link rel="canonical" href="https://draizenmartirez.vercel.app/" />
     <link rel="me" href="https://github.com/Draizen75" />
     <link rel="me" href="https://www.linkedin.com/in/lloydmartirez/" />
@@ -140,7 +141,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           will-change: transform, opacity;
         }
         html.dark .preloader-overlay {
@@ -186,13 +187,13 @@
         var isDismissed = false;
         var minTimeElapsed = false;
 
-        // Ensure preloader displays for at least 800ms
+        // Ensure preloader displays for at least 350ms
         setTimeout(function() {
           minTimeElapsed = true;
           if (isDismissed) {
             triggerExit();
           }
-        }, 800);
+        }, 350);
 
         function triggerExit() {
           if (overlay) {
@@ -201,7 +202,7 @@
               if (overlay.parentNode) {
                 overlay.parentNode.removeChild(overlay);
               }
-            }, 800);
+            }, 400);
           }
         }
 
@@ -210,7 +211,7 @@
           if (minTimeElapsed) {
             triggerExit();
           } else {
-            var timeRemaining = 800 - (Date.now() - (window.preloaderStartTime || Date.now()));
+            var timeRemaining = 350 - (Date.now() - (window.preloaderStartTime || Date.now()));
             setTimeout(triggerExit, Math.max(0, timeRemaining));
           }
         };
