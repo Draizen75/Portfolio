@@ -10,7 +10,7 @@ import sharp from 'sharp';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicDir = path.join(__dirname, '../public');
-const svgPath = path.join(publicDir, 'favicon.svg');
+const logoMarkPath = path.join(publicDir, 'images/logo_mark.png');
 
 const sizes = [
   { name: 'favicon-32x32.png', size: 32 },
@@ -19,17 +19,17 @@ const sizes = [
 ];
 
 /**
- * Renders raster favicon files from the SVG source.
+ * Renders raster favicon files from the new logo mark source.
  */
 async function generateFavicons() {
-  if (!fs.existsSync(svgPath)) {
-    throw new Error('Missing public/favicon.svg');
+  if (!fs.existsSync(logoMarkPath)) {
+    throw new Error('Missing public/images/logo_mark.png');
   }
 
-  const svgBuffer = fs.readFileSync(svgPath);
+  const logoBuffer = fs.readFileSync(logoMarkPath);
 
   for (const { name, size } of sizes) {
-    await sharp(svgBuffer)
+    await sharp(logoBuffer)
       .resize(size, size)
       .png()
       .toFile(path.join(publicDir, name));

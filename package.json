@@ -11,6 +11,7 @@
     "generate:og-image": "node scripts/generateOgImage.js",
     "generate:project-covers": "node scripts/generateProjectCovers.js",
     "generate:seo": "node scripts/generateSeoFiles.js",
+    "optimize:images": "node scripts/optimizeWebpImages.js",
     "predev": "npm run convert:images && npm run generate:project-covers && npm run generate:og-image && npm run generate:images && npm run generate:icons && npm run generate:favicons && npm run generate:seo",
     "dev": "vite",
     "prebuild": "npm run convert:images && npm run generate:project-covers && npm run generate:og-image && npm run generate:images && npm run generate:icons && npm run generate:favicons && npm run generate:seo",

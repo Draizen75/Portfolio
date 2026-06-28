@@ -21,7 +21,7 @@ const SkillCard = ({ skill }: { skill: string }) => {
                 <title>{iconData.title}</title>
                 <path d={iconData.path} />
               </svg>
-              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 absolute inset-0 opacity-0 group-hover:opacity-30 blur-md sm:blur-lg transition-opacity duration-300" style={{ fill: `#${iconData.hex}` }}>
+              <svg aria-hidden="true" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 absolute inset-0 opacity-0 group-hover:opacity-30 blur-md sm:blur-lg transition-opacity duration-300" style={{ fill: `#${iconData.hex}` }}>
                 <path d={iconData.path} />
               </svg>
             </div>

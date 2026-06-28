@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback } from 'react';
+import { lazy, Suspense, useCallback, useEffect } from 'react';
 import GridPattern from './components/common/GridPattern';
 import Navigation from './components/navigation/Navigation';
 import Hero from './components/hero/Hero';
@@ -23,6 +23,13 @@ const Footer = lazy(() => import('./components/footer/Footer'));
 export default function App() {
   const sections: string[] = ['home', 'about', 'skills', 'projects', 'contact'];
   const { activeSection, isScrolled, showBackToTop, setActiveSection } = useScrollDetection(sections);
+
+  useEffect(() => {
+    // Dismiss preloader once the App mounts
+    if (typeof window !== 'undefined' && (window as any).dismissPreloader) {
+      (window as any).dismissPreloader();
+    }
+  }, []);
 
   /**
    * Handles section navigation clicks

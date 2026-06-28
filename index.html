@@ -65,8 +65,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
-
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <!-- Structured Data (JSON-LD) — static baseline for non-JS crawlers -->
     <script type="application/ld+json">
       {
@@ -129,6 +129,96 @@
     <meta name="google-site-verification" content="rWv0kbBERT9kJpBfm4dqen08mrVXXuggqeCVz2zKiGM" />
   </head>
   <body>
+    <!-- Premium Logo Preloader Overlay -->
+    <div id="preloader" class="preloader-overlay">
+      <style>
+        .preloader-overlay {
+          position: fixed;
+          inset: 0;
+          background-color: #f8fafc;
+          z-index: 99999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: transform, opacity;
+        }
+        html.dark .preloader-overlay {
+          background-color: #0a0a0f;
+        }
+        .preloader-logo {
+          width: 96px;
+          height: 96px;
+          opacity: 0;
+          transform: scale(0.85);
+          animation: preloader-logo-enter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+                     preloader-logo-pulse 2.2s ease-in-out infinite alternate 0.8s;
+          will-change: transform, opacity, filter;
+        }
+        .preloader-overlay.exit {
+          opacity: 0;
+          pointer-events: none;
+          transform: scale(1.04);
+        }
+        @keyframes preloader-logo-enter {
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        @keyframes preloader-logo-pulse {
+          0% {
+            transform: scale(1);
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.15));
+          }
+          100% {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 24px rgba(96, 165, 250, 0.5));
+          }
+        }
+      </style>
+      <img src="/images/logo_mark.webp" alt="Draizen Logo" class="preloader-logo" />
+    </div>
+    
+    <script>
+      (function() {
+        var overlay = document.getElementById('preloader');
+        var isDismissed = false;
+        var minTimeElapsed = false;
+
+        // Ensure preloader displays for at least 800ms
+        setTimeout(function() {
+          minTimeElapsed = true;
+          if (isDismissed) {
+            triggerExit();
+          }
+        }, 800);
+
+        function triggerExit() {
+          if (overlay) {
+            overlay.classList.add('exit');
+            setTimeout(function() {
+              if (overlay.parentNode) {
+                overlay.parentNode.removeChild(overlay);
+              }
+            }, 800);
+          }
+        }
+
+        window.dismissPreloader = function() {
+          isDismissed = true;
+          if (minTimeElapsed) {
+            triggerExit();
+          } else {
+            var timeRemaining = 800 - (Date.now() - (window.preloaderStartTime || Date.now()));
+            setTimeout(triggerExit, Math.max(0, timeRemaining));
+          }
+        };
+
+        window.preloaderStartTime = Date.now();
+      })();
+    </script>
+
     <noscript>
       <div style="max-width:48rem;margin:2rem auto;padding:0 1rem;font-family:system-ui,sans-serif;line-height:1.6">
         <h1>Lloyd Draizen Martirez</h1>
