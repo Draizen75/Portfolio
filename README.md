@@ -1,4 +1,4 @@
-# ✨ Draizen75's Digital Portfolio
+# ✨ Draizen's Digital Portfolio
 
 > *Where creativity meets code.* A showcase of projects, skills, and digital adventures built with modern web technologies.
 
@@ -6,7 +6,7 @@
 
 ## 🎨 About Me
 
-Hey there! I'm **Draizen75**, a passionate developer crafting beautiful and interactive digital experiences. This portfolio is a living showcase of my work, showcasing my journey through code and creativity. Here you'll find projects that push boundaries, solve real problems, and demonstrate my commitment to clean, scalable development.
+Hey there! I'm **Lloyd Draizen Martirez**, a passionate developer crafting beautiful and interactive digital experiences. This portfolio is a living showcase of my work, showcasing my journey through code and creativity. Here you'll find projects that push boundaries, solve real problems, and demonstrate my commitment to clean, scalable development.
 
 ---
 
@@ -68,4 +68,4 @@ Thanks for checking out my portfolio! Feel free to explore my work and get inspi
 
 ---
 
-**Built with ❤️ by Draizen75**
+**Built with ❤️ by Draizen**
