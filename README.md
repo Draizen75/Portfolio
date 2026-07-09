@@ -57,7 +57,7 @@ Check out the live portfolio to see my latest projects, including:
 I'm always excited to collaborate, discuss ideas, or chat about web development!
 
 - **GitHub** - [@Draizen75](https://github.com/Draizen75)
-- **Portfolio** - [View Live](https://github.com/Draizen75/Portfolio)
+- **Portfolio** - [View Live](https://draizenmartirez.vercel.app)
 - **Email** - Reach out directly from the portfolio site
 
 ---
