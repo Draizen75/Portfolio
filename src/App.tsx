@@ -6,6 +6,7 @@ import BackToTop from './components/backToTop/BackToTop';
 import { ThemeProvider } from './contexts/ThemeProvider';
 import { useScrollDetection } from './hooks/useScrollDetection';
 import { scrollToSection } from './utils/scrollUtils';
+import MeshGradient from './components/ui/MeshGradient';
 
 const About = lazy(() => import('./components/about/About'));
 const Skills = lazy(() => import('./components/skills/Skills'));
@@ -55,6 +56,7 @@ export default function App() {
       <div className="relative min-h-screen overflow-x-hidden">
         <div className="fixed inset-0 z-0 bg-[var(--page-bg)]" aria-hidden="true">
           <GridPattern />
+          <MeshGradient />
         </div>
         <div className="relative z-10 bg-transparent">
           <Navigation

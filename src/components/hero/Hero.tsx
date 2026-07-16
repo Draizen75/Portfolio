@@ -1,16 +1,16 @@
 import { useTypingEffect } from '../../hooks/useTypingEffect';
 import PortraitImage from '../common/PortraitImage';
 import { motion } from 'framer-motion';
-import MeshGradient from '../ui/MeshGradient';
 import MagneticButton from '../ui/MagneticButton';
 
 interface HeroProps {
   onSectionClick: (sectionId: string) => void;
 }
 
+const ROLES = ['Web Developer', 'Data Analyst', 'Software Engineer'];
+
 export default function Hero({ onSectionClick }: HeroProps) {
-  const roles = ['Web Developer', 'Data Analyst', 'Software Engineer'];
-  const typedText = useTypingEffect(roles, 80, 40, 1500);
+  const typedText = useTypingEffect(ROLES, 80, 40, 1500);
 
   const handleViewWorkClick = (): void => {
     onSectionClick('projects');
@@ -28,7 +28,6 @@ export default function Hero({ onSectionClick }: HeroProps) {
       className="relative min-h-screen flex items-center overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20"
       aria-labelledby="hero-heading"
     >
-      <MeshGradient />
       
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-center gap-10 sm:gap-12 lg:gap-16 xl:gap-20">
