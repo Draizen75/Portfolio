@@ -12,7 +12,10 @@ export default function MeshGradient() {
   const [showCanvas, setShowCanvas] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+
+    if (prefersReducedMotion || !isDesktop) {
       return;
     }
 

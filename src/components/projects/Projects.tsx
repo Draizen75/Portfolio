@@ -1,5 +1,5 @@
 import { useState, useCallback, useTransition, memo, useRef } from 'react';
-import { getProjectImages } from '../../utils/imageUtils';
+import { getProjectCardImageSet, getProjectImages } from '../../utils/imageUtils';
 import { portfolioProjects, type PortfolioProject } from '../../data/projectsData';
 import ProjectCoverArt from './ProjectCoverArt';
 import ProjectDetail from './ProjectDetail';
@@ -16,6 +16,7 @@ interface ProjectCardProps {
 
 const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const imageUrl = getProjectImages(project.imageFolder)[0] || '';
+  const cardImage = getProjectCardImageSet(imageUrl);
   const cardRef = useRef<HTMLButtonElement>(null);
 
   const handleClick = (): void => {
@@ -72,7 +73,9 @@ const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCard
         <div className="relative w-full aspect-[16/10] bg-slate-100 dark:bg-slate-800 overflow-hidden shrink-0">
           {imageUrl ? (
             <img 
-              src={imageUrl} 
+              src={cardImage.src}
+              srcSet={cardImage.srcSet}
+              sizes={cardImage.sizes}
               alt={project.title}
               loading="lazy"
               decoding="async"

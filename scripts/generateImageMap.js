@@ -43,7 +43,9 @@ function getImageFiles(dir, basePath = '') {
     } else if (item.isFile()) {
       // Check if it's an image file
       const ext = path.extname(item.name).toLowerCase();
-      if (['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'].includes(ext)) {
+      const isGeneratedThumbnail = /-card-\d+\.webp$/i.test(item.name);
+
+      if (!isGeneratedThumbnail && ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'].includes(ext)) {
         files.push(relativePath);
       }
     }

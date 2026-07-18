@@ -23,6 +23,28 @@ export const getProjectImages = (folderName: string): string[] => {
 };
 
 /**
+ * Builds responsive card image candidates from the first project screenshot.
+ *
+ * @param imageUrl - Full image path returned by getProjectImages
+ * @returns Responsive image attributes for project cards
+ */
+export const getProjectCardImageSet = (imageUrl: string): { src: string; srcSet: string; sizes: string } => {
+  if (!imageUrl) {
+    return { src: '', srcSet: '', sizes: '' };
+  }
+
+  const extensionIndex = imageUrl.lastIndexOf('.');
+  const basePath = extensionIndex >= 0 ? imageUrl.slice(0, extensionIndex) : imageUrl;
+  const extension = extensionIndex >= 0 ? imageUrl.slice(extensionIndex) : '';
+
+  return {
+    src: `${basePath}-card-520${extension}`,
+    srcSet: `${basePath}-card-360${extension} 360w, ${basePath}-card-520${extension} 520w, ${imageUrl} 740w`,
+    sizes: '(min-width: 1024px) 31vw, (min-width: 768px) 45vw, 80vw',
+  };
+};
+
+/**
  * Normalizes project title to folder name
  * Converts "SYD Commerce" -> "sydcommerce"
  * 
@@ -46,4 +68,3 @@ export const getImagesByTitle = (title: string): string[] => {
   const folderName = normalizeFolderName(title);
   return getProjectImages(folderName);
 };
-
