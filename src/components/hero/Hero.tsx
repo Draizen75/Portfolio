@@ -56,7 +56,7 @@ export default function Hero({ onSectionClick }: HeroProps) {
             <h2
               className="type-hero-role mb-6 sm:mb-8 min-h-[2.5em] sm:min-h-[1.5em] animate-hero-enter animation-delay-75"
             >
-              I'm a <span className="font-medium text-blue-600 dark:text-blue-400">{typedText}</span>
+              I'm a <span className="inline-block min-w-[8.75rem] text-left font-medium text-blue-600 dark:text-blue-400">{typedText}</span>
             </h2>
             
             <p
