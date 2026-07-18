@@ -13,7 +13,7 @@ const sizeClasses: Record<PortraitSize, string> = {
 };
 
 /**
- * Renders the portfolio portrait with WebP preferred and PNG fallback.
+ * Renders the portfolio portrait.
  *
  * @param size - Preset width scale for hero or about placement
  * @param className - Optional wrapper classes
@@ -36,8 +36,8 @@ export default function PortraitImage({
         <picture>
           <source srcSet="/images/portrait.webp" type="image/webp" />
           <img
-            src="/images/portrait.png"
-            alt="Lloyd Draizen Martirez — Web Developer"
+            src="/images/portrait.webp"
+            alt="Lloyd Draizen Martirez - Web Developer"
             className="w-full h-full object-cover object-top"
             width={288}
             height={384}

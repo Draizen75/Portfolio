@@ -7,7 +7,6 @@ import { ThemeProvider } from './contexts/ThemeProvider';
 import { useScrollDetection } from './hooks/useScrollDetection';
 import { scrollToSection } from './utils/scrollUtils';
 import MeshGradient from './components/ui/MeshGradient';
-import StructuredData from './components/seo/StructuredData';
 
 const About = lazy(() => import('./components/about/About'));
 const Skills = lazy(() => import('./components/skills/Skills'));
@@ -37,7 +36,6 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <StructuredData />
       <a
         href="#home"
         className="skip-link"

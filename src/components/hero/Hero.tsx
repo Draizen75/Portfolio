@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useTypingEffect } from '../../hooks/useTypingEffect';
 import PortraitImage from '../common/PortraitImage';
 import MagneticButton from '../ui/MagneticButton';
@@ -10,6 +11,22 @@ const ROLES = ['Web Developer', 'Data Analyst', 'Software Engineer'];
 
 export default function Hero({ onSectionClick }: HeroProps) {
   const typedText = useTypingEffect(ROLES, 80, 40, 1500);
+  const [showDesktopPortrait, setShowDesktopPortrait] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false;
+    }
+
+    return window.matchMedia('(min-width: 1024px)').matches;
+  });
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+    const updateDesktopPortrait = () => setShowDesktopPortrait(mediaQuery.matches);
+
+    mediaQuery.addEventListener('change', updateDesktopPortrait);
+
+    return () => mediaQuery.removeEventListener('change', updateDesktopPortrait);
+  }, []);
 
   const handleViewWorkClick = (): void => {
     onSectionClick('projects');
@@ -71,15 +88,17 @@ export default function Hero({ onSectionClick }: HeroProps) {
             </div>
           </div>
 
-          <div
-            className="hidden lg:block order-2 lg:mx-0 animate-hero-scale animation-delay-225"
-          >
-            <PortraitImage
-              size="hero"
-              loading="eager"
-              fetchPriority="high"
-            />
-          </div>
+          {showDesktopPortrait && (
+            <div
+              className="hidden lg:block order-2 lg:mx-0 animate-hero-scale animation-delay-225"
+            >
+              <PortraitImage
+                size="hero"
+                loading="eager"
+                fetchPriority="high"
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>

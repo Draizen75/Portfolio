@@ -65,8 +65,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,700&display=swap" /></noscript>
     <!-- Structured Data (JSON-LD) - static baseline for non-JS crawlers -->
     <script type="application/ld+json">
       {
@@ -122,6 +122,98 @@
               "https://www.facebook.com/lloyddraizen.martirez/"
             ],
             "knowsAbout": ["Web Development", "React", "Next.js", "Node.js", "TypeScript", "Data Analysis", "Software Engineering"]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://draizenmartirez.vercel.app/#projects",
+            "name": "Selected Web Development Projects",
+            "description": "Selected web development and software projects by Lloyd Draizen Martirez.",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "Portfolio",
+                  "description": "A modern, responsive developer portfolio featuring a dynamic UI, horizontal swipe layouts, and optimized performance.",
+                  "url": "https://draizenmartirez.vercel.app/",
+                  "keywords": "React, TypeScript, Tailwind CSS, Vite, CSS Animations",
+                  "creator": { "@id": "https://draizenmartirez.vercel.app/#person" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "Onad Motorshop",
+                  "description": "A website for a premium motorcycle repair, maintenance, and parts fitting shop in Bato, Camarines Sur.",
+                  "url": "https://onadmotorshop.vercel.app/",
+                  "keywords": "Angular, TypeScript, Tailwind CSS, RxJS, Vercel",
+                  "creator": { "@id": "https://draizenmartirez.vercel.app/#person" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "SYD Commerce",
+                  "description": "A modern e-commerce platform with a focus on user experience and performance.",
+                  "url": "https://sydcommerce.com",
+                  "keywords": "React, Next.js, TypeScript, Tailwind CSS, Node.js, PostgreSQL, Prisma",
+                  "creator": { "@id": "https://draizenmartirez.vercel.app/#person" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "SYD POS",
+                  "description": "A comprehensive Point of Sale system for managing sales, inventory, and transactions.",
+                  "url": "https://sydpos.biz",
+                  "keywords": "React, Next.js, TypeScript, Node.js, PostgreSQL, Tailwind CSS",
+                  "creator": { "@id": "https://draizenmartirez.vercel.app/#person" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "Duola",
+                  "description": "A multi-tenant birth support SaaS for doula agencies with white-label branding, secure messaging, birth plan PDFs, and tenant isolation.",
+                  "url": "https://www.birthflowapp.com/",
+                  "keywords": "Next.js, TypeScript, PostgreSQL, Supabase, Tailwind CSS, Prisma, Stripe",
+                  "creator": { "@id": "https://draizenmartirez.vercel.app/#person" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 6,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "CertiGen PH",
+                  "description": "A free bulk certificate generator that creates certificates from Word templates and Excel or CSV data.",
+                  "url": "https://certigenph.vercel.app/",
+                  "keywords": "React, Next.js, TypeScript, Tailwind CSS, Vercel, Docxtemplater, JSZip, SheetJS",
+                  "creator": { "@id": "https://draizenmartirez.vercel.app/#person" }
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 7,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "PriceList PH",
+                  "description": "A platform to find and view business dashboards and price lists in the Philippines.",
+                  "url": "https://pricelistph.vercel.app/",
+                  "keywords": "React Native, Expo, TypeScript, Tailwind CSS, Supabase, React Navigation, Zustand",
+                  "creator": { "@id": "https://draizenmartirez.vercel.app/#person" }
+                }
+              }
+            ]
           }
         ]
       }

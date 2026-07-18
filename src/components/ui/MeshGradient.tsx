@@ -1,4 +1,6 @@
-import InteractiveCanvas from './InteractiveCanvas';
+import { lazy, Suspense, useEffect, useState } from 'react';
+
+const InteractiveCanvas = lazy(() => import('./InteractiveCanvas'));
 
 /**
  * MeshGradient Component
@@ -7,10 +9,44 @@ import InteractiveCanvas from './InteractiveCanvas';
  * and slow-animating glowing color blobs.
  */
 export default function MeshGradient() {
+  const [showCanvas, setShowCanvas] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    let timeoutId = 0;
+    let idleId = 0;
+
+    const startCanvas = () => {
+      setShowCanvas(true);
+    };
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(startCanvas, { timeout: 1200 });
+    } else {
+      timeoutId = setTimeout(startCanvas, 700);
+    }
+
+    return () => {
+      if (idleId) {
+        window.cancelIdleCallback(idleId);
+      }
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0" aria-hidden="true">
-      {/* Interactive dynamic particle canvas */}
-      <InteractiveCanvas />
+      {showCanvas && (
+        <Suspense fallback={null}>
+          <InteractiveCanvas />
+        </Suspense>
+      )}
       
       {/* Glowing atmospheric mesh colors */}
       <div className="absolute inset-0 opacity-45 dark:opacity-25">
