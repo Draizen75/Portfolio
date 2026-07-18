@@ -23,9 +23,26 @@ export default function InteractiveCanvas() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let animationFrameId = 0;
+    let lastFrameTime = 0;
+    let isPageVisible = !document.hidden;
+    let isDark = document.documentElement.classList.contains('dark');
+    const frameInterval = 1000 / 30;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+    let width = 0;
+    let height = 0;
+
+    const resizeCanvas = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * pixelRatio);
+      canvas.height = Math.floor(height * pixelRatio);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+    };
+
+    resizeCanvas();
 
     interface Particle {
       x: number;
@@ -36,7 +53,7 @@ export default function InteractiveCanvas() {
     }
 
     const particles: Particle[] = [];
-    const maxParticles = Math.min(55, Math.floor((width * height) / 32000));
+    const maxParticles = Math.min(42, Math.floor((width * height) / 42000));
 
     for (let i = 0; i < maxParticles; i++) {
       particles.push({
@@ -65,24 +82,29 @@ export default function InteractiveCanvas() {
     };
 
     const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      resizeCanvas();
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-    window.addEventListener('resize', handleResize, { passive: true });
+    const handleVisibilityChange = () => {
+      isPageVisible = !document.hidden;
+    };
 
-    const animate = () => {
+    const themeObserver = new MutationObserver(() => {
+      isDark = document.documentElement.classList.contains('dark');
+    });
+
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    const draw = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Adapt styles based on the active dark theme class
-      const isDark = document.documentElement.classList.contains('dark');
       const particleColor = isDark ? 'rgba(96, 165, 250, 0.45)' : 'rgba(59, 130, 246, 0.3)';
       const lineColor = isDark ? 'rgba(129, 140, 248, 0.08)' : 'rgba(99, 102, 241, 0.05)';
 
-      // Update & Draw particles
+      // Update & draw particles
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -99,7 +121,6 @@ export default function InteractiveCanvas() {
         if (dist < mouse.radius) {
           const force = (mouse.radius - dist) / mouse.radius;
           const angle = Math.atan2(dy, dx);
-          // Gently push particles away from cursor
           p.x += Math.cos(angle) * force * 1.5;
           p.y += Math.sin(angle) * force * 1.5;
         }
@@ -117,9 +138,10 @@ export default function InteractiveCanvas() {
           const pj = particles[j];
           const dx = pi.x - pj.x;
           const dy = pi.y - pj.y;
-          const dist = Math.hypot(dx, dy);
+          const distanceSquared = dx * dx + dy * dy;
 
-          if (dist < 110) {
+          if (distanceSquared < 12100) {
+            const dist = Math.sqrt(distanceSquared);
             ctx.beginPath();
             ctx.moveTo(pi.x, pi.y);
             ctx.lineTo(pj.x, pj.y);
@@ -129,17 +151,31 @@ export default function InteractiveCanvas() {
           }
         }
       }
+    };
 
-      animationFrameId = requestAnimationFrame(animate);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    const animate = (timestamp = 0) => {
+      if (isPageVisible && timestamp - lastFrameTime >= frameInterval) {
+        lastFrameTime = timestamp;
+        draw();
+      }
+
+      animationFrameId = window.requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      themeObserver.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

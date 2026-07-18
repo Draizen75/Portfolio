@@ -1,6 +1,5 @@
 'use client';
 import { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import MagneticButton from './MagneticButton';
 
 interface ModalProps {
@@ -26,30 +25,22 @@ export default function AnimatedModal({
     return () => { document.body.style.overflow = 'unset'; };
   }, [isOpen]);
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <AnimatePresence>
-      {isOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
           {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+          <div
             onClick={onClose}
-            style={{ willChange: 'opacity' }}
-            className="absolute inset-0 bg-slate-900/80"
+            className="absolute inset-0 bg-slate-900/80 animate-fade-in"
           />
 
           {/* Modal Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+          <div
             onClick={(e) => e.stopPropagation()}
-            style={{ willChange: 'transform, opacity' }}
-            className={`relative w-full ${maxWidth} max-h-[95vh] sm:max-h-[90vh] overflow-hidden bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10`}
+            className={`relative w-full ${maxWidth} max-h-[95vh] sm:max-h-[90vh] overflow-hidden bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 animate-modal-enter`}
           >
             {/* Close Button */}
             <div className="absolute top-4 right-4 z-20">
@@ -81,9 +72,7 @@ export default function AnimatedModal({
             <div className="overflow-y-auto h-full hide-scrollbar">
               {children}
             </div>
-          </motion.div>
+          </div>
         </div>
-      )}
-    </AnimatePresence>
   );
 }

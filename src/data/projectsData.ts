@@ -35,7 +35,7 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     title: 'Portfolio',
     description: 'A modern, responsive developer portfolio featuring a dynamic UI, horizontal swipe layouts, and optimized performance.',
-    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'Framer Motion'],
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Vite', 'CSS Animations'],
     liveUrl: 'https://draizenmartirez.vercel.app/',
     githubUrl: '#',
     imageFolder: 'portfolio',
@@ -44,9 +44,9 @@ export const portfolioProjects: PortfolioProject[] = [
     category: 'Front-end App',
     highlights: [
       'Built interactive global canvas particle backgrounds',
-      'Implemented clean, fluid Framer Motion transitions',
+      'Replaced animation-library transitions with lightweight CSS and IntersectionObserver reveals',
       'Configured responsive capsule navigation overlays',
-      'Tuned SEO-ready sitemaps and meta tag schemas'
+      'Tuned SEO-ready sitemaps, JSON-LD structured data, and Open Graph metadata'
     ]
   },
   {
@@ -102,7 +102,7 @@ export const portfolioProjects: PortfolioProject[] = [
   },
   {
     title: 'Duola',
-    description: 'A multi-tenant birth support SaaS for doula agencies — automated prenatal-to-postpartum care journeys, white-label branding, secure messaging, birth plan PDFs, and HIPAA-ready tenant isolation.',
+    description: 'A multi-tenant birth support SaaS for doula agencies - automated prenatal-to-postpartum care journeys, white-label branding, secure messaging, birth plan PDFs, and HIPAA-ready tenant isolation.',
     technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS', 'Prisma', 'Stripe'],
     liveUrl: 'https://www.birthflowapp.com/',
     githubUrl: '#',

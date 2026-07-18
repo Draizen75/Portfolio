@@ -3,10 +3,10 @@
  * * Displays technologies in a 3-row infinite marquee layout.
  */
 
-import { useRef } from 'react';
+import { useRef, type CSSProperties } from 'react';
 import { useTypingEffect } from '../../hooks/useTypingEffect';
 import { getSkillIcon } from '../../utils/skillIconUtils';
-import { motion } from 'framer-motion';
+import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
 
 const SkillCard = ({ skill }: { skill: string }) => {
   const iconData = getSkillIcon(skill);
@@ -40,11 +40,9 @@ const SkillCard = ({ skill }: { skill: string }) => {
 const MarqueeRow = ({ skillsList, duration = 40, reverse = false }: { skillsList: string[], duration?: number, reverse?: boolean }) => {
   return (
     <div className="flex w-full relative py-3 overflow-hidden">
-      <motion.div
-        initial={{ x: reverse ? "-50%" : "0%" }}
-        animate={{ x: reverse ? "0%" : "-50%" }}
-        transition={{ duration, repeat: Infinity, ease: "linear" }}
-        className="flex flex-nowrap w-max hover:[animation-play-state:paused]"
+      <div
+        className={`skills-marquee-track flex flex-nowrap w-max ${reverse ? 'skills-marquee-track-reverse' : ''}`}
+        style={{ '--marquee-duration': `${duration}s` } as CSSProperties}
       >
         <div className="flex flex-nowrap">
           {skillsList.map((skill, idx) => <SkillCard key={`s1-${idx}`} skill={skill} />)}
@@ -52,13 +50,14 @@ const MarqueeRow = ({ skillsList, duration = 40, reverse = false }: { skillsList
         <div className="flex flex-nowrap" aria-hidden="true">
           {skillsList.map((skill, idx) => <SkillCard key={`s2-${idx}`} skill={skill} />)}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
 
 export default function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { ref: headerRef, isVisible: isHeaderVisible } = useRevealOnScroll<HTMLDivElement>();
   
   const skillCategories = ['Frontend Developer', 'Backend Developer', 'Web Developer', 'Data Analyst'];
   const typedCategory = useTypingEffect(skillCategories, 100, 50, 2000);
@@ -83,12 +82,9 @@ export default function Skills() {
       aria-labelledby="skills-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-12 sm:mb-20"
+        <div
+          ref={headerRef}
+          className={`reveal-on-scroll ${isHeaderVisible ? 'is-visible' : ''} text-center mb-12 sm:mb-20`}
         >
           <h2 id="skills-heading" className="type-section-title">
             My Technical Skills
@@ -96,7 +92,7 @@ export default function Skills() {
           <p className="type-section-lead px-4">
              Building with modern tools as a <span className="font-semibold text-blue-600 dark:text-blue-400">{typedCategory}</span>
           </p>
-        </motion.div>
+        </div>
         
         <div 
           className="relative w-[calc(100%+2rem)] sm:w-full max-w-[100vw] overflow-hidden -mx-4 px-4 sm:mx-0 sm:px-0 mt-6 sm:mt-8 flex flex-col gap-1.5 sm:gap-2"

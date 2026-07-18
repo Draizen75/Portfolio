@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 interface BackToTopProps {
   isVisible: boolean;
 }
@@ -20,12 +18,11 @@ export default function BackToTop({ isVisible }: BackToTopProps) {
   };
 
   return (
-    <motion.button
+    <button
       onClick={scrollToTop}
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
-      className="fixed left-auto right-4 bottom-4 sm:right-8 sm:bottom-8 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-lg flex items-center justify-center group pointer-events-auto border border-slate-200 dark:border-slate-800/80"
+      className={`fixed left-auto right-4 bottom-4 sm:right-8 sm:bottom-8 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 shadow-lg flex items-center justify-center group border border-slate-200 dark:border-slate-800/80 transition-[opacity,transform,background-color,border-color] duration-300 ease-out ${
+        isVisible ? 'opacity-100 scale-100 pointer-events-auto' : 'opacity-0 scale-0 pointer-events-none'
+      }`}
       aria-label="Back to top"
     >
       <svg
@@ -41,6 +38,6 @@ export default function BackToTop({ isVisible }: BackToTopProps) {
           d="M5 10l7-7m0 0l7 7m-7-7v18"
         />
       </svg>
-    </motion.button>
+    </button>
   );
 }

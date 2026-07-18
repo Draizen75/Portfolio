@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useTheme } from '../../hooks/useTheme';
-import { motion } from 'framer-motion';
 
 /**
  * Navigation Component
@@ -19,18 +18,27 @@ interface NavigationProps {
 const ThemeToggleButton = ({ theme, toggleTheme }: { theme: string, toggleTheme: () => void }) => (
   <button
     onClick={toggleTheme}
-    className="w-10 h-10 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+    className="relative w-10 h-10 rounded-full flex items-center justify-center overflow-hidden text-gray-700 dark:text-gray-300 bg-transparent hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-[background-color,color,box-shadow,border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-95"
     aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
   >
-    {theme === 'light' ? (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-      </svg>
-    ) : (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-      </svg>
-    )}
+    <svg
+      className={`absolute w-6 h-6 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${theme === 'light' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-45 scale-75'}`}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+    </svg>
+    <svg
+      className={`absolute w-6 h-6 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${theme === 'dark' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-45 scale-75'}`}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
   </button>
 );
 
@@ -65,10 +73,10 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transform-gpu transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 transform-gpu border-b transition-[background-color,backdrop-filter,border-color,box-shadow,padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
         isScrolled 
-          ? 'glass-chrome shadow-sm border-b border-slate-200/50 dark:border-slate-800/40 py-2.5 sm:py-3' 
-          : 'bg-transparent py-4 sm:py-5'
+          ? 'bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-slate-200/60 dark:border-slate-900/70 shadow-[0_8px_24px_-18px_rgba(15,23,42,0.35)] py-2.5 sm:py-3' 
+          : 'bg-transparent backdrop-blur-0 border-transparent shadow-none py-4 sm:py-5'
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-16">
@@ -98,13 +106,11 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
                   }`}
                 >
                   {item.label}
-                  {activeSection === item.id && (
-                    <motion.span
-                      layoutId="activePill"
-                      className="absolute inset-0 bg-white dark:bg-slate-800 rounded-full -z-10 shadow-[0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-none border border-slate-200/10 dark:border-slate-700/20"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
+                  <span
+                    className={`absolute inset-0 bg-white dark:bg-slate-800 rounded-full -z-10 shadow-[0_2px_8px_rgba(0,0,0,0.06)] dark:shadow-none border border-slate-200/10 dark:border-slate-700/20 transition-opacity duration-300 ${
+                      activeSection === item.id ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  />
                 </a>
               ))}
             </div>
@@ -132,7 +138,7 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden glass-chrome">
+          <div className="md:hidden border-t border-slate-200/40 bg-white/90 backdrop-blur-xl dark:border-slate-800/50 dark:bg-slate-950/90">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {navItems.map((item) => (
                 <a

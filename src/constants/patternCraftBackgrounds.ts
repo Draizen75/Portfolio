@@ -6,7 +6,7 @@
 import type { CSSProperties } from 'react';
 
 /** Shared duration for theme crossfade (background + UI colors). */
-export const THEME_TRANSITION_MS = 500;
+export const THEME_TRANSITION_MS = 360;
 
 export interface PatternCraftStyle {
   id: string;

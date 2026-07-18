@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect } from 'react';
+import { lazy, Suspense, useCallback } from 'react';
 import GridPattern from './components/common/GridPattern';
 import Navigation from './components/navigation/Navigation';
 import Hero from './components/hero/Hero';
@@ -7,6 +7,7 @@ import { ThemeProvider } from './contexts/ThemeProvider';
 import { useScrollDetection } from './hooks/useScrollDetection';
 import { scrollToSection } from './utils/scrollUtils';
 import MeshGradient from './components/ui/MeshGradient';
+import StructuredData from './components/seo/StructuredData';
 
 const About = lazy(() => import('./components/about/About'));
 const Skills = lazy(() => import('./components/skills/Skills'));
@@ -24,13 +25,6 @@ export default function App() {
   const sections: string[] = ['home', 'about', 'skills', 'projects', 'contact'];
   const { activeSection, isScrolled, showBackToTop, setActiveSection } = useScrollDetection(sections);
 
-  useEffect(() => {
-    // Dismiss preloader once the App mounts
-    if (typeof window !== 'undefined' && (window as any).dismissPreloader) {
-      (window as any).dismissPreloader();
-    }
-  }, []);
-
   /**
    * Handles section navigation clicks
    *
@@ -43,6 +37,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
+      <StructuredData />
       <a
         href="#home"
         className="skip-link"
@@ -53,8 +48,8 @@ export default function App() {
       >
         Skip to main content
       </a>
-      <div className="relative min-h-screen overflow-x-hidden">
-        <div className="fixed inset-0 z-0 bg-[var(--page-bg)]" aria-hidden="true">
+      <div className="relative min-h-[100dvh] overflow-x-hidden bg-[var(--page-bg)]">
+        <div className="app-background" aria-hidden="true">
           <GridPattern />
           <MeshGradient />
         </div>

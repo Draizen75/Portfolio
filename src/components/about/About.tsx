@@ -8,7 +8,7 @@
 
 import { useRef } from 'react';
 import PortraitImage from '../common/PortraitImage';
-import { motion } from 'framer-motion';
+import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
 
 // --- Interfaces ---
 interface EducationItem {
@@ -127,16 +127,17 @@ const SectionHeader = ({ title, icon: Icon }: { title: string; icon: React.FC<Re
   </div>
 );
 
-const GlassCard = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number; }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-50px" }}
-    transition={{ duration: 0.6, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
-    className={`
+const GlassCard = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number; }) => {
+  const { ref, isVisible } = useRevealOnScroll<HTMLDivElement>();
+
+  return (
+  <div
+    ref={ref}
+    style={{ transitionDelay: `${Math.min(delay, 140)}ms` }}
+    className={`reveal-on-scroll ${isVisible ? 'is-visible' : ''}
       relative overflow-hidden rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)]
       group hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.08)]
-      glass-surface glass-surface-hover
+      glass-surface glass-surface-hover transform-gpu will-change-[transform,opacity]
       ${className}
     `}
   >
@@ -146,8 +147,22 @@ const GlassCard = ({ children, className = "", delay = 0 }: { children: React.Re
     <div className="relative z-10 p-5 sm:p-8">
       {children}
     </div>
-  </motion.div>
-);
+  </div>
+  );
+};
+
+const TimelineDot = ({ delay = 0 }: { delay?: number }) => {
+  const { ref, isVisible } = useRevealOnScroll<HTMLSpanElement>();
+
+  return (
+    <span
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`reveal-scale ${isVisible ? 'is-visible' : ''} absolute left-[11px] top-6 z-10 h-5 w-5 -translate-x-1/2 rounded-full border-4 border-white dark:border-slate-950 bg-blue-600 transform-gpu will-change-[transform,opacity]`}
+      aria-hidden="true"
+    />
+  );
+};
 
 const DateBadge = ({ date }: { date: string }) => (
   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-slate-800 type-label border border-slate-200 dark:border-slate-700/50 shadow-sm">
@@ -158,6 +173,7 @@ const DateBadge = ({ date }: { date: string }) => (
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { ref: headerRef, isVisible: isHeaderVisible } = useRevealOnScroll<HTMLDivElement>();
 
   const aboutIntro =
     "I’m a detail-oriented developer who enjoys turning complex problems into simple, intuitive digital experiences. I care about clean code, great UX, and building products that feel fast and reliable on every device.";
@@ -172,12 +188,9 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* --- Header & Bio --- */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16 md:mb-24"
+        <div
+          ref={headerRef}
+          className={`reveal-on-scroll ${isHeaderVisible ? 'is-visible' : ''} text-center mb-16 md:mb-24 transform-gpu will-change-[transform,opacity]`}
         >
           <div className="inline-flex items-center justify-center px-4 py-1.5 mb-8 rounded-full bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30 backdrop-blur-sm">
             <Icons.User className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mr-2" />
@@ -201,7 +214,7 @@ export default function About() {
               loading="lazy"
             />
           </div>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 xl:gap-16 items-start">
           
@@ -213,7 +226,7 @@ export default function About() {
               <SectionHeader title="Education" icon={Icons.GraduationCap} />
               <div className="space-y-4">
                 {education.map((edu, index) => (
-                  <GlassCard key={index} delay={100 + (index * 100)}>
+                  <GlassCard key={index} delay={40 + (index * 60)}>
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="type-card-title">
                         {edu.degree}
@@ -231,7 +244,7 @@ export default function About() {
               <SectionHeader title="Certifications" icon={Icons.Award} />
               <div className="space-y-4">
                 {certifications.map((cert, index) => (
-                  <GlassCard key={index} delay={300 + (index * 100)}>
+                  <GlassCard key={index} delay={70 + (index * 60)}>
                     <div className="flex flex-col gap-2">
                       <h3 className="type-card-title">
                         {cert.title}
@@ -271,17 +284,10 @@ export default function About() {
               <div className="space-y-8 sm:space-y-10 lg:space-y-12">
                 {workExperience.map((work, index) => (
                   <div key={index} className="relative">
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.4, delay: 0.3 + (index * 0.15) }}
-                      className="absolute left-[11px] top-6 z-10 h-5 w-5 -translate-x-1/2 rounded-full border-4 border-white dark:border-slate-950 bg-blue-600"
-                      aria-hidden="true"
-                    />
+                    <TimelineDot delay={60 + (index * 40)} />
 
                     <div className="pl-10">
-                      <GlassCard delay={500 + (index * 150)}>
+                      <GlassCard delay={90 + (index * 60)}>
                         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4">
                           <div>
                             <h3 className="type-card-title">

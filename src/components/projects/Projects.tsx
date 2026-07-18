@@ -17,7 +17,6 @@ interface ProjectCardProps {
 const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const imageUrl = getProjectImages(project.imageFolder)[0] || '';
   const cardRef = useRef<HTMLButtonElement>(null);
-  const [transformStyle, setTransformStyle] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
 
   const handleClick = (): void => {
     onSelect(project);
@@ -44,11 +43,14 @@ const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCard
     const rotateX = (y - 0.5) * -10; // max 5 deg
     const rotateY = (x - 0.5) * 10; // max 5 deg
 
-    setTransformStyle(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`);
+    cardRef.current.style.transition = 'none';
+    cardRef.current.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
   };
 
   const handleMouseLeave = () => {
-    setTransformStyle('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+    if (!cardRef.current) return;
+    cardRef.current.style.transition = 'transform 0.5s ease-out';
+    cardRef.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
   };
 
   return (
@@ -57,7 +59,10 @@ const ProjectCard = memo(function ProjectCard({ project, onSelect }: ProjectCard
         ref={cardRef}
         type="button"
         className="group relative flex flex-col w-full h-full bg-white dark:bg-slate-900 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.4)] text-left overflow-hidden border border-slate-100 dark:border-slate-800/80 transition-shadow duration-300 will-change-transform ease-out"
-        style={{ transform: transformStyle, transition: transformStyle.includes('scale3d(1, 1, 1)') ? 'transform 0.5s ease-out' : 'none' }}
+        style={{
+          transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+          transition: 'transform 0.5s ease-out',
+        }}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         onMouseMove={handleMouseMove}

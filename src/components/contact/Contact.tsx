@@ -5,7 +5,7 @@
 
 import { useRef } from 'react';
 import { socialIcons } from '../../data/inlineIcons.generated';
-import { motion } from 'framer-motion';
+import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
 
 interface SocialLink {
   name: string;
@@ -24,6 +24,7 @@ type SocialLinkItem = SocialLink | BrandSocialLink;
 
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { ref: contentRef, isVisible } = useRevealOnScroll<HTMLDivElement>();
 
 
   const emailAddress = 'draizenllaban@gmail.com';
@@ -58,11 +59,9 @@ export default function Contact() {
       aria-labelledby="contact-heading"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        <div
+          ref={contentRef}
+          className={`reveal-on-scroll ${isVisible ? 'is-visible' : ''}`}
         >
 
           <div className="text-center mb-12 sm:mb-16">
@@ -182,7 +181,7 @@ export default function Contact() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

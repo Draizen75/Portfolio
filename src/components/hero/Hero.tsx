@@ -1,6 +1,5 @@
 import { useTypingEffect } from '../../hooks/useTypingEffect';
 import PortraitImage from '../common/PortraitImage';
-import { motion } from 'framer-motion';
 import MagneticButton from '../ui/MagneticButton';
 
 interface HeroProps {
@@ -20,8 +19,6 @@ export default function Hero({ onSectionClick }: HeroProps) {
     onSectionClick('contact');
   };
 
-  const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
-
   return (
     <section
       id="home"
@@ -32,40 +29,28 @@ export default function Hero({ onSectionClick }: HeroProps) {
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-center gap-10 sm:gap-12 lg:gap-16 xl:gap-20">
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left flex-1 min-w-0 order-1">
-            <motion.h1 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: easeCurve }}
+            <h1
               id="hero-heading" 
-              className="type-display mb-5 sm:mb-6 break-words max-w-full"
+              className="type-display mb-5 sm:mb-6 break-words max-w-full animate-hero-enter"
             >
               Lloyd Draizen Martirez
-            </motion.h1>
+            </h1>
             
-            <motion.h2 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.05, ease: easeCurve }}
-              className="type-hero-role mb-6 sm:mb-8 min-h-[2.5em] sm:min-h-[1.5em]"
+            <h2
+              className="type-hero-role mb-6 sm:mb-8 min-h-[2.5em] sm:min-h-[1.5em] animate-hero-enter animation-delay-75"
             >
               I'm a <span className="font-medium text-blue-600 dark:text-blue-400">{typedText}</span>
-            </motion.h2>
+            </h2>
             
-            <motion.p 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1, ease: easeCurve }}
-              className="type-hero-lead mb-10 sm:mb-12 lg:max-w-lg lg:mx-0"
+            <p
+              className="type-hero-lead mb-10 sm:mb-12 lg:max-w-lg lg:mx-0 animate-hero-enter animation-delay-150"
             >
               I create beautiful, functional, and user-centric web experiences.
               Let's build something amazing together.
-            </motion.p>
+            </p>
             
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15, ease: easeCurve }}
-              className="flex flex-col xs:flex-row gap-4 w-full xs:w-auto lg:justify-start"
+            <div
+              className="flex flex-col xs:flex-row gap-4 w-full xs:w-auto lg:justify-start animate-hero-enter animation-delay-225"
             >
               <MagneticButton>
                 <button
@@ -83,21 +68,18 @@ export default function Hero({ onSectionClick }: HeroProps) {
                   View My Work
                 </button>
               </MagneticButton>
-            </motion.div>
+            </div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2, ease: easeCurve }}
-            className="hidden lg:block order-2 lg:mx-0"
+          <div
+            className="hidden lg:block order-2 lg:mx-0 animate-hero-scale animation-delay-225"
           >
             <PortraitImage
               size="hero"
               loading="eager"
               fetchPriority="high"
             />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

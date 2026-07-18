@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -9,13 +8,6 @@ interface MagneticButtonProps {
 
 export default function MagneticButton({ children, className, onClick }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
-  
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  
-  const springConfig = { stiffness: 150, damping: 15, mass: 0.1 };
-  const xSpring = useSpring(x, springConfig);
-  const ySpring = useSpring(y, springConfig);
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
     // Disable magnetic effect on touch devices to avoid sticky transforms
@@ -28,25 +20,23 @@ export default function MagneticButton({ children, className, onClick }: Magneti
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
-    x.set(middleX * 0.2);
-    y.set(middleY * 0.2);
+    ref.current.style.transform = `translate3d(${middleX * 0.2}px, ${middleY * 0.2}px, 0)`;
   };
 
   const reset = () => {
-    x.set(0);
-    y.set(0);
+    if (!ref.current) return;
+    ref.current.style.transform = 'translate3d(0, 0, 0)';
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      style={{ x: xSpring, y: ySpring, willChange: 'transform' }}
-      className={`inline-block w-full xs:w-auto ${className || ''}`}
+      className={`inline-block w-full xs:w-auto transition-transform duration-300 ease-out will-change-transform ${className || ''}`}
       onClick={onClick}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

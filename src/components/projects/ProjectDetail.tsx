@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getProjectImages } from '../../utils/imageUtils';
 import type { PortfolioProject } from '../../data/projectsData';
 import ProjectCoverArt from './ProjectCoverArt';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import MagneticButton from '../ui/MagneticButton';
 
 interface ProjectDetailProps {
@@ -10,7 +9,7 @@ interface ProjectDetailProps {
 }
 
 export default function ProjectDetail({ project }: ProjectDetailProps) {
-  const projectImages = getProjectImages(project.imageFolder);
+  const projectImages = useMemo(() => getProjectImages(project.imageFolder), [project.imageFolder]);
   const hasGallery = projectImages.length > 0;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -27,6 +26,18 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
+  const goToNextImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === projectImages.length - 1 ? 0 : prevIndex + 1
+    );
+  }, [projectImages.length]);
+
+  const goToPrevImage = useCallback(() => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? projectImages.length - 1 : prevIndex - 1
+    );
+  }, [projectImages.length]);
+
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
@@ -34,18 +45,6 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
     const isRightSwipe = distance < -minSwipeDistance;
     if (isLeftSwipe) goToNextImage();
     if (isRightSwipe) goToPrevImage();
-  };
-
-  const goToNextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === projectImages.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const goToPrevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? projectImages.length - 1 : prevIndex - 1
-    );
   };
 
   useEffect(() => {
@@ -59,20 +58,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLightboxOpen, currentImageIndex, projectImages.length]);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.08 } // removed initial delay
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 400, damping: 25 } }
-  };
+  }, [goToNextImage, goToPrevImage, isLightboxOpen]);
 
   return (
     <>
@@ -143,34 +129,31 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
         </div>
 
         {/* Bottom: Redone 2-Column Split Layout */}
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+        <div
           className="w-full p-6 sm:p-10 md:p-12 bg-white dark:bg-slate-900"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             
             {/* Left Column (2/3 width) - Case Study Details */}
             <div className="lg:col-span-8 flex flex-col space-y-8 text-left">
-              <motion.div variants={itemVariants}>
+              <div className="animate-detail-enter">
                 <span className="type-eyebrow mb-2 block">Case Study</span>
                 <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 dark:text-white tracking-tight mb-4">
                   {project.title}
                 </h3>
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants} className="space-y-4">
+              <div className="space-y-4 animate-detail-enter animation-delay-75">
                 <h4 className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
                   Overview
                 </h4>
                 <div className="type-body text-slate-700 dark:text-slate-350 text-base sm:text-lg leading-relaxed max-w-3xl">
                   <p>{project.description}</p>
                 </div>
-              </motion.div>
+              </div>
 
               {project.highlights && project.highlights.length > 0 && (
-                <motion.div variants={itemVariants} className="pt-2">
+                <div className="pt-2 animate-detail-enter animation-delay-150">
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-4">
                     Key Features & Highlights
                   </h4>
@@ -188,7 +171,7 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               )}
             </div>
 
@@ -196,9 +179,8 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
             <div className="lg:col-span-4 flex flex-col space-y-6">
               
               {/* Specs & CTAs Card */}
-              <motion.div 
-                variants={itemVariants} 
-                className="glass-surface p-6 sm:p-8 rounded-2xl flex flex-col space-y-6 text-left"
+              <div
+                className="glass-surface p-6 sm:p-8 rounded-2xl flex flex-col space-y-6 text-left animate-detail-enter animation-delay-225"
               >
                 <div>
                   <h4 className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-500 mb-4">
@@ -265,22 +247,17 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
                   </div>
                 </div>
 
-              </motion.div>
+              </div>
             </div>
             
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Fullscreen Lightbox Overlay */}
-      <AnimatePresence>
-        {isLightboxOpen && hasGallery && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-8"
+      {isLightboxOpen && hasGallery && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-8 animate-fade-in"
             onClick={() => setIsLightboxOpen(false)}
           >
             <button 
@@ -333,9 +310,8 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
               onTouchEnd={onTouchEnd}
               decoding="async"
             />
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   );
 }
