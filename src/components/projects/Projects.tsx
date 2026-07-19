@@ -9,6 +9,9 @@ const projects = portfolioProjects;
 
 type Project = PortfolioProject;
 
+const getProjectTitleId = (project: Project): string =>
+  `project-dialog-${project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
 interface ProjectCardProps {
   project: Project;
   onSelect: (project: Project) => void;
@@ -164,9 +167,14 @@ export default function Projects() {
         isOpen={!!selectedProject} 
         onClose={handleModalClose}
         maxWidth="max-w-6xl"
+        labelledBy={selectedProject ? getProjectTitleId(selectedProject) : undefined}
       >
         {selectedProject && (
-          <ProjectDetail key={selectedProject.title} project={selectedProject} />
+          <ProjectDetail
+            key={selectedProject.title}
+            project={selectedProject}
+            titleId={getProjectTitleId(selectedProject)}
+          />
         )}
       </AnimatedModal>
     </section>

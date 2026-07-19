@@ -82,19 +82,19 @@ const workExperience: WorkItem[] = [
     period: 'October 2025 - Present',
     company: 'Syd Solution Tech',
     responsibilities: [
-      'Developed responsive and interactive web applications using modern frontend technologies',
-      'Collaborated with cross-functional teams to deliver innovative IT solutions for businesses',
-      'Built scalable web applications focusing on user experience and performance optimization',
+      'Built responsive business application screens with React, Angular, TypeScript, and Tailwind CSS',
+      'Worked on dashboard, inventory, transaction, and admin workflows for client-facing systems',
+      'Collaborated on practical UI, performance, and deployment improvements for production-style web apps',
     ],
   },
   {
-    position: 'Programmer Intern',
+    position: 'Programmer Intern - IT and Technical Support Assignment',
     period: 'March 2025 - May 2025',
     company: 'AI Research Center for Community Development',
     responsibilities: [
-      'Provided technical support and troubleshooting for network issues',
-      'Assisted in software installation and maintenance',
-      'Managed user accounts and permissions',
+      'Supported network troubleshooting, software setup, and workstation maintenance tasks',
+      'Assisted with account and permission management for internal users',
+      'Documented recurring technical issues to improve support handoff and resolution',
     ],
   },
 ];
@@ -176,7 +176,7 @@ export default function About() {
   const { ref: headerRef, isVisible: isHeaderVisible } = useRevealOnScroll<HTMLDivElement>();
 
   const aboutIntro =
-    "I’m a detail-oriented developer who enjoys turning complex problems into simple, intuitive digital experiences. I care about clean code, great UX, and building products that feel fast and reliable on every device.";
+    "I'm a detail-oriented full-stack web developer who enjoys turning complex business workflows into simple, reliable digital products. I care about clean TypeScript, usable interfaces, and applications that stay fast across devices.";
 
   return (
     <section

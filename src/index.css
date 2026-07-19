@@ -21,14 +21,8 @@
   html {
     @apply scroll-smooth;
     background-color: var(--page-bg);
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
     min-height: 100%;
     overscroll-behavior-y: none;
-  }
-
-  html::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
   }
 
   @media (prefers-reduced-motion: reduce) {

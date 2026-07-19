@@ -1,71 +1,41 @@
-# ✨ Draizen's Digital Portfolio
+# Lloyd Draizen Martirez Portfolio
 
-> *Where creativity meets code.* A showcase of projects, skills, and digital adventures built with modern web technologies.
+Personal portfolio for Lloyd Draizen Martirez, a Full-Stack Web Developer from Camarines Sur, Philippines.
 
----
+The site presents selected projects, technical skills, experience, certifications, contact links, SEO metadata, generated social images, and a printable resume page.
 
-## 🎨 About Me
+## Tech Stack
 
-Hey there! I'm **Lloyd Draizen Martirez**, a passionate developer crafting beautiful and interactive digital experiences. This portfolio is a living showcase of my work, showcasing my journey through code and creativity. Here you'll find projects that push boundaries, solve real problems, and demonstrate my commitment to clean, scalable development.
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- CSS animations
+- Sharp-powered asset generation
+- JSON-LD structured data
 
----
+## Features
 
-## 🚀 What's Inside
+- Responsive single-page portfolio
+- Light and dark theme support
+- Recruiter-focused project case studies
+- Accessible skip link, semantic sections, and improved project modal behavior
+- Generated WebP images, favicons, project covers, thumbnails, sitemap, and Open Graph image
+- Resume PDF available at `/Martirez_Resume.pdf`
 
-This portfolio is built with **cutting-edge web technologies** and modern development practices:
+## Scripts
 
-### Tech Stack
-- **⚛️ React** - Building dynamic, responsive UIs with component-driven architecture
-- **🎭 TypeScript** - Type-safe JavaScript for robust, maintainable code
-- **⚡ Vite** - Lightning-fast development and optimized production builds
-- **✨ Modern ESLint** - Keeping code clean and following best practices
+```bash
+npm run dev
+npm run build
+npm run lint
+```
 
----
+Asset and SEO generation scripts run automatically before development and production builds.
 
-## 📁 Featured Projects
+## Contact
 
-Check out the live portfolio to see my latest projects, including:
-- Interactive web applications
-- UI/UX explorations
-- Full-stack solutions
-- Open-source contributions
-
----
-
-## ✨ Features
-
-- ⚡ **Lightning Fast** - Powered by Vite for instant performance
-- 🎯 **Type-Safe** - Full TypeScript support for safer, more maintainable code
-- 🎨 **Responsive Design** - Looks great on all devices and screen sizes
-- 🔍 **SEO Optimized** - Built with modern web standards and best practices
-- 🌙 **Developer Friendly** - Clean, consistent code following best practices
-
----
-
-## 💡 What I Believe In
-
-- ✅ Clean, maintainable code that speaks for itself
-- ✅ User-centric design and seamless experiences
-- ✅ Continuous learning and exploring new technologies
-- ✅ Solving real problems with creative solutions
-- ✅ Building with purpose and passion
-
----
-
-## 🤝 Let's Connect
-
-I'm always excited to collaborate, discuss ideas, or chat about web development!
-
-- **GitHub** - [@Draizen75](https://github.com/Draizen75)
-- **Portfolio** - [View Live](https://draizenmartirez.vercel.app)
-- **Email** - Reach out directly from the portfolio site
-
----
-
-## 🎉 Thanks for Visiting!
-
-Thanks for checking out my portfolio! Feel free to explore my work and get inspired. Happy coding! 🚀
-
----
-
-**Built with ❤️ by Draizen**
+- Portfolio: <https://draizenmartirez.vercel.app>
+- GitHub: <https://github.com/Draizen75>
+- LinkedIn: <https://www.linkedin.com/in/lloydmartirez/>
+- Email: <draizenllaban@gmail.com>

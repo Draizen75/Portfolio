@@ -8,18 +8,18 @@ export const SITE_NAME = 'Lloyd Draizen Martirez';
 
 export const SITE_ALTERNATE_NAMES = ['Draizen', 'Draizen Portfolio'] as const;
 
-export const SITE_TITLE = 'Lloyd Draizen Martirez | Web Developer & Data Analyst';
+export const SITE_TITLE = 'Lloyd Draizen Martirez | Full-Stack Web Developer';
 
 export const SITE_DESCRIPTION =
-  'Portfolio of Lloyd Draizen Martirez, a Web Developer and Data Analyst from the Philippines specializing in React, Next.js, Node.js, TypeScript, and modern web applications.';
+  'Portfolio of Lloyd Draizen Martirez, a Full-Stack Web Developer from the Philippines building responsive business applications with React, Next.js, Angular, TypeScript, and modern web tools.';
 
 export const SITE_KEYWORDS = [
   'Lloyd Draizen Martirez',
   'Draizen',
+  'Full-Stack Web Developer',
   'Web Developer',
-  'Data Analyst',
-  'Software Engineer',
   'React Developer',
+  'Angular Developer',
   'Next.js',
   'Node.js',
   'TypeScript',
@@ -46,13 +46,13 @@ export const SOCIAL_PROFILES = {
 
 export const CONTACT_EMAIL = 'draizenllaban@gmail.com';
 
-export const CONTACT_PHONE = '+639923630328';
+export const CONTACT_PHONE = '';
 
 export const CONTACT_ADDRESS = {
-  streetAddress: 'San Miguel',
+  streetAddress: '',
   addressLocality: 'Bato',
   addressRegion: 'Camarines Sur',
-  postalCode: '4435',
+  postalCode: '',
   addressCountry: 'PH',
 } as const;
 
@@ -62,7 +62,6 @@ export const PERSON_KNOWS_ABOUT = [
   'Next.js',
   'Node.js',
   'TypeScript',
-  'Data Analysis',
   'Software Engineering',
   'PostgreSQL',
   'Supabase',
