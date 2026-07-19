@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import MagneticButton from './MagneticButton';
 
 interface ModalProps {
@@ -7,23 +7,85 @@ interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
   maxWidth?: string;
+  labelledBy?: string;
 }
 
 export default function AnimatedModal({ 
   isOpen, 
   onClose, 
   children, 
-  maxWidth = 'max-w-4xl' 
+  maxWidth = 'max-w-4xl',
+  labelledBy,
 }: ModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  const previousActiveElementRef = useRef<HTMLElement | null>(null);
   
   useEffect(() => {
     if (isOpen) {
+      previousActiveElementRef.current = document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
       document.body.style.overflow = 'hidden';
+
+      window.setTimeout(() => {
+        const focusableElement = modalRef.current?.querySelector<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        focusableElement?.focus();
+      }, 0);
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => { document.body.style.overflow = 'unset'; };
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      previousActiveElementRef.current?.focus();
+    };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !modalRef.current) {
+        return;
+      }
+
+      const focusableElements = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((element) => element.offsetParent !== null);
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        modalRef.current.focus();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   if (!isOpen) {
     return null;
@@ -39,7 +101,12 @@ export default function AnimatedModal({
 
           {/* Modal Card */}
           <div
+            ref={modalRef}
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={labelledBy}
+            tabIndex={-1}
             className={`relative w-full ${maxWidth} max-h-[95vh] sm:max-h-[90vh] overflow-hidden bg-white dark:bg-slate-900 rounded-t-2xl sm:rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 animate-modal-enter`}
           >
             {/* Close Button */}
@@ -69,7 +136,7 @@ export default function AnimatedModal({
               </MagneticButton>
             </div>
 
-            <div className="overflow-y-auto h-full hide-scrollbar">
+            <div className="overflow-y-auto h-full">
               {children}
             </div>
           </div>

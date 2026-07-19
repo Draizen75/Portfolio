@@ -20,7 +20,6 @@ import { portfolioProjects } from '../data/projectsData';
  */
 export function buildStructuredDataJson(): string {
   const sameAs = Object.values(SOCIAL_PROFILES);
-
   const liveProjects = portfolioProjects.filter((project) => project.liveUrl !== '#');
 
   const graph = [
@@ -47,7 +46,7 @@ export function buildStructuredDataJson(): string {
       primaryImageOfPage: {
         '@type': 'ImageObject',
         url: PORTRAIT_IMAGE_URL,
-        caption: `${SITE_NAME} — Web Developer`,
+        caption: `${SITE_NAME} - Full-Stack Web Developer`,
       },
     },
     {
@@ -56,16 +55,16 @@ export function buildStructuredDataJson(): string {
       name: SITE_NAME,
       url: SITE_URL,
       image: PORTRAIT_IMAGE_URL,
-      jobTitle: 'Web Developer & Data Analyst',
+      jobTitle: 'Full-Stack Web Developer',
       description: SITE_DESCRIPTION,
       email: `mailto:${CONTACT_EMAIL}`,
-      telephone: CONTACT_PHONE,
+      ...(CONTACT_PHONE ? { telephone: CONTACT_PHONE } : {}),
       address: {
         '@type': 'PostalAddress',
-        streetAddress: CONTACT_ADDRESS.streetAddress,
+        ...(CONTACT_ADDRESS.streetAddress ? { streetAddress: CONTACT_ADDRESS.streetAddress } : {}),
         addressLocality: CONTACT_ADDRESS.addressLocality,
         addressRegion: CONTACT_ADDRESS.addressRegion,
-        postalCode: CONTACT_ADDRESS.postalCode,
+        ...(CONTACT_ADDRESS.postalCode ? { postalCode: CONTACT_ADDRESS.postalCode } : {}),
         addressCountry: CONTACT_ADDRESS.addressCountry,
       },
       sameAs,

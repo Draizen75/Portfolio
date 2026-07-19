@@ -94,11 +94,11 @@ function buildOgSvg() {
   <text x="88" y="272" fill="#f8fafc" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="500">Martirez</text>
 
   <!-- Role -->
-  <text x="88" y="332" fill="#cbd5e1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="300">Web Developer</text>
-  <text x="88" y="368" fill="#60a5fa" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="500">&amp; Data Analyst</text>
+  <text x="88" y="332" fill="#cbd5e1" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="300">Full-Stack</text>
+  <text x="88" y="368" fill="#60a5fa" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="500">Web Developer</text>
 
   <!-- Tagline -->
-  <text x="88" y="430" fill="#94a3b8" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="400">Beautiful, functional, user-centric web experiences.</text>
+  <text x="88" y="430" fill="#94a3b8" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="22" font-weight="400">Business apps, SaaS workflows, and responsive interfaces.</text>
 
   <!-- Tech pills -->
   <rect x="88" y="468" width="108" height="38" rx="19" fill="rgba(15,23,42,0.75)" stroke="rgba(59,130,246,0.35)" stroke-width="1"/>

@@ -28,8 +28,7 @@ export default function Contact() {
 
 
   const emailAddress = 'draizenllaban@gmail.com';
-  const phone = '09923630328';
-  const address = 'San Miguel, Bato, Camarines Sur, 4435';
+  const address = 'Bato, Camarines Sur, Philippines';
 
   const socialLinks: SocialLinkItem[] = [
     {
@@ -67,7 +66,7 @@ export default function Contact() {
           <div className="text-center mb-12 sm:mb-16">
             <h2 id="contact-heading" className="type-section-title">Get in Touch</h2>
             <p className="type-section-lead px-4">
-              Have a project in mind or want to connect? Reach out anytime.
+              Open to full-time web developer roles, junior full-stack roles, and remote opportunities across the Philippines.
             </p>
           </div>
 
@@ -89,18 +88,6 @@ export default function Contact() {
                   </a>
                 </div>
                 
-                {/* Phone */}
-                <div className="flex items-start justify-center sm:justify-start gap-3 min-w-0">
-                  <svg className="w-6 h-6 text-gray-700 dark:text-gray-300 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  <a 
-                    href={`tel:${phone}`}
-                    className="type-body hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300"
-                  >
-                    {phone}
-                  </a>
-                </div>
               </div>
             </div>
 
