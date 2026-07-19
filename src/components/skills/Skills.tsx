@@ -229,12 +229,6 @@ export default function Skills() {
           })}
         </div>
 
-        <p className="mb-0 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-          {activeFilter === 'all'
-            ? `${visibleSkills.length} skills across the full stack`
-            : `${activeGroup?.label ?? 'Selected'} stack - ${visibleSkills.length} skills`}
-        </p>
-
         {activeFilter === 'all' ? (
           <div
             key={activeFilter}
