@@ -13,16 +13,14 @@ const publicDir = path.join(__dirname, '../public');
 const SITE_URL = 'https://draizenmartirez.vercel.app';
 
 /**
- * Writes sitemap.xml with the current last-modified date.
+ * Writes a sitemap without a last-modified date. This avoids publishing a
+ * misleading timestamp when content has not actually changed.
  */
 function generateSitemap() {
-  const today = new Date().toISOString().split('T')[0];
-
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${SITE_URL}/</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
