@@ -84,7 +84,7 @@ export const portfolioProjects: PortfolioProject[] = [
     ]
   },
   {
-    title: 'Duola',
+    title: 'BirthFlow',
     description: 'A multi-tenant birth support SaaS concept for doula agencies, including branded care journeys, secure messaging, birth plan PDFs, and tenant-aware data boundaries.',
     technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS', 'Prisma', 'Stripe'],
     liveUrl: 'https://www.birthflowapp.com/',

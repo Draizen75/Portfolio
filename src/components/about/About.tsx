@@ -79,7 +79,7 @@ const education: EducationItem[] = [
 const workExperience: WorkItem[] = [
   {
     position: 'Web Developer',
-    period: 'October 2025 - Present',
+    period: 'October 2025 - November 2026',
     company: 'Syd Solution Tech',
     responsibilities: [
       'Built responsive business application screens with React, Angular, TypeScript, and Tailwind CSS',
