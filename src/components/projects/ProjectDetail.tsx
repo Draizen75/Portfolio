@@ -325,10 +325,16 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
 
       {isLightboxOpen && hasGallery && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md sm:p-8"
+          ref={lightboxRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} screenshot gallery`}
+          tabIndex={-1}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md outline-none sm:p-8"
           onClick={() => setIsLightboxOpen(false)}
         >
           <button
+            type="button"
             className="absolute right-4 top-4 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-6 sm:top-6"
             onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
             aria-label="Close fullscreen"
@@ -339,6 +345,7 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
           {projectImages.length > 1 && (
             <div className="absolute bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/65 px-3 py-2 text-white shadow-lg backdrop-blur-md sm:bottom-8">
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); goToPrevImage(); }}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                 aria-label="Previous image"
@@ -349,6 +356,7 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
                 {currentImageIndex + 1} / {projectImages.length}
               </div>
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); goToNextImage(); }}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                 aria-label="Next image"
