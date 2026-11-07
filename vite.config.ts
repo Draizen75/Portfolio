@@ -1,23 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { execSync } from 'child_process';
 
-// https://vite.dev/config/
+// Image maps are generated once by the prebuild script in package.json.
+// Avoid running the same filesystem scan again from Vite's buildStart hook.
 export default defineConfig({
-  plugins: [
-    react(),
-    // Auto-generate image map before build
-    {
-      name: 'generate-image-map',
-      buildStart() {
-        try {
-          execSync('node scripts/generateImageMap.js', { stdio: 'inherit' });
-        } catch (error) {
-          console.warn('Failed to generate image map:', error);
-        }
-      },
-    },
-  ],
+  plugins: [react()],
   build: {
     rollupOptions: {
       output: {
