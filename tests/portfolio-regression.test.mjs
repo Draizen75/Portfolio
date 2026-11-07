@@ -95,3 +95,21 @@ describe('getActiveSection', () => {
     assert.equal(getActiveSection([]), '');
   });
 });
+
+describe('asset and build efficiency', () => {
+  it('uses the small raster favicon and does not reference the oversized embedded SVG', () => {
+    const html = readFileSync(resolve(rootDirectory, 'index.html'), 'utf8');
+
+    assert.match(html, /href="\/favicon-32x32\.png"/);
+    assert.doesNotMatch(html, /href="\/favicon\.svg"/);
+  });
+
+  it('generates the image map only once during the prebuild lifecycle', () => {
+    const viteConfig = readFileSync(resolve(rootDirectory, 'vite.config.ts'), 'utf8');
+    const packageJson = JSON.parse(readFileSync(resolve(rootDirectory, 'package.json'), 'utf8'));
+
+    assert.match(packageJson.scripts.prebuild, /generate:images/);
+    assert.doesNotMatch(viteConfig, /generateImageMap\.js/);
+    assert.doesNotMatch(viteConfig, /execSync/);
+  });
+});
