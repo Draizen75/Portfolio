@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CalendarDays,
   CheckCircle2,
@@ -60,6 +60,8 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
   const hasGallery = projectImages.length > 0;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const lightboxTriggerRef = useRef<HTMLElement | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const minSwipeDistance = 50;
@@ -110,14 +112,43 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
   useEffect(() => {
     if (!isLightboxOpen) return;
 
+    lightboxTriggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    lightboxRef.current?.querySelector<HTMLElement>('button[aria-label="Close fullscreen"]')?.focus();
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsLightboxOpen(false);
-      if (e.key === 'ArrowRight') goToNextImage();
-      if (e.key === 'ArrowLeft') goToPrevImage();
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsLightboxOpen(false);
+        return;
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goToNextImage();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToPrevImage();
+      }
+      if (e.key === 'Tab' && lightboxRef.current) {
+        const focusable = Array.from(lightboxRef.current.querySelectorAll<HTMLElement>('button:not([disabled])'));
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (first && last && e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (first && last && !e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      lightboxTriggerRef.current?.focus();
+      lightboxTriggerRef.current = null;
+    };
   }, [goToNextImage, goToPrevImage, isLightboxOpen]);
 
   return (
@@ -294,10 +325,16 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
 
       {isLightboxOpen && hasGallery && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md sm:p-8"
+          ref={lightboxRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} screenshot gallery`}
+          tabIndex={-1}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md outline-none sm:p-8"
           onClick={() => setIsLightboxOpen(false)}
         >
           <button
+            type="button"
             className="absolute right-4 top-4 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-6 sm:top-6"
             onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
             aria-label="Close fullscreen"
@@ -308,6 +345,7 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
           {projectImages.length > 1 && (
             <div className="absolute bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/65 px-3 py-2 text-white shadow-lg backdrop-blur-md sm:bottom-8">
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); goToPrevImage(); }}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                 aria-label="Previous image"
@@ -318,6 +356,7 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
                 {currentImageIndex + 1} / {projectImages.length}
               </div>
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); goToNextImage(); }}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                 aria-label="Next image"

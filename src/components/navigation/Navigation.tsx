@@ -20,6 +20,7 @@ const ThemeToggleButton = ({ theme, toggleTheme }: { theme: string, toggleTheme:
   <button
     onClick={toggleTheme}
     className="relative w-10 h-10 rounded-full flex items-center justify-center overflow-hidden text-gray-700 dark:text-gray-300 bg-transparent hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-[background-color,color,box-shadow,border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-95"
+    type="button"
     aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
   >
     <svg
@@ -112,6 +113,7 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={(e) => handleNavClick(e, item.id)}
+                aria-current={activeSection === item.id ? 'location' : undefined}
                 className={`relative px-4 py-2 rounded-full type-nav-link transition-colors duration-300 z-10 select-none ${activeSection === item.id
                     ? 'text-slate-900 dark:text-white font-semibold'
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -140,6 +142,8 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
               className="ml-2 sm:ml-4 p-2.5 min-w-[44px] min-h-[44px] rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation-menu"
+              type="button"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"} />
@@ -152,12 +156,13 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200/40 bg-white/90 backdrop-blur-xl dark:border-slate-800/50 dark:bg-slate-950/90">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div id="mobile-navigation-menu" className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={(e) => handleNavClick(e, item.id)}
+                aria-current={activeSection === item.id ? 'location' : undefined}
                 className={`block px-3 py-3 min-h-[44px] rounded-md type-nav-link ${activeSection === item.id
                     ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-semibold'
                     : 'text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
