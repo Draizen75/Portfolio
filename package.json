@@ -18,6 +18,7 @@
     "prebuild": "npm run convert:images && npm run generate:project-covers && npm run generate:og-image && npm run generate:thumbnails && npm run generate:images && npm run generate:icons && npm run generate:favicons && npm run generate:seo",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
