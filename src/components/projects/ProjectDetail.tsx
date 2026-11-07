@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   CalendarDays,
   CheckCircle2,
@@ -60,6 +60,8 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
   const hasGallery = projectImages.length > 0;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const lightboxTriggerRef = useRef<HTMLElement | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const minSwipeDistance = 50;
@@ -110,14 +112,43 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
   useEffect(() => {
     if (!isLightboxOpen) return;
 
+    lightboxTriggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    lightboxRef.current?.querySelector<HTMLElement>('button[aria-label="Close fullscreen"]')?.focus();
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsLightboxOpen(false);
-      if (e.key === 'ArrowRight') goToNextImage();
-      if (e.key === 'ArrowLeft') goToPrevImage();
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsLightboxOpen(false);
+        return;
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goToNextImage();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToPrevImage();
+      }
+      if (e.key === 'Tab' && lightboxRef.current) {
+        const focusable = Array.from(lightboxRef.current.querySelectorAll<HTMLElement>('button:not([disabled])'));
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (first && last && e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (first && last && !e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      lightboxTriggerRef.current?.focus();
+      lightboxTriggerRef.current = null;
+    };
   }, [goToNextImage, goToPrevImage, isLightboxOpen]);
 
   return (
