@@ -34,6 +34,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Audit dependency vulnerabilities
+        shell: bash
+        run: |
+          npm audit --json > "$RUNNER_TEMP/npm-audit.json" || true
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const report = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/npm-audit.json", "utf8"));
+            const metadata = report.metadata?.vulnerabilities ?? {};
+            console.log("Dependency audit summary:", JSON.stringify(metadata));
+            for (const [name, item] of Object.entries(report.vulnerabilities ?? {})) {
+              console.log(JSON.stringify({
+                package: name,
+                severity: item.severity,
+                direct: item.isDirect,
+                range: item.range,
+                fixAvailable: item.fixAvailable
+              }));
+            }
+          '
+
       - name: Run regression tests
         run: npm test
 

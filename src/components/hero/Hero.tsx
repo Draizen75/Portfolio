@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTypingEffect } from '../../hooks/useTypingEffect';
 import PortraitImage from '../common/PortraitImage';
 import MagneticButton from '../ui/MagneticButton';
+import { Button } from '../ui/button';
 
 interface HeroProps {
   onSectionClick: (sectionId: string) => void;
@@ -69,20 +70,24 @@ export default function Hero({ onSectionClick }: HeroProps) {
               className="grid grid-cols-2 gap-3 w-full max-w-[22rem] sm:flex sm:flex-row sm:flex-wrap sm:gap-4 sm:w-auto sm:max-w-none lg:justify-start animate-hero-enter animation-delay-225"
             >
               <MagneticButton>
-                <button
+                <Button
+                  type="button"
+                  variant="default"
                   onClick={handleContactClick}
-                  className="w-full sm:w-auto px-4 sm:px-10 py-3.5 sm:py-4 bg-slate-900 text-white dark:bg-white dark:text-slate-900 rounded-full type-button hover:bg-blue-600 dark:hover:bg-blue-500 transition-all duration-300 active:scale-95 shadow-[0_10px_20px_-5px_rgba(15,23,42,0.3)] dark:shadow-none pointer-events-auto"
+                  className="h-auto w-full rounded-full px-4 py-3.5 type-button text-white shadow-[0_10px_20px_-5px_rgba(15,23,42,0.3)] transition-all duration-300 hover:bg-blue-600 active:scale-95 dark:bg-white dark:text-slate-900 dark:shadow-none dark:hover:bg-blue-500 dark:hover:text-white sm:w-auto sm:px-10 sm:py-4"
                 >
                   Get in Touch
-                </button>
+                </Button>
               </MagneticButton>
               <MagneticButton>
-                <button
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={handleViewWorkClick}
-                  className="w-full sm:w-auto px-4 sm:px-10 py-3.5 sm:py-4 bg-white/95 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white rounded-full type-button hover:border-slate-900 dark:hover:border-blue-400 transition-[transform,border-color,background-color] duration-300 active:scale-95 shadow-sm pointer-events-auto"
+                  className="h-auto w-full rounded-full border-slate-200 bg-white/95 px-4 py-3.5 type-button text-slate-900 shadow-sm transition-[transform,border-color,background-color] duration-300 hover:border-slate-900 hover:bg-white active:scale-95 dark:border-slate-700 dark:bg-slate-950/80 dark:text-white dark:hover:border-blue-400 dark:hover:bg-slate-900 sm:w-auto sm:px-10 sm:py-4"
                 >
                   View My Work
-                </button>
+                </Button>
               </MagneticButton>
             </div>
           </div>
