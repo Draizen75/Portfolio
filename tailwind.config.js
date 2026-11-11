@@ -12,26 +12,28 @@ export default {
       },
       colors: {
         'background': {
+          DEFAULT: 'hsl(var(--background))', foreground: 'hsl(var(--foreground))',
           'primary': '#ffffff',
           'secondary': '#f8fafc',
           'tertiary': '#f1f5f9',
         },
-        'text': {
+        'text': { foreground: 'hsl(var(--foreground))',
           'primary': '#0f172a',
           'secondary': '#334155',
           'muted': '#64748b',
         },
-        'accent': {
+        'accent': { DEFAULT: 'hsl(var(--accent))', foreground: 'hsl(var(--accent-foreground))',
           'primary': '#3b82f6',
           'secondary': '#2563eb',
           'hover': '#60a5fa',
           'light': '#dbeafe',
         },
-        'border': {
+        'border': { DEFAULT: 'hsl(var(--border))',
           'default': '#e2e8f0',
           'light': '#cbd5e1',
         },
       },
+      card: { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' }, popover: { DEFAULT: 'hsl(var(--popover))', foreground: 'hsl(var(--popover-foreground))' }, primary: { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' }, secondary: { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' }, muted: { DEFAULT: 'hsl(var(--muted))', foreground: 'hsl(var(--muted-foreground))' }, destructive: { DEFAULT: 'hsl(var(--destructive))', foreground: 'hsl(var(--destructive-foreground))' }, input: 'hsl(var(--input))', ring: 'hsl(var(--ring))',
       fontFamily: {
         'sans': ['"DM Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
         'serif': ['"Source Serif 4"', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
@@ -83,7 +85,7 @@ export default {
         '88': '22rem',
         '128': '32rem',
       },
-      borderRadius: {
+      borderRadius: { lg: 'var(--radius)', md: 'calc(var(--radius) - 2px)', sm: 'calc(var(--radius) - 4px)',
         'xl': '0.75rem',
         '2xl': '1rem',
         '3xl': '1.5rem',
