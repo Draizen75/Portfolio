@@ -22,7 +22,7 @@ export default function AnimatedModal({
       open={isOpen}
       onOpenChange={(open) => { if (!open) onClose(); }}
       ariaLabelledBy={labelledBy}
-      className="fixed inset-0 z-50 m-0 flex max-h-none w-screen max-w-none items-end justify-center overflow-hidden border-0 bg-transparent p-0 sm:items-center sm:p-4 backdrop:bg-slate-900/80"
+      className="fixed inset-0 z-50 m-0 flex max-h-none w-screen max-w-none items-end justify-center overflow-hidden border-0 bg-transparent p-0 sm:items-center sm:p-4 [&::backdrop]:bg-slate-900/80"
     >
       <div className={'relative z-10 flex max-h-[95vh] w-full ' + maxWidth + ' flex-col overflow-hidden rounded-t-2xl border border-slate-200 bg-white shadow-2xl animate-modal-enter dark:border-slate-800 dark:bg-slate-900 sm:max-h-[90vh] sm:rounded-3xl'}>
         <div className="absolute right-4 top-4 z-20">
