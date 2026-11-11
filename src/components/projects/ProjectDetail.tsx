@@ -17,6 +17,7 @@ import { getProjectImages } from '../../utils/imageUtils';
 import type { PortfolioProject } from '../../data/projectsData';
 import { socialIcons } from '../../data/inlineIcons.generated';
 import ProjectCoverArt from './ProjectCoverArt';
+import { Dialog } from '../ui/dialog';
 
 interface ProjectDetailProps {
   project: PortfolioProject;
@@ -60,8 +61,6 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
   const hasGallery = projectImages.length > 0;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const lightboxRef = useRef<HTMLDivElement>(null);
-  const lightboxTriggerRef = useRef<HTMLElement | null>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const minSwipeDistance = 50;
@@ -110,46 +109,14 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
   };
 
   useEffect(() => {
-    if (!isLightboxOpen) return;
-
-    lightboxTriggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    lightboxRef.current?.querySelector<HTMLElement>('button[aria-label="Close fullscreen"]')?.focus();
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        setIsLightboxOpen(false);
-        return;
-      }
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        goToNextImage();
-      }
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        goToPrevImage();
-      }
-      if (e.key === 'Tab' && lightboxRef.current) {
-        const focusable = Array.from(lightboxRef.current.querySelectorAll<HTMLElement>('button:not([disabled])'));
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (first && last && e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (first && last && !e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
+    if (!isLightboxOpen || projectImages.length < 2) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowRight') { event.preventDefault(); goToNextImage(); }
+      else if (event.key === 'ArrowLeft') { event.preventDefault(); goToPrevImage(); }
     };
-
     window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      lightboxTriggerRef.current?.focus();
-      lightboxTriggerRef.current = null;
-    };
-  }, [goToNextImage, goToPrevImage, isLightboxOpen]);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [goToNextImage, goToPrevImage, isLightboxOpen, projectImages.length]);
 
   return (
     <>
@@ -323,63 +290,34 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
         </div>
       </div>
 
-      {isLightboxOpen && hasGallery && (
-        <div
-          ref={lightboxRef}
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${project.title} screenshot gallery`}
-          tabIndex={-1}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md outline-none sm:p-8"
-          onClick={() => setIsLightboxOpen(false)}
-        >
-          <button
-            type="button"
-            className="absolute right-4 top-4 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-6 sm:top-6"
-            onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
-            aria-label="Close fullscreen"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-          </button>
-
-          {projectImages.length > 1 && (
-            <div className="absolute bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/65 px-3 py-2 text-white shadow-lg backdrop-blur-md sm:bottom-8">
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); goToPrevImage(); }}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                aria-label="Previous image"
-              >
-                <ChevronLeft className="h-6 w-6" aria-hidden="true" />
-              </button>
-              <div className="min-w-14 text-center text-sm font-bold tracking-widest text-white">
-                {currentImageIndex + 1} / {projectImages.length}
-              </div>
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); goToNextImage(); }}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                aria-label="Next image"
-              >
-                <ChevronRight className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-          )}
-
-          <img
-            key={`lightbox-${currentImageIndex}`}
-            src={projectImages[currentImageIndex]}
-            alt={`${project.title} fullscreen screenshot`}
-            className="max-h-[78vh] max-w-[95vw] select-none rounded-lg object-contain shadow-[0_0_50px_rgba(0,0,0,0.5)] sm:max-h-[86vh] sm:max-w-[calc(100vw-96px)]"
-            onClick={(e) => e.stopPropagation()}
-            draggable={false}
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-            decoding="async"
-          />
-        </div>
-      )}
+      <Dialog
+        open={isLightboxOpen && hasGallery}
+        onOpenChange={setIsLightboxOpen}
+        ariaLabel={project.title + ' screenshot gallery'}
+        className="fixed inset-0 z-[100] m-0 flex h-screen max-h-none w-screen max-w-none items-center justify-center overflow-hidden border-0 bg-black/95 p-4 text-white backdrop:bg-black/95 sm:p-8"
+      >
+        <button type="button" className="absolute right-4 top-4 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-6 sm:top-6" onClick={() => setIsLightboxOpen(false)} aria-label="Close fullscreen">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+        </button>
+        {projectImages.length > 1 && (
+          <div className="absolute bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/10 bg-black/65 px-3 py-2 text-white shadow-lg backdrop-blur-md sm:bottom-8">
+            <button type="button" onClick={goToPrevImage} className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white" aria-label="Previous image"><ChevronLeft className="h-6 w-6" aria-hidden="true" /></button>
+            <div className="min-w-14 text-center text-sm font-bold tracking-widest text-white">{currentImageIndex + 1} / {projectImages.length}</div>
+            <button type="button" onClick={goToNextImage} className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white" aria-label="Next image"><ChevronRight className="h-6 w-6" aria-hidden="true" /></button>
+          </div>
+        )}
+        <img
+          key={'lightbox-' + currentImageIndex}
+          src={projectImages[currentImageIndex]}
+          alt={project.title + ' fullscreen screenshot'}
+          className="max-h-[78vh] max-w-[95vw] select-none rounded-lg object-contain shadow-[0_0_50px_rgba(0,0,0,0.5)] sm:max-h-[86vh] sm:max-w-[calc(100vw-96px)]"
+          draggable={false}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          decoding="async"
+        />
+      </Dialog>
     </>
   );
 }
