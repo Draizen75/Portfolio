@@ -147,7 +147,20 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
                 <SheetTitle className="sr-only">Mobile navigation</SheetTitle>
                 <SheetDescription className="sr-only">Choose a section of the portfolio to visit.</SheetDescription>
                 <div id="mobile-navigation-menu" className="mx-auto max-w-7xl space-y-1 sm:px-3">
-                  {navItems.map((item) => <a key={item.id} href={`#${item.id}`} onClick={(e) => handleNavClick(e, item.id)} aria-current={activeSection === item.id ? 'location' : undefined} className={`block min-h-[44px] rounded-md px-3 py-3 type-nav-link ${activeSection === item.id ? 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white font-semibold' : 'text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'}`}>{item.label}</a>)}
+                  {navItems.map((item) => (
+                    <a
+                      key={item.id}
+                      href={`#${item.id}`}
+                      onClick={(e) => handleNavClick(e, item.id)}
+                      aria-current={activeSection === item.id ? 'location' : undefined}
+                      className={`block min-h-[44px] rounded-md px-3 py-3 type-nav-link ${activeSection === item.id
+                        ? 'bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-white font-semibold'
+                        : 'text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
                 </div>
               </SheetContent>
             </Sheet>
