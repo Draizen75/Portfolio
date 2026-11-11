@@ -294,7 +294,7 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
         open={isLightboxOpen && hasGallery}
         onOpenChange={setIsLightboxOpen}
         ariaLabel={project.title + ' screenshot gallery'}
-        className="fixed inset-0 z-[100] m-0 flex h-screen max-h-none w-screen max-w-none items-center justify-center overflow-hidden border-0 bg-black/95 p-4 text-white backdrop:bg-black/95 sm:p-8"
+        className="fixed inset-0 z-[100] m-0 flex h-screen max-h-none w-screen max-w-none items-center justify-center overflow-hidden border-0 bg-black/95 p-4 text-white [&::backdrop]:bg-black/95 sm:p-8"
       >
         <button type="button" className="absolute right-4 top-4 z-50 rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 sm:right-6 sm:top-6" onClick={() => setIsLightboxOpen(false)} aria-label="Close fullscreen">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
