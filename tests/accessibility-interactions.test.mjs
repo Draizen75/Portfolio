@@ -56,4 +56,17 @@ describe('accessibility interaction contracts', () => {
     assert.match(detail, /event\.key === 'ArrowLeft'/);
     assert.match(dialog, /<DialogPrimitive\.Content/);
   });
+  it('uses the shared shadcn Button for common actions while preserving anchor semantics', () => {
+    const contact = readSource('src/components/contact/Contact.tsx');
+    const navigation = readSource('src/components/navigation/Navigation.tsx');
+    const projectDetail = readSource('src/components/projects/ProjectDetail.tsx');
+
+    assert.match(contact, /import \\{ Button \\} from ['"]..\\/ui\\/button['"]/);
+    assert.match(contact, /<Button asChild[\\s\\S]*?<a href={`mailto:\\$\\{emailAddress\\}`}>[\\s\\S]*?Say Hello[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
+    assert.match(navigation, /<Button asChild[\\s\\S]*?<a[\\s\\S]*?href="\\/Martirez_Resume\\.pdf"[\\s\\S]*?aria-label="View resume"[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
+    assert.match(navigation, /<SheetTrigger asChild>[\\s\\S]*?<Button[\\s\\S]*?aria-label={isMobileMenuOpen \\? "Close navigation menu" : "Open navigation menu"}/);
+    assert.match(projectDetail, /<Button asChild[\\s\\S]*?<a href={project\\.liveUrl} target="_blank" rel="noopener noreferrer">[\\s\\S]*?Visit Site[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
+    assert.match(projectDetail, /<Button asChild variant="outline"[\\s\\S]*?<a href={project\\.githubUrl} target="_blank" rel="noopener noreferrer">[\\s\\S]*?GitHub[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
+  });
+
 });
