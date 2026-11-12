@@ -29,7 +29,7 @@ describe('accessibility interaction contracts', () => {
 
     assert.match(navigation, /<Sheet\s+open={isMobileMenuOpen}\s+onOpenChange={setIsMobileMenuOpen}/);
     assert.match(navigation, /<SheetTrigger\s+asChild>/);
-    assert.match(navigation, /aria-label="Open navigation menu"/);
+    assert.match(navigation, /aria-label={isMobileMenuOpen \? "Close navigation menu" : "Open navigation menu"}/);
     assert.match(navigation, /<SheetContent\s+side="top"/);
     assert.match(navigation, /<SheetTitle\s+className="sr-only">Mobile navigation<\/SheetTitle>/);
     assert.match(navigation, /<SheetDescription\s+className="sr-only">Choose a section of the portfolio to visit\.<\/SheetDescription>/);
@@ -56,4 +56,29 @@ describe('accessibility interaction contracts', () => {
     assert.match(detail, /event\.key === 'ArrowLeft'/);
     assert.match(dialog, /<DialogPrimitive\.Content/);
   });
+  it('uses the shared shadcn Button for common actions while preserving anchor semantics', () => {
+    const contact = readSource('src/components/contact/Contact.tsx');
+    const navigation = readSource('src/components/navigation/Navigation.tsx');
+    const projectDetail = readSource('src/components/projects/ProjectDetail.tsx');
+
+    assert.ok(contact.includes("import { Button } from '../ui/button';"));
+    assert.ok(contact.includes('<Button asChild'));
+    assert.ok(contact.includes("href={`mailto:${emailAddress}`}"));
+    assert.ok(contact.includes('Say Hello'));
+    assert.ok(navigation.includes('<Button'));
+    assert.ok(navigation.includes('asChild'));
+    assert.ok(navigation.includes('href="/Martirez_Resume.pdf"'));
+    assert.ok(navigation.includes('aria-label="View resume"'));
+    assert.ok(navigation.includes('<SheetTrigger asChild>'));
+    assert.ok(navigation.includes('variant="ghost"'));
+    assert.ok(navigation.includes('!h-5 !w-5'));
+    assert.ok(navigation.includes('!h-6 !w-6'));
+    assert.ok(contact.includes('!h-6 !w-6'));
+    assert.ok(navigation.includes('aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}'));
+    assert.ok(projectDetail.includes('<Button asChild'));
+    assert.ok(projectDetail.includes('href={project.liveUrl} target="_blank" rel="noopener noreferrer"'));
+    assert.ok(projectDetail.includes('href={project.githubUrl} target="_blank" rel="noopener noreferrer"'));
+    assert.ok(projectDetail.includes('variant="outline"'));
+  });
+
 });

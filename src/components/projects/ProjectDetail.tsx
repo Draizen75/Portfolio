@@ -18,6 +18,7 @@ import type { PortfolioProject } from '../../data/projectsData';
 import { socialIcons } from '../../data/inlineIcons.generated';
 import ProjectCoverArt from './ProjectCoverArt';
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from '../ui/dialog';
+import { Button } from '../ui/button';
 
 interface ProjectDetailProps {
   project: PortfolioProject;
@@ -210,24 +211,18 @@ export default function ProjectDetail({ project, titleId }: ProjectDetailProps) 
 
                 <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col">
                   {project.liveUrl !== '#' && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-colors hover:bg-blue-500"
-                    >
-                      Visit Site <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                    </a>
+                    <Button asChild className="h-auto min-h-11 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-colors hover:bg-blue-500">
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        Visit Site <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    </Button>
                   )}
                   {project.githubUrl !== '#' && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800"
-                    >
-                      GitHub <GithubLogo />
-                    </a>
+                    <Button asChild variant="outline" className="h-auto min-h-11 rounded-xl border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800">
+                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        GitHub <GithubLogo />
+                      </a>
+                    </Button>
                   )}
                 </div>
               </div>

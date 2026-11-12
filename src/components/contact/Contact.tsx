@@ -6,6 +6,7 @@
 import { useRef } from 'react';
 import { socialIcons } from '../../data/inlineIcons.generated';
 import { useRevealOnScroll } from '../../hooks/useRevealOnScroll';
+import { Button } from '../ui/button';
 
 interface SocialLink {
   name: string;
@@ -118,15 +119,14 @@ export default function Contact() {
             <div className="space-y-4 text-center">
               <h2 className="type-subsection-title mb-4">Let's Connect</h2>
               <div>
-                <a 
-                  href={`mailto:${emailAddress}`} 
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-gray-900 text-white dark:bg-white dark:text-slate-900 rounded-lg type-button hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1"
-                >
-                  <span>Say Hello</span>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </a>
+                <Button asChild className="h-auto w-full sm:w-auto gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-gray-900 text-white dark:bg-white dark:text-slate-900 rounded-lg type-button hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-white transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1">
+                  <a href={`mailto:${emailAddress}`}>
+                    <span>Say Hello</span>
+                    <svg className="!h-6 !w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </a>
+                </Button>
               </div>
 
               <div className="flex justify-center gap-6 sm:gap-8 mt-6 sm:mt-8">
