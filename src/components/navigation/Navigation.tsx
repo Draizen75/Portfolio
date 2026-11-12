@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FileUser } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
+import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '../ui/sheet';
 
 /**
@@ -18,10 +19,12 @@ interface NavigationProps {
 }
 
 const ThemeToggleButton = ({ theme, toggleTheme }: { theme: string, toggleTheme: () => void }) => (
-  <button
+  <Button
+    type="button"
+    variant="ghost"
+    size="icon"
     onClick={toggleTheme}
     className="relative w-10 h-10 rounded-full flex items-center justify-center overflow-hidden text-gray-700 dark:text-gray-300 bg-transparent hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-[background-color,color,box-shadow,border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-95"
-    type="button"
     aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
   >
     <svg
@@ -42,20 +45,26 @@ const ThemeToggleButton = ({ theme, toggleTheme }: { theme: string, toggleTheme:
     >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>
-  </button>
+  </Button>
 );
 
 const ResumeButton = () => (
-  <a
-    href="/Martirez_Resume.pdf"
-    target="_blank"
-    rel="noopener noreferrer"
+  <Button
+    asChild
+    variant="ghost"
+    size="icon"
     className="relative w-10 h-10 rounded-full flex items-center justify-center text-gray-700 dark:text-gray-300 bg-transparent hover:bg-gray-100/80 dark:hover:bg-gray-800/80 transition-[background-color,color,box-shadow,border-color,transform] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-95"
-    aria-label="View resume"
-    title="View resume"
   >
-    <FileUser className="w-5 h-5" strokeWidth={2} aria-hidden="true" />
-  </a>
+    <a
+      href="/Martirez_Resume.pdf"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="View resume"
+      title="View resume"
+    >
+      <FileUser className="w-5 h-5" strokeWidth={2} aria-hidden="true" />
+    </a>
+  </Button>
 );
 
 export default function Navigation({ activeSection, isScrolled, onSectionClick }: NavigationProps) {
@@ -139,9 +148,15 @@ export default function Navigation({ activeSection, isScrolled, onSectionClick }
             <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
-                <button className="ml-2 sm:ml-4 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" aria-label="Open navigation menu" type="button">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="ml-2 sm:ml-4 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                  aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                >
                   <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"} /></svg>
-                </button>
+                </Button>
               </SheetTrigger>
               <SheetContent side="top" className="max-h-[85dvh] overflow-y-auto border-t border-slate-200/40 px-4 pb-5 pt-20 dark:border-slate-800/50 md:hidden">
                 <SheetTitle className="sr-only">Mobile navigation</SheetTitle>
