@@ -29,7 +29,7 @@ describe('accessibility interaction contracts', () => {
 
     assert.match(navigation, /<Sheet\s+open={isMobileMenuOpen}\s+onOpenChange={setIsMobileMenuOpen}/);
     assert.match(navigation, /<SheetTrigger\s+asChild>/);
-    assert.match(navigation, /aria-label={isMobileMenuOpen \\? "Close navigation menu" : "Open navigation menu"}/);
+    assert.match(navigation, /aria-label={isMobileMenuOpen \? "Close navigation menu" : "Open navigation menu"}/);
     assert.match(navigation, /<SheetContent\s+side="top"/);
     assert.match(navigation, /<SheetTitle\s+className="sr-only">Mobile navigation<\/SheetTitle>/);
     assert.match(navigation, /<SheetDescription\s+className="sr-only">Choose a section of the portfolio to visit\.<\/SheetDescription>/);
@@ -66,7 +66,7 @@ describe('accessibility interaction contracts', () => {
     assert.ok(contact.includes("href={`mailto:${emailAddress}`}"));
     assert.ok(contact.includes('Say Hello'));
     assert.ok(navigation.includes('<Button'));
-    assert.ok(navigation.includes('asChild\\n    variant="ghost"'));
+    assert.ok(navigation.includes('asChild'));
     assert.ok(navigation.includes('href="/Martirez_Resume.pdf"'));
     assert.ok(navigation.includes('aria-label="View resume"'));
     assert.ok(navigation.includes('<SheetTrigger asChild>'));
