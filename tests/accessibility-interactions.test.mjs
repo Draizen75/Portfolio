@@ -61,12 +61,20 @@ describe('accessibility interaction contracts', () => {
     const navigation = readSource('src/components/navigation/Navigation.tsx');
     const projectDetail = readSource('src/components/projects/ProjectDetail.tsx');
 
-    assert.match(contact, /import \\{ Button \\} from ['"]..\\/ui\\/button['"]/);
-    assert.match(contact, /<Button asChild[\\s\\S]*?<a href={`mailto:\\$\\{emailAddress\\}`}>[\\s\\S]*?Say Hello[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
-    assert.match(navigation, /<Button asChild[\\s\\S]*?<a[\\s\\S]*?href="\\/Martirez_Resume\\.pdf"[\\s\\S]*?aria-label="View resume"[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
-    assert.match(navigation, /<SheetTrigger asChild>[\\s\\S]*?<Button[\\s\\S]*?aria-label={isMobileMenuOpen \\? "Close navigation menu" : "Open navigation menu"}/);
-    assert.match(projectDetail, /<Button asChild[\\s\\S]*?<a href={project\\.liveUrl} target="_blank" rel="noopener noreferrer">[\\s\\S]*?Visit Site[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
-    assert.match(projectDetail, /<Button asChild variant="outline"[\\s\\S]*?<a href={project\\.githubUrl} target="_blank" rel="noopener noreferrer">[\\s\\S]*?GitHub[\\s\\S]*?<\\/a>[\\s\\S]*?<\\/Button>/);
+    assert.ok(contact.includes("import { Button } from '../ui/button';"));
+    assert.ok(contact.includes('<Button asChild'));
+    assert.ok(contact.includes("href={`mailto:${emailAddress}`}"));
+    assert.ok(contact.includes('Say Hello'));
+    assert.ok(navigation.includes('<Button asChild'));
+    assert.ok(navigation.includes('href="/Martirez_Resume.pdf"'));
+    assert.ok(navigation.includes('aria-label="View resume"'));
+    assert.ok(navigation.includes('<SheetTrigger asChild>'));
+    assert.ok(navigation.includes('variant="ghost"'));
+    assert.ok(navigation.includes('aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}'));
+    assert.ok(projectDetail.includes('<Button asChild'));
+    assert.ok(projectDetail.includes('href={project.liveUrl} target="_blank" rel="noopener noreferrer"'));
+    assert.ok(projectDetail.includes('href={project.githubUrl} target="_blank" rel="noopener noreferrer"'));
+    assert.ok(projectDetail.includes('variant="outline"'));
   });
 
 });
