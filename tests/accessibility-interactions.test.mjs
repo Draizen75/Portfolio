@@ -70,6 +70,9 @@ describe('accessibility interaction contracts', () => {
     assert.ok(navigation.includes('aria-label="View resume"'));
     assert.ok(navigation.includes('<SheetTrigger asChild>'));
     assert.ok(navigation.includes('variant="ghost"'));
+    assert.ok(navigation.includes('!h-5 !w-5'));
+    assert.ok(navigation.includes('!h-6 !w-6'));
+    assert.ok(contact.includes('!h-6 !w-6'));
     assert.ok(navigation.includes('aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}'));
     assert.ok(projectDetail.includes('<Button asChild'));
     assert.ok(projectDetail.includes('href={project.liveUrl} target="_blank" rel="noopener noreferrer"'));
